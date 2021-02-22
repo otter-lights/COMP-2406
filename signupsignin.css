@@ -1,0 +1,58 @@
+body {
+  margin: 0px;
+  background: black;
+  height: 900px;
+
+}
+
+.gradientcontainer{
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
+  background-repeat: no-repeat;
+  margin: auto;
+  margin-top: 100px;
+  width: 1117px;
+  height: 654px;
+  border: 1px solid #FFFFFF;
+  border-radius: 20px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.gradientcontainer p{
+  padding-top: 150px;
+  text-align: center;
+  font-size: 50px;
+  margin: auto;
+}
+
+.gradientform{
+  margin: auto;
+  width: 638px;
+  height: 226px;
+  left: 392px;
+  top: 362px;
+  padding-left: 200px;
+  padding-top: 30px;
+
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+}
+
+.gradientform input[type=text]{
+  margin: auto;
+  margin-top: 20px;
+}
+
+.gradientform button{
+  font-family: Fira Sans Extra Condensed;
+  font-style: normal;
+  font-weight: bold;
+  border-radius: 15px;
+  width: 168px;
+  height: 24px;
+  margin-top:20px;
+  margin-bottom: 2px;
+  background: #FFBAAB;
+}

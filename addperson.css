@@ -1,0 +1,164 @@
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
+  height: 1450px;
+  background-repeat: no-repeat;
+}
+
+.menubar{
+  width: 100%;
+  height:67px;
+  background-color: black;
+  overflow: hidden;
+  position: sticky;
+  top: 0px;
+}
+
+.logo{
+  float:left;
+  padding: 15px 16px;
+  color: rgba(255,186,171,1);
+  font-family: Inter;
+  font-weight: Bold;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+
+.menu{
+    float: right;
+    padding: 25px 16px;
+    display: block;
+    color: rgba(255,186,171,1);
+    top: 40px;
+    font-family: Inter;
+    font-weight: Bold;
+    font-size: 20px;
+    opacity: 1;
+    text-align: right;
+}
+
+.searchbar{
+  float:left;
+  top: 40px;
+}
+
+.searchbar input[type=text]{
+  margin-top: 15px;
+  width: 454px;
+  height: 35px;
+  font-size: 17px;
+}
+
+.searchbar button{
+  float: right;
+  width: 70px;
+  height: 40px;
+  margin-top: 15.5px;
+  background: rgba(255,186,171,1);
+  border: none;
+  cursor: pointer;
+  color:white;
+}
+
+.blackbackground{
+  background: black;
+  margin: auto;
+  margin-top: 50px;
+  width: 1236px;
+  height: 1264px;
+  border: 1px solid #FFFFFF;
+  border-radius: 20px;
+}
+
+.userheader{
+  text-align: right;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  background: white;
+  margin: auto;
+  margin-top: 55px;
+  margin-bottom: 33px;
+  width: 1117px;
+  height: 171px;
+  border-radius: 20px;
+}
+
+.userheader button{
+  border-radius: 15px;
+  width: 93px;
+  height: 25px;
+  background: #FFBAAB;
+  margin-right:520px;
+  padding: 0px;
+}
+
+.userheader p{
+  padding-top: 36px;
+  margin:0px;
+  font-size: 50px;
+  text-align: center;
+}
+
+.usercard{
+  background: white;
+  margin: auto;
+  width: 1117px;
+  height: 927px;
+  margin-bottom: 55px;
+  border-radius: 20px;
+}
+
+
+.sections{
+  font-family: Fira Sans Extra Condensed;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  width: 986px;
+  height: 181px;
+  margin: auto;
+}
+
+.sections p{
+  margin:0px;
+  padding-top: 36px;
+  display: inline-block;
+}
+
+.profileboxes{
+  width: 986px;
+  height: 143px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+}
+
+.iconboxes{
+  width: 101px;
+  height: 130px;
+}
+
+.iconboxes img{
+  width: 101px;
+  height: 101px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  margin: 12px;
+  margin-bottom: 0px;
+  display: block;
+}
+
+.iconboxes p{
+  text-align: center;
+  width: 113px;
+  padding: 0px;
+  font-size: 14px;
+}
+
+.reviewsbox{
+  width: 986px;
+  height: 400px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+}
