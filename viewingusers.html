@@ -1,0 +1,60 @@
+<!<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="./viewingusers.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <title>Viewing Users</title>
+  </head>
+  <body>
+
+    <!-- contributing user bar-->
+    <div class="menubar">
+      <div class ="logo">IMDB</div>
+      <div class = "searchbar">
+          <!-- make this a form?? https://www.w3schools.com/howto/howto_css_searchbar.asp-->
+        <input type="text" placeholder="Search for a movie, actor, etc.">
+        <button type="submit">SEARCH</button>
+      </div>
+      <div class ="menu">LOGOUT</div>
+      <div class ="menu">PROFILE</div>
+      <div class ="menu">ADD A MOVIE</div>
+      <div class ="menu">ADD A PERSON</div>
+    </div>
+
+    <div class="blackbackground">
+      <div class="userheader">
+        <p>USER NAME</p>
+        <button type="button" name="follow">follow</button>
+      </div>
+      <div class="usercard">
+          <div class="sections">
+            <div>
+              <p>PEOPLE [USER] IS FOLLOWING</p>
+              <div class = "profileboxes">
+                <div class = "iconboxes">
+                  <img src="./Profile.png" alt=""/>
+                  <p>PERSON #1</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p>WATCH LIST</p>
+              <div class = "profileboxes">
+                <div class = "iconboxes">
+                  <img src="./Video.png" alt=""/>
+                  <p>MOVIE #1</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p>REVIEWS</p>
+              <div class = "reviewsbox"></div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+  </body>
+</html>

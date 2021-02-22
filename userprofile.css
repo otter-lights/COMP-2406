@@ -1,0 +1,202 @@
+body {
+  margin: 0px;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
+  height: 1700px;
+  background-repeat: no-repeat;
+}
+
+.menubar{
+  width: 100%;
+  height:67px;
+  background-color: black;
+  overflow: hidden;
+  position: sticky;
+  top: 0px;
+}
+
+.logo{
+  float:left;
+  padding: 15px 16px;
+  color: rgba(255,186,171,1);
+  font-family: Inter;
+  font-weight: Bold;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+
+.menu{
+    float: right;
+    padding: 25px 16px;
+    display: block;
+    color: rgba(255,186,171,1);
+    top: 40px;
+    font-family: Inter;
+    font-weight: Bold;
+    font-size: 20px;
+    opacity: 1;
+    text-align: right;
+}
+
+.searchbar{
+  float:left;
+  top: 40px;
+}
+
+.searchbar input[type=text]{
+  margin-top: 15px;
+  width: 454px;
+  height: 35px;
+  font-size: 17px;
+}
+
+.searchbar button{
+  float: right;
+  width: 70px;
+  height: 40px;
+  margin-top: 15.5px;
+  background: rgba(255,186,171,1);
+  border: none;
+  cursor: pointer;
+  color:white;
+}
+
+.blackbackground{
+  background: black;
+  margin: auto;
+  margin-top: 50px;
+  width: 1236px;
+  height: 1544px;
+  border: 1px solid #FFFFFF;
+  border-radius: 20px;
+}
+
+.welcomebox{
+  background: white;
+  margin: auto;
+  margin-top: 55px;
+  margin-bottom: 33px;
+  width: 1117px;
+  height: 302px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.profilecard{
+  background: white;
+  margin: auto;
+  width: 1117px;
+  height: 1093px;
+  margin-bottom: 55px;
+  border-radius: 20px;
+}
+
+
+.welcomeuser{
+  text-align: right;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  width: 278px;
+  padding-top: 135px;
+  display:inline-block;
+  align-content: center;
+}
+
+.welcomeuser h3{
+  margin:0px;
+  font-size: 50px;
+
+}
+
+.welcomeuser p{
+  margin:0px;
+  font-size: 24px;
+}
+
+.sections{
+  font-family: Fira Sans Extra Condensed;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  width: 986px;
+  height: 181px;
+  margin: auto;
+}
+
+.sections p{
+  margin:0px;
+  padding-top: 36px;
+  display: inline-block;
+}
+
+.profileboxes{
+  width: 986px;
+  height: 143px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+}
+
+.sections button{
+  border-radius: 15px;
+  width: 93px;
+  height: 25px;
+  margin-bottom: 2px;
+  background: #FFBAAB;
+}
+
+.iconboxes{
+  width: 101px;
+  height: 130px;
+}
+
+.iconboxes img{
+  width: 101px;
+  height: 101px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  margin: 12px;
+  margin-bottom: 0px;
+  display: block;
+}
+
+.iconboxes p{
+  text-align: center;
+  width: 113px;
+  padding: 0px;
+  font-size: 14px;
+}
+
+.welcomebox img{
+  width: 186px;
+  height: 186px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  display:inline-block;
+  margin-top: 30px;
+}
+
+.account{
+  width: 149px;
+  height: 19px;
+  margin: 0px;
+  font-family: Fira Sans Extra Condensed;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 0px;
+  text-align: center;
+  display: block;
+}
+
+.welcomebox button{
+  font-family: Fira Sans Extra Condensed;
+  font-style: normal;
+  font-weight: bold;
+  border-radius: 15px;
+  width: 168px;
+  height: 24px;
+  margin-bottom: 2px;
+  background: #FFBAAB;
+}
