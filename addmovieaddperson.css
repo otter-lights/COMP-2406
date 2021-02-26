@@ -65,8 +65,8 @@ body {
   background: white;
   margin: auto;
   margin-top: 100px;
+  padding-bottom: 50px;
   width: 1117px;
-  height: 654px;
   border: 1px solid #FFFFFF;
   border-radius: 20px;
   font-family: Inter;
@@ -84,17 +84,25 @@ body {
 .formbox{
   margin: auto;
   width: 638px;
-  height: 541px;
   border: 1px solid #000000;
   box-sizing: border-box;
-  padding-top: 70px;
-  padding-left: 190px;
-  align-content: center;
+  display: table;
 }
 
 .formbox input[type=text]{
   margin: auto;
   margin-top: 20px;
+  display: table-cell;
+}
+
+.formbox label{
+    display: table-cell;
+    font-size: 15px;
+}
+
+.formbox p{
+    display: table-row;
+    text-indent: 2em
 }
 
 .formbox button{
@@ -107,4 +115,5 @@ body {
   margin-top:20px;
   margin-bottom: 2px;
   background: #FFBAAB;
+  display: table-cell;
 }
