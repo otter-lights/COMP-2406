@@ -87,6 +87,7 @@ body {
   border: 1px solid #000000;
   box-sizing: border-box;
   display: table;
+  padding: 15px;
 }
 
 .formbox input[type=text]{
