@@ -93,7 +93,7 @@ body {
 }
 
 
-.welcomeuser{
+.left{
   text-align: right;
   font-family: Inter;
   font-style: normal;
@@ -102,17 +102,53 @@ body {
   padding-top: 135px;
   display:inline-block;
   align-content: center;
+  float: left;
 }
 
-.welcomeuser h3{
+.left h3{
   margin:0px;
   font-size: 50px;
 
 }
 
-.welcomeuser p{
+.left p{
   margin:0px;
   font-size: 24px;
+} 
+
+.right{
+    width:200px;
+    margin-left:50px;
+    text-align: center;
+    float:right;
+}
+
+.right p{
+  margin: 0px;
+  font-family: Fira Sans Extra Condensed;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  display: block;
+}
+.right img{
+  width: 186px;
+  height: 186px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  margin-top: 30px;
+}
+
+.right button{
+  font-family: Fira Sans Extra Condensed;
+  font-style: normal;
+  font-weight: bold;
+  border-radius: 15px;
+  width: 168px;
+  height: 24px;
+  margin-bottom: 2px;
+  background: #FFBAAB;
 }
 
 .sections{
@@ -166,37 +202,4 @@ body {
   width: 113px;
   padding: 0px;
   font-size: 14px;
-}
-
-.welcomebox img{
-  width: 186px;
-  height: 186px;
-  border: 1px solid #000000;
-  box-sizing: border-box;
-  display:inline-block;
-  margin-top: 30px;
-}
-
-.account{
-  width: 149px;
-  height: 19px;
-  margin: 0px;
-  font-family: Fira Sans Extra Condensed;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  padding: 0px;
-  text-align: center;
-  display: block;
-}
-
-.welcomebox button{
-  font-family: Fira Sans Extra Condensed;
-  font-style: normal;
-  font-weight: bold;
-  border-radius: 15px;
-  width: 168px;
-  height: 24px;
-  margin-bottom: 2px;
-  background: #FFBAAB;
 }
