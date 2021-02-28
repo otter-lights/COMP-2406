@@ -94,18 +94,17 @@ body {
 
 .resultsbox{
     width: 986px;
-    height: 450px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 440px;
 }
 
 .results button{
-    width: 65px;
     height: 50px;
-    margin: 5px;
+    margin: 10px;
     background-color: #FFBAAB;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .results img{
@@ -114,11 +113,9 @@ body {
 
 #back{
     float:left;
-    margin-left: 2px;
 }
 
 #forward{
     float:right;
     align-content: right;
-    margin-right: 2px
 }
