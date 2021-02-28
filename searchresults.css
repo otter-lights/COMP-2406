@@ -81,7 +81,7 @@ body {
   margin: auto;
 }
 
-.resultsbox{
+.results{
   width: 986px;
   height: 510px;
   left: 227px;
@@ -90,4 +90,35 @@ body {
   border: 1px solid #000000;
   box-sizing: border-box;
   margin: auto;
+}
+
+.resultsbox{
+    width: 986px;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.results button{
+    width: 65px;
+    height: 50px;
+    margin: 5px;
+    background-color: #FFBAAB;
+    border-radius: 10px;
+}
+
+.results img{
+    height:50px;
+}
+
+#back{
+    float:left;
+    margin-left: 2px;
+}
+
+#forward{
+    float:right;
+    align-content: right;
+    margin-right: 2px
 }
