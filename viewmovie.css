@@ -1,0 +1,235 @@
+#moveinfobody {
+  margin: 0px;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
+  height: 2046px;
+  background-repeat: no-repeat;
+}
+
+.menubar{
+  width: 100%;
+  height:67px;
+  background-color: black;
+  overflow: hidden;
+  position: sticky;
+  top: 0px;
+}
+
+.logo{
+  float:left;
+  padding: 15px 16px;
+  color: rgba(255,186,171,1);
+  font-family: Inter;
+  font-weight: Bold;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+
+.menu{
+    float: right;
+    padding: 25px 16px;
+    display: block;
+    color: rgba(255,186,171,1);
+    top: 40px;
+    font-family: Inter;
+    font-weight: Bold;
+    font-size: 20px;
+    opacity: 1;
+    text-align: right;
+}
+
+.searchbar{
+  float:left;
+  top: 40px;
+}
+
+.searchbar input[type=text]{
+  margin-top: 15px;
+  width: 454px;
+  height: 35px;
+  font-size: 17px;
+}
+
+.searchbar button{
+  float: right;
+  width: 70px;
+  height: 40px;
+  margin-top: 15.5px;
+  background: rgba(255,186,171,1);
+  border: none;
+  cursor: pointer;
+  color:white;
+}
+
+#movieinfoblackbackground{
+  background: black;
+  margin: auto;
+  margin-top: 42px;
+  width: 1236px;
+  height: 736px;
+  border: 1px solid #FFFFFF;
+  border-radius: 20px;
+  display:flex;
+}
+
+#reviewsonmoviepagecontainer{
+  width: 1236px;
+  height: 1236px;
+  margin:auto;
+  margin-top: 73px;
+}
+
+#movieinfocard{
+  width: 797px;
+  height: 620px;
+  display: inline-block;
+  margin-left: 65px;
+  margin-top: 58px;
+  background: #FFFFFF;
+  border-radius: 20px;
+}
+
+#recommendedmovieinfocard{
+  width: 284px;
+  height: 620px;
+  display: inline-block;
+  margin-left: 25px;
+  margin-top: 58px;
+  background: #FFFFFF;
+  border-radius: 20px;
+}
+
+#movieinfotitle{
+  font-family: Fira Sans Extra Condensed;
+  display:inline-block;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 72px;
+  margin-left: 72px;
+  margin-top: 23px;
+  margin-bottom:0px;
+}
+
+.moviedateduration{
+  width: 120px;
+  height: 30px;
+  background: #FFBAAB;
+  border-radius: 15px;
+  display: inline-block;
+  text-align: center;
+  font-family: Fira Sans Extra Condensed;
+  font-size: 18px;
+  padding-top: 8px;
+  overflow: auto;
+}
+
+#movieinforeleasedate{
+  margin-left: 72px;
+}
+
+#addtowatchlistbutton{
+  width: 195px;
+  height: 34px;
+  background:black;
+  border-radius: 15px;
+  color: white;
+  padding-top: 10px;
+}
+
+#movierating{
+  margin-left: 9px;
+  font-family: Fira Sans Extra Condensed;
+  font-size: 30px;
+  display:inline-block;
+  margin: 0px 9px;
+}
+
+.movieinfocard h5{
+  font-family: Fira Sans Extra Condensed;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 12px;
+  margin-bottom: 0px;
+  margin-left: 72px;
+}
+
+#overviewdiv{
+  width: 653px;
+  height: 172px;
+  margin-left:72px;
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  overflow: auto;
+  word-wrap: break-word;
+  padding: 2px;
+}
+
+.castcontainers{
+  width: 653px;
+  height: 50px;
+  margin-left:72px;
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  overflow: auto;
+  font-family: Fira Sans Extra Condensed;
+  font-size: 12px;
+  overflow: auto;
+  word-wrap: break-word;
+  padding: 2px;
+}
+
+.recommendedmovieinfocard h3{
+  font-family: Fira Sans Extra Condensed;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 14px;
+}
+
+#briefsummaryinput{
+  width: 1236px;
+  height: 118px;
+  resize:none;
+}
+
+#fullreviewinput{
+  width: 1236px;
+  height: 169px;
+  resize:none;
+}
+
+.reviewsonmoviepagecontainer h5{
+  font-family: Fira Sans Extra Condensed;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+}
+
+#submitreviewbutton{
+  width: 119.31px;
+  height: 32px;
+  background: black;
+  border-radius: 15px;
+  font-family: Fira Sans Extra Condensed;
+  font-size: 18px;
+  color: white;
+}
+
+#allreviewscontainer{
+  width: 1236px;
+  height: 596px;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  font-family: Fira Sans Extra Condensed;
+  font-size: 13px;
+  overflow: auto;
+  padding: 2px;
+  margin-top: 70px;
+  border-radius: 15px;
+}

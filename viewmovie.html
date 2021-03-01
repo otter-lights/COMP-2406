@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="./viewmovie.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <title>Movie Information</title>
+  </head>
+  <body id = "moveinfobody">
+
+    <!-- contributing user bar-->
+    <div class="menubar" id ="contributingbar">
+      <div class ="logo">IMDB</div>
+      <div class = "searchbar">
+          <!-- make this a form?? https://www.w3schools.com/howto/howto_css_searchbar.asp-->
+        <input type="text" placeholder="Search for a movie, actor, etc.">
+        <button type="submit">SEARCH</button>
+      </div>
+      <div class ="menu">LOGOUT</div>
+      <div class ="menu">PROFILE</div>
+      <div class ="menu">ADD A MOVIE</div>
+      <div class ="menu">ADD A PERSON</div>
+      </div>
+
+      <div id="movieinfoblackbackground">
+        <div id="movieinfocard" class="movieinfocard">
+          <h1 id="movieinfotitle">Movie Title</h1>
+          <h3 id="movierating">#.#/10</h3>
+          <button type="button" id="addtowatchlistbutton">ADD TO WATCHLIST</button>
+
+          <br>
+          <div class="moviedateduration" id="movieinforeleasedate">date</div>
+          <div class="moviedateduration" id="movieinfoduration">duration</div>
+          <br>
+          <h5 id="overview">OVERVIEW</h5>
+          <div id="overviewdiv">test</div>
+          <h5>DIRECTORS</h5>
+          <div id="movieinfodirectors"class="castcontainers"></div>
+          <h5>WRITERS</h5>
+          <div id="movieinfowriters"class="castcontainers"></div>
+          <h5>ACTORS</h5>
+          <div id="movieinfoactors"class="castcontainers"></div>
+
+        </div>
+        <div id="recommendedmovieinfocard" class= "recommendedmovieinfocard">
+          <h3>RECOMMENDED MOVIES</h3>
+        </div>
+        </div>
+
+      <div id="reviewsonmoviepagecontainer" class="reviewsonmoviepagecontainer">
+        <h5>ADD A SCORE OUT OF 10 (REQUIRED):</h5>
+        <input type="number" id="reviewoutof10" min="0" max="10"></input>
+        <h5>WRITE A BRIEF SUMMARY (OPTIONAL):</h5>
+        <textarea rows= "4" cols="50" id="briefsummaryinput" ></textarea>
+        <h5>WRITE A FULL REVIEW (OPTIONAL):</h5>
+        <textarea rows= "4" cols="50"type="text" id="fullreviewinput" ></textarea>
+        <button type="button" id="submitreviewbutton">SUBMIT</button>
+
+        <div id="allreviewscontainer">
+          <!--need to make css styling for reviews in reviews container-->
+          </div>
+      </div>
+
+
+
+
+  </body>
+</html>
