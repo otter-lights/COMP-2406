@@ -40,7 +40,7 @@
         <div class="welcomebox">
             <div class="left">
               <p>Welcome,</p>
-              <h3>USERNAME</h3>
+              <h3 id="username">USERNAME</h3>
             </div>
             <div class="right">
                 <img src="./Profile.png" alt="user profile picture"/>
@@ -53,8 +53,8 @@
           <div class="sections">
             <div>
               <p>PEOPLE YOU FOLLOW</p>
-              <button type="button" name="editpeople">edit</button>
-              <div class = "profileboxes">
+              <button type="button" id="editpeoplebutton" name="editpeople">edit</button>
+              <div class = "profileboxes" id="peopleyoufollowcontainer">
                 <div class = "iconboxes">
                   <img src="./Profile.png" alt=""/>
                   <p>PERSON #1</p>
@@ -63,8 +63,8 @@
             </div>
             <div>
               <p>USERS YOU FOLLOW</p>
-              <button type="button" name="editusers">edit</button>
-              <div class = "profileboxes">
+              <button type="button" id="editusersbutton" name="editusers">edit</button>
+              <div class = "profileboxes" id="usersyoufollowcontainer">
                 <div class = "iconboxes">
                   <img src="./Profile.png" alt=""/>
                   <p>USER #1</p>
@@ -73,8 +73,8 @@
             </div>
             <div>
               <p>WATCH LIST</p>
-              <button type="button" name="editwatch">edit</button>
-              <div class = "profileboxes">
+              <button type="button" id="editwatchbutton" name="editwatch">edit</button>
+              <div class = "profileboxes" id="watchlistcontainer">
                 <div class = "iconboxes">
                   <img src="./Video.png" alt=""/>
                   <p>MOVIE #1</p>
@@ -83,7 +83,7 @@
             </div>
             <div>
               <p>RECOMMENDED MOVIES<p>
-                <div class = "profileboxes">
+                <div class = "profileboxes" id="recommendedmoviescontainer">
                   <div class = "iconboxes">
                     <img src="./Video.png" alt=""/>
                     <p>MOVIE #1</p>
@@ -92,8 +92,7 @@
               </div>
             <div>
               <p>NOTIFICATIONS<p>
-                <div class = "profileboxes">
-
+                <div class = "profileboxes" id="notificationscontainer">
                 </div>
             </div>
           </div>

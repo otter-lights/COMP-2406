@@ -5,7 +5,6 @@ body {
   background-repeat: no-repeat;
 }
 
-
 .blackbackground{
   background: black;
   margin: auto;
@@ -77,11 +76,13 @@ body {
   height: 143px;
   border: 1px solid #000000;
   box-sizing: border-box;
+  overflow: auto;
 }
 
 .iconboxes{
   width: 101px;
   height: 130px;
+  overflow: auto;
 }
 
 .iconboxes img{
@@ -106,4 +107,6 @@ body {
   height: 400px;
   border: 1px solid #000000;
   box-sizing: border-box;
+  overflow: auto;
+  word-wrap: break-word;
 }

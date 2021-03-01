@@ -116,6 +116,7 @@ body {
   height: 143px;
   border: 1px solid #000000;
   box-sizing: border-box;
+  overflow: auto;
 }
 
 .sections button{
@@ -129,6 +130,7 @@ body {
 .iconboxes{
   width: 101px;
   height: 130px;
+  display: inline-block;
 }
 
 .iconboxes img{

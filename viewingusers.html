@@ -26,14 +26,14 @@
 
     <div class="blackbackground">
       <div class="userheader">
-        <p>USER NAME</p>
-        <button type="button" name="follow">follow</button>
+        <p id="username">USER NAME</p>
+        <button type="button" id="followbutton" name="follow">follow</button>
       </div>
       <div class="usercard">
           <div class="sections">
             <div>
-              <p>PEOPLE [USER] IS FOLLOWING</p>
-              <div class = "profileboxes">
+              <p>WHO THEY'RE FOLLOWING</p>
+              <div class = "profileboxes" id="followingcontainer">
                 <div class = "iconboxes">
                   <img src="./Profile.png" alt=""/>
                   <p>PERSON #1</p>
@@ -42,7 +42,7 @@
             </div>
             <div>
               <p>WATCH LIST</p>
-              <div class = "profileboxes">
+              <div class = "profileboxes" id="watchlistcontainer">
                 <div class = "iconboxes">
                   <img src="./Video.png" alt=""/>
                   <p>MOVIE #1</p>
@@ -51,7 +51,7 @@
             </div>
             <div>
               <p>REVIEWS</p>
-              <div class = "reviewsbox"></div>
+              <div class = "reviewsbox" id="reviewsboxcontainer"></div>
             </div>
           </div>
       </div>
