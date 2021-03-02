@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="./searchresults.css" rel="stylesheet">
+    <link href="./menubar.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <title></title>
+  </head>
+  <body>
+
+    <!-- contributing user bar-->
+    <div class="menubar">
+      <a href="\" class ="logo">RAZARA</a>
+      <div class = "searchbar">
+          <!-- make this a form?? https://www.w3schools.com/howto/howto_css_searchbar.asp-->
+        <input type="text" placeholder="Search for a movie, actor, etc.">
+        <button type="submit">SEARCH</button>
+      </div>
+      <a href="\logout" class ="menu">LOGOUT</a>
+      <a href="\profile" class ="menu">PROFILE</a>
+      <a href="\addmovie" class ="menu">ADD A MOVIE</a>
+      <a href="\addperson" class ="menu">ADD A PERSON</a>
+    </div>
+
+      <div class="whitebackground">
+        <p>SEARCH RESULTS</p>
+          <div class = "results">
+              <div class="resultsbox" id="resultsbox"></div>
+              <button id="back"><img src="./img/backwards.png"></button>
+              <button id="forward"><img src="./img/forward.png"></button>
+          </div>
+      </div>
+
+      <script src="searchresults.js" charset="utf-8"></script>
+
+    </body>
+
+  </html>

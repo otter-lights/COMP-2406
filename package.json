@@ -1,1 +1,23 @@
-
+{
+  "name": "comp-2406",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otter-lights/COMP-2406.git"
+  },
+  "author": "Razz & Zara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/otter-lights/COMP-2406/issues"
+  },
+  "homepage": "https://github.com/otter-lights/COMP-2406#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
