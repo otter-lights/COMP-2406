@@ -83,7 +83,6 @@ body {
 .iconboxes{
   width: 101px;
   height: 130px;
-  overflow: auto;
 }
 
 .iconboxes img{
@@ -100,7 +99,7 @@ body {
   text-align: center;
   width: 113px;
   padding: 0px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .followbutton{

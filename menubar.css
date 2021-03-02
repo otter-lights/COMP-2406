@@ -16,6 +16,7 @@
   font-size: 36px;
   opacity: 1;
   text-align: left;
+  text-decoration: none;
 }
 
 .menu{
@@ -29,6 +30,7 @@
     font-size: 20px;
     opacity: 1;
     text-align: right;
+    text-decoration: none;
 }
 
 .searchbar{
