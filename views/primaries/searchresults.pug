@@ -1,0 +1,20 @@
+doctype html
+html(lang='en' dir='ltr')
+    head
+        meta(charset='utf-8')
+        link(href='./css/searchresults.css' rel='stylesheet')
+        link(href='./css/menubar.css' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
+        title Search Results for "___"
+    body
+        include ../partials/menubar
+        .whitebackground
+            p SEARCH RESULTS
+            .results
+                #resultsbox.resultsbox
+                button#back
+                    img(src='./img/backwards.png')
+                button#forward
+                    img(src='./img/forward.png')
+        script(src='./javascript/searchresults.js' charset='utf-8')

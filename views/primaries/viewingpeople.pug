@@ -1,0 +1,42 @@
+doctype html
+html(lang='en' dir='ltr')
+    head
+        meta(charset='utf-8')
+        link(href='./css/viewingpeople.css' rel='stylesheet')
+        link(href='./css/menubar.css' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
+        title ______'s Page
+    body
+        include ../partials/menubar
+        .blackbackground
+            .personheader
+                p#personname PERSON NAME
+                button#followbutton(type='button' name='follow') follow
+            .personcard
+                .sections
+                    div
+                        p FREQUENT COLLABORATORS
+                        #frequentcollaboratorscontainer.profileboxes
+                            .iconboxes
+                                img(src='./img/Profile.png' alt='')
+                                p PERSON #1
+                    div
+                        p MOVIES DIRECTED
+                        #moviesdirectedcontainer.profileboxes
+                            .iconboxes
+                                img(src='./img/Video.png' alt='')
+                                p MOVIE #1
+                    div
+                        p MOVIES WRITTEN
+                        #movieswrittencontainer.profileboxes
+                            .iconboxes
+                                img(src='./img/Video.png' alt='')
+                                p MOVIE #1
+                    div
+                        p MOVIES ACTED IN
+                        #moviesactedincontainer.profileboxes
+                            .iconboxes
+                                img(src='./img/Video.png' alt='')
+                                p MOVIE #1
+        script(src='./javascript/viewingpeople.js' charset='utf-8')

@@ -1,0 +1,60 @@
+doctype html
+html(lang='en' dir='ltr')
+    head
+        meta(charset='utf-8')
+        link(href='./css/userprofile.css' rel='stylesheet')
+        link(href='./css/menubar.css' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
+        title ____'s Profile
+    body
+        include ../partials/menubar
+        .blackbackground
+            .welcomebox
+                .left
+                    p Welcome,
+                    h3#username USERNAME
+                .right
+                    img(src='./img/Profile.png' alt='user profile picture')
+                    p ACCOUNT TYPE
+                    br
+                    button#switchaccount(type='button' onclick='switchAccount()') SWITCH ACCOUNT TYPE
+            .profilecard
+                .sections
+                    div
+                        p PEOPLE YOU FOLLOW
+                        button#removepeoplebutton(type='button' name='editpeople' onclick='removeFollow()') remove
+                        #peopleyoufollowcontainer.profileboxes
+                            .iconboxes
+                                img(src='./img/Profile.png' alt='')
+                                label(for='person#1')
+                                    input(type='checkbox' id='person#1' name='person#1')
+                                    | Forest Anderson
+                        div
+                            p USERS YOU FOLLOW
+                            button#removeusersbutton(type='button' name='removeusers') remove
+                            #usersyoufollowcontainer.profileboxes
+                                .iconboxes
+                                    img(src='./img/Profile.png' alt='')
+                                    label(for='user#1')
+                                        input(type='checkbox' id='user#1' name='user#1')
+                                        | USER #1
+                        div
+                            p WATCH LIST
+                            button#removewatchbutton(type='button' name='removewatch') remove
+                            #watchlistcontainer.profileboxes
+                                .iconboxes
+                                    img(src='./img/Video.png' alt='')
+                                    label(for='movie#1')
+                                        input(type='checkbox' id='movie#1' name='movie#1')
+                                        | MOVIE #1
+                        div
+                            p RECOMMENDED MOVIES
+                            #recommendedmoviescontainer.profileboxes
+                                .iconboxes
+                                    img(src='./img/Video.png' alt='')
+                                    label(for='recommended#1') MOVIE #1
+                        div
+                            p NOTIFICATIONS
+                            #notificationscontainer.profileboxes
+            script(src='./javascript/userprofile.js' charset='utf-8')
