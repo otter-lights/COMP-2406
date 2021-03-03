@@ -1,0 +1,30 @@
+doctype html
+html(lang='en' dir='ltr')
+    head
+        meta(charset='utf-8')
+        link(href='./css/addmovieaddperson.css' rel='stylesheet')
+        link(href='./css/menubar.css' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
+        title Advanced Search
+    body
+        include ../partials/menubar
+        .whitebackground
+            p ADVANCED SEARCH
+            .formbox
+                p
+                    label(for='title') TITLE: 
+                    input#title(type='text' placeholder='Search by title...')
+                    br
+                p
+                    label(for='cast') CAST: 
+                    input#releaseYear(type='text' placeholder='Search by cast member...')
+                    br
+                p
+                    label(for='genre') GENRE: 
+                    input#runtime(type='text' placeholder='Search by genre...')
+                    br
+                p
+                    label
+                    button#searchButton(type='button' name='search' onclick='search()') SEARCH
+        script(src='./javascript/advancedsearch.js' charset='utf-8')

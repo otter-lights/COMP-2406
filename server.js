@@ -59,6 +59,10 @@ app.get('/movieprofile', (req, res) => {
 	res.render('./primaries/movieprofile', {})
 })
 
+app.get('/advancedsearch', (req, res) => {
+	res.render('./primaries/advancedsearch', {})
+})
+
 //This is a shorthand way of creating/initializing the HTTP server
 app.listen(3000);
 console.log("Server listening at http://localhost:3000");
