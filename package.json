@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/otter-lights/COMP-2406#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pug": "^3.0.2"
   }
 }
