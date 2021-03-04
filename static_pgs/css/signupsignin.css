@@ -38,12 +38,20 @@ body {
   background: #FFFFFF;
   border: 1px solid #000000;
   box-sizing: border-box;
-  display:table;
+}
+.gradientform label{
+    display: table-cell;
+    font-size: 15px;
+}
+
+.gradientform p{
+    display: table-row;
 }
 
 .gradientform input[type=text]{
   margin: auto;
   margin-top: 20px;
+  display:table-cell
 }
 
 .gradientform button{
@@ -56,4 +64,5 @@ body {
   margin-top:20px;
   margin-bottom: 2px;
   background: #FFBAAB;
+  display:table-cell;
 }
