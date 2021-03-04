@@ -13,8 +13,6 @@ app.use(function(req,res,next){
 //Serve static resources from public, if they exist
 app.use(express.static("static_pgs"));
 
-//If the resource wasn't in other, continue the chain
-
 //This is a shorthand way of creating/initializing the HTTP server
 app.listen(3000);
 console.log("Server listening at http://localhost:3000");

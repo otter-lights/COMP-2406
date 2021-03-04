@@ -38,6 +38,7 @@ body {
   background: #FFFFFF;
   border: 1px solid #000000;
   box-sizing: border-box;
+  display:table;
 }
 
 .gradientform input[type=text]{
