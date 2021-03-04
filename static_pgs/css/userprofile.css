@@ -149,3 +149,13 @@ body {
   display: inline-block;
   word-wrap: break-word;
 }
+#notificationscontainer p{
+    font-size: 15px;
+    display: inline-block;
+    margin:5px;
+    padding-top: 10px
+}
+#notificationscontainer img{
+    height:20px;
+    margin-left:10px;
+}
