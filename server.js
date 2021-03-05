@@ -3,6 +3,8 @@ const http = require("http");
 const pug = require("pug");
 let app = express();
 
+let avengersMovieData = {"Title":"The Avengers","Year":"2012","Rated":"PG-13","Released":"04 May 2012","Runtime":"143 min","Genre":["Action","Adventure","Sci-Fi"],"Director":["Joss Whedon"],"Writer":["Joss Whedon","Zak Penn"],"Actors":["Robert Downey Jr.","Chris Evans","Mark Ruffalo","Chris Hemsworth"],"Plot":"Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.","Awards":"Nominated for 1 Oscar. Another 38 wins & 79 nominations.","Poster":"https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"};
+
 app.set("view engine", "pug");
 app.set("views", "./views");
 
@@ -20,10 +22,6 @@ app.use(function(req,res,next){
 
 //If the resource wasn't in other, continue the chain
 app.get(['/', '/profile'], (req, res) => {
-	res.render('./primaries/userprofile', {})
-})
-
-app.get('/profile', (req, res) => {
 	res.render('./primaries/userprofile', {})
 })
 
@@ -56,11 +54,15 @@ app.get('/viewpeople', (req, res) => {
 })
 
 app.get('/movieprofile', (req, res) => {
-	res.render('./primaries/movieprofile', {})
+	res.render('./primaries/movieprofile', {movie: avengersMovieData})
 })
 
 app.get('/movieprofile', (req, res) => {
 	res.render('./primaries/movieprofile', {})
+})
+
+app.get('/advancedsearch', (req, res) => {
+	res.render('./primaries/advancedsearch', {})
 })
 
 //This is a shorthand way of creating/initializing the HTTP server

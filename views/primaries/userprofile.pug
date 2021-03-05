@@ -57,4 +57,39 @@ html(lang='en' dir='ltr')
                         div
                             p NOTIFICATIONS
                             #notificationscontainer.profileboxes
+                                img(src='./img/review.png')
+                                p
+                                    a(href='/viewuser') USERNAME
+                                    |  wrote a review for !{' '}
+                                    a(href='/movieprofile') MOVIE
+                                    | .
+                                br
+                                img(src='./img/watchlist.png')
+                                p
+                                    a(href='/viewuser') USERNAME
+                                    |  added !{' '}
+                                    a(href='/movieprofile') MOVIE
+                                    |  to their watchlist.
+                                br
+                                img(src='./img/directed.png')
+                                p
+                                    a(href='/viewpeople') PERSON NAME
+                                    |  directed !{' '}
+                                    a(href='/movieprofile') MOVIE
+                                    | .
+                                br
+                                img(src='./img/wrote.png')
+                                p
+                                    a(href='/viewpeople') PERSON NAME
+                                    |  wrote !{' '}
+                                    a(href='/movieprofile') MOVIE
+                                    | .
+                                br
+                                img(src='./img/acted.png')
+                                p
+                                    a(href='/viewpeople') PERSON NAME
+                                    |  acted in !{' '}
+                                    a(href='/movieprofile') MOVIE
+                                    | .
+                                br
             script(src='./javascript/userprofile.js' charset='utf-8')
