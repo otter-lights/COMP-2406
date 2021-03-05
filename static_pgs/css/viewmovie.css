@@ -212,3 +212,21 @@ body{
     float:left;
     font-size: 20px;
 }
+#recommendedmovieinfocard{
+  overflow:auto;
+  word-wrap: break-word;
+}
+
+#recommendedmovieinfocard div{
+  border-radius: 15px;
+  border: 1px solid white;
+  margin:5px;
+  padding:5px;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
+}
+#recommendedmovieinfocard h4{
+  font-family: Fira Sans Extra Condensed;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+}
