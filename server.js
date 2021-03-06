@@ -5,6 +5,17 @@ let app = express();
 
 let avengersMovieData = {"Title":"The Avengers","Year":"2012","Rated":"PG-13","Released":"04 May 2012","Runtime":"143 min","Genre":["Action","Adventure","Sci-Fi"],"Director":["Joss Whedon"],"Writer":["Joss Whedon","Zak Penn"],"Actors":["Robert Downey Jr.","Chris Evans","Mark Ruffalo","Chris Hemsworth"],"Plot":"Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.","Awards":"Nominated for 1 Oscar. Another 38 wins & 79 nominations.","Poster":"https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"};
 
+let actor = {"Name: Chris Evans", "Directed":, "Written": "Acted In":};
+
+let dummyUserData = {};
+
+let viewingUserData = {};
+
+let reviews = {}; //format: id# as key, review data as value.
+
+//all movies will have an array of review ids that we can use to get from this reviews object
+//all users will have an array of review ids that we can use to get from this reviews object
+
 app.set("view engine", "pug");
 app.set("views", "./views");
 
@@ -21,7 +32,11 @@ app.use(function(req,res,next){
 });
 
 //If the resource wasn't in other, continue the chain
-app.get(['/', '/profile'], (req, res) => {
+app.get('/', (req, res) => {
+	res.render('./primaries/homepage.pug', {})
+})
+
+app.get('/profile', (req, res) => {
 	res.render('./primaries/userprofile', {})
 })
 
