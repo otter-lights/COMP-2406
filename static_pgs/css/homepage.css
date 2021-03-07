@@ -4,15 +4,18 @@ body {
 }
 
 .homepagecontainer{
-  width: 1440px;
+  width: 100%;
   height: 660px;
   margin: auto;
   margin-top: 20px;
-  margin-bottom: 100px;
+  margin-bottom: 0px;
+  overflow: hidden;
+  text-align: center;
 }
 
 .homepagecontainer img {
-  margin-left: 10px;
+  margin: 4px;
+  align-self: center;
 }
 
 .textcontainer{

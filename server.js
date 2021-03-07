@@ -3,15 +3,26 @@ const http = require("http");
 const pug = require("pug");
 let app = express();
 
-let avengersMovieData = {"Title":"The Avengers","Year":"2012","Rated":"PG-13","Released":"04 May 2012","Runtime":"143 min","Genre":["Action","Adventure","Sci-Fi"],"Director":["Joss Whedon"],"Writer":["Joss Whedon","Zak Penn"],"Actors":["Robert Downey Jr.","Chris Evans","Mark Ruffalo","Chris Hemsworth"],"Plot":"Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.","Awards":"Nominated for 1 Oscar. Another 38 wins & 79 nominations.","Poster":"https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"};
+let avengersMovieDummyData = {"Title":"The Avengers",
+"Year":"2012", "Released":"04 May 2012", "Runtime":"143 min",
+"Genre":["Action","Adventure","Sci-Fi"],"Director":["Joss Whedon"],"Writer":["Joss Whedon","Zak Penn"],
+"Actors":["Robert Downey Jr.","Chris Evans","Mark Ruffalo","Chris Hemsworth"],
+"Plot":"Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.",
+"Rating": "8.4",
+"Reviews": ["2", "4", "34"]};
 
-let actor = {"Name: Chris Evans", "Directed":, "Written": "Acted In":};
+let dummyIDTitleMovieData = {"1": {"Title": "Before We Go"}, "2": {"Title": "Knives Out"}, "3": {"Title": "The Avengers"}, "4": {"Title": "Avengers: Endgame"}, "5": {"Title": "Fantastic Four"}};
 
-let dummyUserData = {};
+let actorDummyData = {"Name": "Chris Evans", "Directed": ["1"], "Written": [""], "Acted":["2", "4", "3", "5"], "Collaborators": [""]};
+//
+let userData = {"Username": "AngelOnFira", "Password": "password", "Contributing": "True",
+"peopleFollowing": ["Chris Evans", "Chris Hemsworth", "Chris Pratt", "Chrissie Teigen"],
+"usersFollowing": ["zaraahlie", "snapracklepop", "LegitAdi", "eriicali", "veronicaSmiles", "preethi12", "kartho"],
+"watchlist:" ["2", "3"],
+"reviews": ["3", "4", "9"],
+"notifications": ["{}", "{}", "{}"]}; //Recommendations are algorithmically generated
 
-let viewingUserData = {};
-
-let reviews = {}; //format: id# as key, review data as value.
+let reviewsDummyData = {"2": "{}", "4": "{}", "6": "{}", "34": "{}""};  //format: id# as key, review data as object value.-
 
 //all movies will have an array of review ids that we can use to get from this reviews object
 //all users will have an array of review ids that we can use to get from this reviews object
@@ -69,7 +80,11 @@ app.get('/viewpeople', (req, res) => {
 })
 
 app.get('/movieprofile', (req, res) => {
-	res.render('./primaries/movieprofile', {movie: avengersMovieData})
+	let reviewObjects = [];
+	if(avengersMovieDummyData.hasOwnProperty("reviews")){
+		reviewObjects = getReviewObjects(avengersMovieDummyData);
+	}
+	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, reviews: reviewObjects});
 })
 
 app.get('/advancedsearch', (req, res) => {
@@ -79,6 +94,16 @@ app.get('/advancedsearch', (req, res) => {
 app.get('/searchresults', (req, res) => {
 	res.render('./primaries/searchresults', {})
 })
+
+function getReviewObjects(movie){
+	let reviewObjects = [];
+	movie["reviews"].forEach(id =>{
+		if(reviewsDummyData.hasOwnProperty(id)){
+			reviews.push(reviewsDummyData[id]);
+		}
+	});
+	return reviewObjects;
+}
 
 //This is a shorthand way of creating/initializing the HTTP server
 app.listen(3000);
