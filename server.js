@@ -18,11 +18,12 @@ let actorDummyData = {"Name": "Chris Evans", "Directed": ["1"], "Written": [""],
 let userData = {"Username": "AngelOnFira", "Password": "password", "Contributing": "True",
 "peopleFollowing": ["Chris Evans", "Chris Hemsworth", "Chris Pratt", "Chrissie Teigen"],
 "usersFollowing": ["zaraahlie", "snapracklepop", "LegitAdi", "eriicali", "veronicaSmiles", "preethi12", "kartho"],
-"watchlist:" ["2", "3"],
+"watchlist": ["2", "3"],
 "reviews": ["3", "4", "9"],
 "notifications": ["{}", "{}", "{}"]}; //Recommendations are algorithmically generated
 
-let reviewsDummyData = {"2": "{}", "4": "{}", "6": "{}", "34": "{}""};  //format: id# as key, review data as object value.-
+let reviewsDummyData = {"2": "{}", "4": "{}", "6": "{}", "34": "{}"};  
+                        //format: id# as key, review data as object value.
 
 //all movies will have an array of review ids that we can use to get from this reviews object
 //all users will have an array of review ids that we can use to get from this reviews object
