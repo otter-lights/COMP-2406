@@ -3,6 +3,7 @@ body {
   background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
   height: 1450px;
   background-repeat: no-repeat;
+  overflow-x: hidden;
 }
 
 .blackbackground{
@@ -72,16 +73,20 @@ body {
 }
 
 .profileboxes{
-  width: 986px;
-  height: 143px;
+  width: 985px;
+  height: 150px;
   border: 1px solid #000000;
   box-sizing: border-box;
   overflow: auto;
 }
 
 .iconboxes{
-  width: 101px;
+  width: 130px;
   height: 130px;
+  display: inline-block;
+  overflow: auto;
+  margin: 5px;
+  margin-right: 0px;
 }
 
 .iconboxes img{
@@ -89,7 +94,7 @@ body {
   height: 101px;
   border: 1px solid #000000;
   box-sizing: border-box;
-  margin: 12px;
+  margin: 8px;
   margin-bottom: 0px;
   display: block;
 
@@ -99,7 +104,9 @@ body {
   text-align: center;
   width: 113px;
   padding: 0px;
-  font-size: 12px;
+  font-size: 15px;
+  margin: 0px;
+  word-wrap: break-word;
 }
 
 .reviewsbox{
@@ -108,12 +115,16 @@ body {
   border: 1px solid #000000;
   overflow:auto;
   word-wrap: break-word;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .reviewsbox h2{
   padding-top: 10px;
-  font-size: 22px;
+  font-size: 20px;
+}
+
+.reviewsbox a{
+  color: black;
 }
 
 .review{
@@ -125,7 +136,11 @@ body {
     height:100px;
 }
 .review h4{
-    font-size: 18px
+    font-size: 18px;
+    margin-bottom: 0px;
+    display: inline-block;
+    background-color: #FFBAAB;
+    color: black;
 }
 .review .right{
     width: 80%;
@@ -139,8 +154,11 @@ body {
     text-align: center;
     float:left;
     font-size: 18px;
+    margin-bottom: 0px;
+    background-color: #FFBAAB;
 }
 
 .review .left p {
   margin: 0px;
+  background-color: white;
 }

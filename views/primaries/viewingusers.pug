@@ -6,44 +6,46 @@ html(lang='en' dir='ltr')
         link(href='./css/menubar.css' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
-        title ______'s Profile
+        title #{user.username}'s Profile
     body
         include ../partials/menubar
         .blackbackground
             .userheader
-                p#username USER NAME
+                p #{user.username.toUpperCase()}
                 button#followbutton(type='button' name='follow') follow
             .usercard
                 .sections
                     div
                         h2 WHO THEY'RE FOLLOWING
                         #followingcontainer.profileboxes
-                            .iconboxes
-                                img(src='./img/Profile.png' alt='')
-                                p PERSON #1
+                            each person in user.peopleFollowing
+                                .iconboxes
+                                    img(src='./img/Profile.png' alt='')
+                                    p
+                                        a(href='/viewpeople') #{person}
                     div
                         h2 WATCH LIST
                         #watchlistcontainer.profileboxes
-                            .iconboxes
-                                img(src='./img/Video.png' alt='')
-                                p MOVIE #1
+                            each movie in watchlist
+                                .iconboxes
+                                    img(src='./img/Video.png' alt='')
+                                    p
+                                        a(href='/movieprofile') #{movie.Title}
                     div
                         h2 REVIEWS
                         #reviewsboxcontainer.reviewsbox
-                            .review
-                                .left
-                                    h2
-                                        a(href='./movieprofile') Movie Name
-                                    img(src='./img/Video.png' alt='')
-                                    p Score/10
-                                    
-                                .right
-                                    
-                                    h4 Summary
-                                    p
-                                        | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Convallis aenean et tortor at risus viverra adipiscing at in. Nunc sed blandit libero volutpat sed cras. Lectus quam id leo in. Fermentum leo vel orci porta non pulvinar neque laoreet. Diam vulputate ut pharetra sit amet aliquam id diam maecenas.
-                                    h4 Full Review
-                                    p
-                                        | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Convallis aenean et tortor at risus viverra adipiscing at in. Nunc sed blandit libero volutpat sed cras. Lectus quam id leo in. Fermentum leo vel orci porta non pulvinar neque laoreet. Diam vulputate ut pharetra sit amet aliquam id diam maecenas. Eu volutpat odio facilisis mauris sit amet massa vitae. Tempor orci dapibus ultrices in iaculis nunc sed augue lacus. Nisi lacus sed viverra tellus. Mattis molestie a iaculis at erat pellentesque adipiscing commodo. Ultrices mi tempus imperdiet nulla malesuada. Purus viverra accumsan in nisl nisi. In ante metus dictum at tempor.
-                                        | Ultrices dui sapien eget mi proin sed. Ut eu sem integer vitae. At quis risus sed vulputate odio ut enim blandit. Eu augue ut lectus arcu bibendum at. Neque gravida in fermentum et sollicitudin ac. Lacus vestibulum sed arcu non odio euismod lacinia at quis. Volutpat ac tincidunt vitae semper. Dui id ornare arcu odio. Eget nunc lobortis mattis aliquam faucibus purus. Dignissim enim sit amet venenatis urna cursus. Diam quam nulla porttitor massa. Amet risus nullam eget felis eget nunc lobortis mattis. Est ante in nibh mauris cursus mattis molestie a. Pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus et. Massa id neque aliquam vestibulum morbi blandit cursus.
-        script(src='./javascript/viewingusers.js' charset='utf-8')
+                            each review in reviews
+                                .review
+                                    .left
+                                        h2
+                                            a(href='./movieprofile') #{review.movieTitle}
+                                        img(src='./img/Video.png' alt='')
+                                        p #{review.rating}/10
+                                    .right
+                                        if(review.hasOwnProperty("summary"))
+                                            h4 Summary
+                                            p #{review.summary}
+                                        if(review.hasOwnProperty("fullreview"))
+                                            h4 Full Review
+                                            p #{review.fullreview}
+            script(src='./javascript/viewingusers.js' charset='utf-8')

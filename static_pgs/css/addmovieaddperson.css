@@ -3,6 +3,7 @@ body {
   background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
   height: 900px;
   background-repeat: no-repeat;
+  overflow-x: hidden;
 }
 
 .whitebackground{

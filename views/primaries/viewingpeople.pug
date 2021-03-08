@@ -6,37 +6,48 @@ html(lang='en' dir='ltr')
         link(href='./css/menubar.css' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
-        title ______'s Page
+        title #{person.Name}'s Page
     body
         include ../partials/menubar
         .blackbackground
             .personheader
-                p#personname PERSON NAME
+                p #{person.Name.toUpperCase()}
                 button#followbutton(type='button' name='follow') follow
             .personcard
                 .sections
                     div
-                        p FREQUENT COLLABORATORS
+                        h2 FREQUENT COLLABORATORS
                         #frequentcollaboratorscontainer.profileboxes
-                            .iconboxes
-                                img(src='./img/Profile.png' alt='')
-                                p PERSON #1
-                    div
-                        p MOVIES DIRECTED
-                        #moviesdirectedcontainer.profileboxes
-                            .iconboxes
-                                img(src='./img/Video.png' alt='')
-                                p MOVIE #1
-                    div
-                        p MOVIES WRITTEN
-                        #movieswrittencontainer.profileboxes
-                            .iconboxes
-                                img(src='./img/Video.png' alt='')
-                                p MOVIE #1
-                    div
-                        p MOVIES ACTED IN
-                        #moviesactedincontainer.profileboxes
-                            .iconboxes
-                                img(src='./img/Video.png' alt='')
-                                p MOVIE #1
+                            each collaborator in person.Collaborators
+                                .iconboxes
+                                    img(src='./img/Profile.png' alt='')
+                                    p
+                                        a(href='/viewpeople') #{collaborator}
+                    if (person.hasOwnProperty("Directed"))
+                        div
+                            h2 MOVIES DIRECTED
+                            #moviesdirectedcontainer.profileboxes
+                                each movie in person.Directed
+                                    .iconboxes
+                                        img(src='./img/Video.png' alt='')
+                                        p
+                                            a(href='/movieprofile') #{movie}
+                    if (person.hasOwnProperty("Written"))
+                        div
+                            h2 MOVIES WRITTEN
+                            #movieswrittencontainer.profileboxes
+                                each movie in person.Written
+                                    .iconboxes
+                                        img(src='./img/Video.png' alt='')
+                                        p
+                                          a(href='/movieprofile') #{movie}
+                    if (person.hasOwnProperty("Acted"))
+                        div
+                            h2 MOVIES ACTED IN
+                            #moviesactedincontainer.profileboxes
+                                each movie in person.Acted
+                                    .iconboxes
+                                        img(src='./img/Video.png' alt='')
+                                        p
+                                            a(href='/movieprofile') #{movie}
         script(src='./javascript/viewingpeople.js' charset='utf-8')

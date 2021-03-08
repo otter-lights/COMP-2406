@@ -3,7 +3,7 @@ body {
   background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
   height: 1450px;
   background-repeat: no-repeat;
-
+  overflow-x: hidden;
 }
 
 .blackbackground{
@@ -60,29 +60,33 @@ body {
   font-family: Fira Sans Extra Condensed;
   font-style: normal;
   font-weight: bold;
-  font-size: 24px;
   width: 986px;
   height: 181px;
   margin: auto;
 }
 
-.sections p{
-  margin:0px;
-  padding-top: 36px;
-  display: inline-block;
+.sections h2{
+    font-size: 24px;
+    margin:0px;
+    padding-top: 36px;
+    display: inline-block;
 }
 
 .profileboxes{
   width: 986px;
-  height: 143px;
+  height: 150px;
   border: 1px solid #000000;
   box-sizing: border-box;
   overflow: auto;
 }
 
 .iconboxes{
-  width: 101px;
+  width: 130px;
   height: 130px;
+  display: inline-block;
+  overflow: auto;
+  margin: 5px;
+  margin-right: 0px;
 }
 
 .iconboxes img{
@@ -90,16 +94,19 @@ body {
   height: 101px;
   border: 1px solid #000000;
   box-sizing: border-box;
-  margin: 12px;
+  margin: 8px;
   margin-bottom: 0px;
   display: block;
+
 }
 
 .iconboxes p{
   text-align: center;
   width: 113px;
   padding: 0px;
-  font-size: 12px;
+  font-size: 15px;
+  margin: 0px;
+  word-wrap: break-word;
 }
 
 .followbutton{

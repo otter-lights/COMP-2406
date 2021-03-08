@@ -1,6 +1,7 @@
 body {
   margin: 0px;
   background: black;
+  overflow-x: hidden;
 }
 
 .gradientcontainer{

@@ -13,11 +13,13 @@ html(lang='en' dir='ltr')
             .welcomebox
                 .left
                     p Welcome,
-                    h3#username USERNAME
+                    h3#username #{user.username.toUpperCase()}
                 .right
                     img(src='./img/Profile.png' alt='user profile picture')
-                    p ACCOUNT TYPE
-                    br
+                    if(user.contributing === "True")
+                        p CONTRIBUTING USER
+                    else
+                        p BASIC USER
                     button#switchaccount(type='button' onclick='switchAccount()') SWITCH ACCOUNT TYPE
             .profilecard
                 .sections
@@ -25,71 +27,82 @@ html(lang='en' dir='ltr')
                         p PEOPLE YOU FOLLOW
                         button#removepeoplebutton(type='button' name='editpeople' onclick='removeFollow()') remove
                         #peopleyoufollowcontainer.profileboxes
-                            .iconboxes
-                                img(src='./img/Profile.png' alt='')
-                                label(for='person#1')
-                                    input(type='checkbox' id='person#1' name='person#1')
-                                    | Forest Anderson
+                            each person in user.peopleFollowing
+                                .iconboxes
+                                    img(src='./img/Profile.png' alt='')
+                                    label(for='person')
+                                        input(type='checkbox' id='person' name='person')
+                                        a(href='/viewpeople') #{person}
                         div
                             p USERS YOU FOLLOW
                             button#removeusersbutton(type='button' name='removeusers') remove
                             #usersyoufollowcontainer.profileboxes
-                                .iconboxes
-                                    img(src='./img/Profile.png' alt='')
-                                    label(for='user#1')
-                                        input(type='checkbox' id='user#1' name='user#1')
-                                        | USER #1
+                                each u in user.usersFollowing
+                                    .iconboxes
+                                        img(src='./img/Profile.png' alt='')
+                                        label(for='u')
+                                            input(type='checkbox' id='u' name='u')
+                                            a(href='/viewuser') #{u}
                         div
-                            p WATCH LIST
+                            p WATCHLIST
                             button#removewatchbutton(type='button' name='removewatch') remove
                             #watchlistcontainer.profileboxes
-                                .iconboxes
-                                    img(src='./img/Video.png' alt='')
-                                    label(for='movie#1')
-                                        input(type='checkbox' id='movie#1' name='movie#1')
-                                        | MOVIE #1
+                                each movie in watchlist
+                                    .iconboxes
+                                        img(src='./img/Video.png' alt='')
+                                        label(for='movie.Title')
+                                            input(type='checkbox' id='movie.id' name='movie.Title')
+                                            a(href='/movieprofile') #{movie.Title}
                         div
                             p RECOMMENDED MOVIES
                             #recommendedmoviescontainer.profileboxes
-                                .iconboxes
-                                    img(src='./img/Video.png' alt='')
-                                    label(for='recommended#1') MOVIE #1
+                                each movie in recommended
+                                    .iconboxes
+                                        img(src='./img/Video.png' alt='')
+                                        label(for='movie')
+                                            a(href='/movieprofile') #{movie}
                         div
                             p NOTIFICATIONS
                             #notificationscontainer.profileboxes
-                                img(src='./img/review.png')
-                                p
-                                    a(href='/viewuser') USERNAME
-                                    |  wrote a review for !{' '}
-                                    a(href='/movieprofile') MOVIE
-                                    | .
-                                br
-                                img(src='./img/watchlist.png')
-                                p
-                                    a(href='/viewuser') USERNAME
-                                    |  added !{' '}
-                                    a(href='/movieprofile') MOVIE
-                                    |  to their watchlist.
-                                br
-                                img(src='./img/directed.png')
-                                p
-                                    a(href='/viewpeople') PERSON NAME
-                                    |  directed !{' '}
-                                    a(href='/movieprofile') MOVIE
-                                    | .
-                                br
-                                img(src='./img/wrote.png')
-                                p
-                                    a(href='/viewpeople') PERSON NAME
-                                    |  wrote !{' '}
-                                    a(href='/movieprofile') MOVIE
-                                    | .
-                                br
-                                img(src='./img/acted.png')
-                                p
-                                    a(href='/viewpeople') PERSON NAME
-                                    |  acted in !{' '}
-                                    a(href='/movieprofile') MOVIE
-                                    | .
-                                br
+                                each notification in user.notifications
+                                    if(notification.type === "0")
+                                        img(src='./img/review.png')
+                                        p
+                                            a(href='/viewuser') #{notification.name.toUpperCase()}
+                                            |  wrote a review for a !{' '}
+                                            a(href='/movieprofile') MOVIE
+                                            | .
+                                        br
+                                    else if(notification.type === "1")
+                                        img(src='./img/watchlist.png')
+                                        p
+                                            a(href='/viewuser') #{notification.name.toUpperCase()}
+                                            |  added a !{' '}
+                                            a(href='/movieprofile') MOVIE
+                                            |  to their watchlist.
+                                        br
+                                    else if(notification.type === "2")
+                                        img(src='./img/directed.png')
+                                        p
+                                            a(href='/viewpeople') #{notification.name.toUpperCase()}
+                                            |  directed a !{' '}
+                                            a(href='/movieprofile') MOVIE
+                                            | .
+                                        br
+                                    else if(notification.type === "3")
+                                        img(src='./img/wrote.png')
+                                        p
+                                            a(href='/viewpeople') #{notification.name.toUpperCase()}
+                                            |  wrote a !{' '}
+                                            a(href='/movieprofile') MOVIE
+                                            | .
+                                        br
+                                    else if(notification.type === "4")
+                                        img(src='./img/acted.png')
+                                        p
+                                            a(href='/viewpeople') #{notification.name.toUpperCase()}
+                                            |  acted in a !{' '}
+                                            a(href='/movieprofile') MOVIE
+                                            | .
+                                        br
             script(src='./javascript/userprofile.js' charset='utf-8')

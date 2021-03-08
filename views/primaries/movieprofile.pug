@@ -12,12 +12,12 @@ html(lang='en' dir='ltr')
     #movieinfoblackbackground
       #movieinfocard.movieinfocard
         h1#movieinfotitle #{movie.Title}
-        h3#movierating #.#/10
+        h3#movierating #{movie.Rating}/10
         button#addtowatchlistbutton(type='button') ADD TO WATCHLIST
         br
         #movieinforeleasedate.moviedateduration #{movie.Released}
         #movieinfoduration.moviedateduration #{movie.Runtime}
-        #genres.moviedateduration 
+        #genres.moviedateduration
           each genre in movie.Genre
             a(href='/searchresults') #{genre}
             | /
@@ -41,6 +41,14 @@ html(lang='en' dir='ltr')
             br
       #recommendedmovieinfocard.recommendedmovieinfocard
         h3 RECOMMENDED MOVIES
+        each movie in recommended
+            div
+              h4
+                a(href='/movieprofile') #{movie.Title} (#{movie.Rating}/10)
+              p #{movie.Plot.slice(0, 70)}...
+              p
+                each genre in movie.Genres
+                  | #{' '} |#{genre}| #{' '}
     #reviewsonmoviepagecontainer.reviewsonmoviepagecontainer
       h5 ADD A SCORE OUT OF 10 (REQUIRED):
       input#reviewoutof10(type='number' min='0' max='10')
@@ -50,20 +58,22 @@ html(lang='en' dir='ltr')
       textarea#fullreviewinput(rows='4' cols='50' type='text')
       button#submitreviewbutton(type='button') SUBMIT
       #allreviewscontainer
-        .review
-          .left
-            img(src='./img/Video.png' alt='')
-            br
-            p Score/10
-            p
-              | Reviewer: #{' '}
-              a(href='./viewuser') Name
-          .right
-            h4 Summary
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Convallis aenean et tortor at risus viverra adipiscing at in. Nunc sed blandit libero volutpat sed cras. Lectus quam id leo in. Fermentum leo vel orci porta non pulvinar neque laoreet. Diam vulputate ut pharetra sit amet aliquam id diam maecenas.
-            h4 Full Review
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Convallis aenean et tortor at risus viverra adipiscing at in. Nunc sed blandit libero volutpat sed cras. Lectus quam id leo in. Fermentum leo vel orci porta non pulvinar neque laoreet. Diam vulputate ut pharetra sit amet aliquam id diam maecenas. Eu volutpat odio facilisis mauris sit amet massa vitae. Tempor orci dapibus ultrices in iaculis nunc sed augue lacus. Nisi lacus sed viverra tellus. Mattis molestie a iaculis at erat pellentesque adipiscing commodo. Ultrices mi tempus imperdiet nulla malesuada. Purus viverra accumsan in nisl nisi. In ante metus dictum at tempor.
-              | Ultrices dui sapien eget mi proin sed. Ut eu sem integer vitae. At quis risus sed vulputate odio ut enim blandit. Eu augue ut lectus arcu bibendum at. Neque gravida in fermentum et sollicitudin ac. Lacus vestibulum sed arcu non odio euismod lacinia at quis. Volutpat ac tincidunt vitae semper. Dui id ornare arcu odio. Eget nunc lobortis mattis aliquam faucibus purus. Dignissim enim sit amet venenatis urna cursus. Diam quam nulla porttitor massa. Amet risus nullam eget felis eget nunc lobortis mattis. Est ante in nibh mauris cursus mattis molestie a. Pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus et. Massa id neque aliquam vestibulum morbi blandit cursus.
+        each review in reviews
+          .review
+            .left
+              .rating
+                img(src='./img/Video.png' alt='')
+                br
+                p #{review.rating}/10
+              p
+                a(href='./viewuser') #{review.username}
+            .right
+              if (review.hasOwnProperty("summary"))
+                h4 Summary
+                p
+                  | #{review.summary}
+              if (review.hasOwnProperty("fullreview"))
+                h4 Full Review
+                p
+                  | #{review.fullreview}
     script(src='./javascript/viewmovie.js' charset='utf-8')

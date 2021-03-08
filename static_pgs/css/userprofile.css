@@ -5,12 +5,14 @@ body {
   background-repeat: no-repeat;
 }
 
+
+
 .blackbackground{
   background: black;
   margin: auto;
   margin-top: 50px;
-  width: 1236px;
-  height: 1544px;
+  width: 1235px;
+  height: 1560px;
   border: 1px solid #FFFFFF;
   border-radius: 20px;
 }
@@ -19,9 +21,9 @@ body {
   background: white;
   margin: auto;
   margin-top: 55px;
-  margin-bottom: 33px;
-  width: 1117px;
-  height: 302px;
+  margin-bottom: 35px;
+  width: 1115px;
+  height: 300px;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -30,8 +32,8 @@ body {
 .profilecard{
   background: white;
   margin: auto;
-  width: 1117px;
-  height: 1093px;
+  width: 1115px;
+  height: 1110px;
   margin-bottom: 55px;
   border-radius: 20px;
 }
@@ -42,7 +44,6 @@ body {
   font-family: Inter;
   font-style: normal;
   font-weight: bold;
-  width: 278px;
   padding-top: 135px;
   display:inline-block;
   align-content: center;
@@ -62,7 +63,7 @@ body {
 
 .right{
     width:200px;
-    margin-left:50px;
+    margin-left:10px;
     text-align: center;
     float:right;
 }
@@ -89,8 +90,8 @@ body {
   font-style: normal;
   font-weight: bold;
   border-radius: 15px;
-  width: 168px;
-  height: 24px;
+  width: 165px;
+  height: 25px;
   margin-bottom: 2px;
   background: #FFBAAB;
 }
@@ -107,24 +108,26 @@ body {
 
 .sections p{
   margin:0px;
-  padding-top: 36px;
+  padding-top: 35px;
   display: inline-block;
 }
 
 .profileboxes{
-  width: 986px;
-  height: 143px;
+  width: 985px;
+  height: 148px;
   border: 1px solid #000000;
   box-sizing: border-box;
   overflow: auto;
+  margin-top: 3px;
 }
 
 .sections button{
   border-radius: 15px;
-  width: 93px;
+  width: 95px;
   height: 25px;
   margin-bottom: 2px;
   background: #FFBAAB;
+  margin-left: 10px;
 }
 
 .iconboxes{
@@ -133,6 +136,7 @@ body {
   display: inline-block;
   overflow: auto;
   margin: 5px;
+  margin-right: 0px;
 }
 
 .iconboxes img{
@@ -145,16 +149,18 @@ body {
 }
 
 .iconboxes label{
-  font-size: 12px;
+  font-size: 13.5px;
   display: inline-block;
   word-wrap: break-word;
 }
+
 #notificationscontainer p{
     font-size: 15px;
     display: inline-block;
     margin:5px;
     padding-top: 10px
 }
+
 #notificationscontainer img{
     height:20px;
     margin-left:10px;
