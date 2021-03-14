@@ -84,10 +84,13 @@ body {
 }
 
 #back{
+    clear:right;
     float:left;
+    display:inline-block;
 }
 
 #forward{
+    clear:right;
     float:right;
-    align-content: right;
+    display:inline-block;
 }
