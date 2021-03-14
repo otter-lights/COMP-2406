@@ -1,7 +1,7 @@
 COMP-2406 Project Check In
 R Routly (101183371), Z Ali (101186150)
 
-Other Documentation can be found in this folder under the names DataModel.pdf and RESTfulOutline.pdf
+Other documentation can be found in this folder under the names DataModel.pdf (data model) and RESTfulOutline.pdf (RESTful API outline).
 
 Running the server
 - open a command line and navigate to the directory of the project
