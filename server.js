@@ -6,6 +6,8 @@ let app = express();
 app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(express.static("static_pgs"));
+let searchResults = require("./movie-data-10.json");
+console.log(searchResults);
 
 let avengersMovieDummyData = {"id": "3", "Title":"The Avengers",
 "Year":"2012", "Released":"04 May 2012", "Runtime":"143 min",
@@ -37,6 +39,14 @@ app.get(['/', '/logout'], (req, res) => {
 	res.render('./primaries/homepage.pug', {})
 })
 
+app.get('/signin', (req, res) => {
+  res.sendFile(path.join(__dirname + '/static_pgs/signin.html'));
+})
+
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname + '/static_pgs/signup.html'));
+})
+
 app.get('/addmovie', (req, res) => {
 	res.render('./primaries/addamovie', {})
 })
@@ -45,13 +55,12 @@ app.get('/addperson', (req, res) => {
 	res.render('./primaries/addaperson', {})
 })
 
-app.get('/signin', (req, res) => {
-  res.sendFile(path.join(__dirname + '/static_pgs/signin.html'));
-
+app.get('/advancedsearch', (req, res) => {
+	res.render('./primaries/advancedsearch', {})
 })
 
-app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname + '/static_pgs/signup.html'));
+app.get('/searchresults', (req, res) => {
+	res.render('./primaries/searchresults', {movies: searchResults})
 })
 
 app.get('/profile', (req, res) => {
@@ -88,14 +97,6 @@ app.get('/movieprofile', (req, res) => {
 		reviewObjects = getReviewObjects(avengersMovieDummyData);
 	}
 	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, reviews: reviewObjects, recommended: recommendedMovies});
-})
-
-app.get('/advancedsearch', (req, res) => {
-	res.render('./primaries/advancedsearch', {})
-})
-
-app.get('/searchresults', (req, res) => {
-	res.render('./primaries/searchresults', {})
 })
 
 function getReviewObjects(data){

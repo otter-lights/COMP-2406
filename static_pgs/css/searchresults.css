@@ -19,7 +19,7 @@ body {
   font-weight: bold;
 }
 
-.whitebackground p{
+.whitebackground h1{
   padding-top: 15px;
   text-align: center;
   font-size: 50px;
@@ -40,6 +40,7 @@ body {
 .resultsbox{
     width: 986px;
     height: 440px;
+    padding: 2px;
 }
 
 .results button{
@@ -54,6 +55,34 @@ body {
 
 .results img{
     height:50px;
+}
+
+.searchresult{
+  margin-bottom: 3px;
+  height: 9%;
+  width: 978px;
+  border:1px solid black;
+  color: black;
+  background: #FFBAAB;
+}
+
+.searchresult h2{
+  display: inline-block;
+  margin-left: 20px;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.searchresult p{
+  display: inline-block;
+  float: right;
+  margin-right: 20px;
+  margin-bottom: 0px;
+  font-size: 15px;
+}
+
+.searchresult a{
+  color: black;
 }
 
 #back{

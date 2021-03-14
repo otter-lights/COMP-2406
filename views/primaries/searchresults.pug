@@ -10,9 +10,15 @@ html(lang='en' dir='ltr')
     body
         include ../partials/menubar
         .whitebackground
-            p SEARCH RESULTS
+            h1 SEARCH RESULTS
             .results
                 #resultsbox.resultsbox
+                    each movie in movies
+                        .searchresult
+                            h2
+                                a(href='/movieprofile') #{movie.Title}
+                            each genre in movie.Genre
+                                p #{genre}
                 button#back
                     img(src='./img/backwards.png')
                 button#forward
