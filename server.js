@@ -1,8 +1,8 @@
 const express = require('express');
 const http = require("http");
 const pug = require("pug");
+var path = require('path');
 let app = express();
-
 app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(express.static("static_pgs"));
@@ -46,11 +46,12 @@ app.get('/addperson', (req, res) => {
 })
 
 app.get('/signin', (req, res) => {
-	res.send('signin.html');
+  res.sendFile(path.join(__dirname + '/static_pgs/signin.html'));
+
 })
 
 app.get('/signup', (req, res) => {
-	res.send('signup.html');
+  res.sendFile(path.join(__dirname + '/static_pgs/signup.html'));
 })
 
 app.get('/profile', (req, res) => {

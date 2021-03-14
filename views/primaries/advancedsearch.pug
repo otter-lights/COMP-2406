@@ -13,18 +13,18 @@ html(lang='en' dir='ltr')
             p ADVANCED SEARCH
             .formbox
                 p
-                    label(for='title') TITLE: 
+                    label(for='title') TITLE:
                     input#title(type='text' placeholder='Search by title...')
                     br
                 p
-                    label(for='cast') CAST: 
+                    label(for='cast') CAST:
                     input#releaseYear(type='text' placeholder='Search by cast member...')
                     br
                 p
-                    label(for='genre') GENRE: 
+                    label(for='genre') GENRE:
                     input#runtime(type='text' placeholder='Search by genre...')
                     br
                 p
                     label
-                    button#searchButton(type='button' name='search' onclick='search()') SEARCH
+                    button#searchButton(type='button' name='search' onclick="window.location.href='/searchresults'") SEARCH
         script(src='./javascript/advancedsearch.js' charset='utf-8')
