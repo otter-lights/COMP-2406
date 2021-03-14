@@ -5,7 +5,7 @@ var path = require('path');
 let app = express();
 app.set("view engine", "pug");
 app.set("views", "./views");
-app.use(express.static("static_pgs"));
+app.use(express.static("public"));
 let searchResults = require("./movie-data-10.json");
 
 let avengersMovieDummyData = {"id": "3", "Title":"The Avengers",
@@ -39,11 +39,11 @@ app.get(['/', '/logout'], (req, res) => {
 })
 
 app.get('/signin', (req, res) => {
-  res.sendFile(path.join(__dirname + '/static_pgs/signin.html'));
+  res.sendFile(path.join(__dirname + '/views/primaries/signin.html'));
 })
 
 app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname + '/static_pgs/signup.html'));
+  res.sendFile(path.join(__dirname + '/views/primaries/signup.html'));
 })
 
 app.get('/addmovie', (req, res) => {
