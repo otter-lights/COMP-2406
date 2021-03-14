@@ -2,8 +2,8 @@ doctype html
 html(lang='en' dir='ltr')
     head
         meta(charset='utf-8')
-        link(href='./css/viewingpeople.css' rel='stylesheet')
-        link(href='./css/menubar.css' rel='stylesheet')
+        link(href='/css/viewingpeople.css' rel='stylesheet')
+        link(href='/css/menubar.css' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
         title #{person.Name}'s Page
@@ -20,7 +20,7 @@ html(lang='en' dir='ltr')
                         #frequentcollaboratorscontainer.profileboxes
                             each collaborator in person.Collaborators
                                 .iconboxes
-                                    img(src='./img/Profile.png' alt='')
+                                    img(src='/img/Profile.png' alt='')
                                     p
                                         a(href='/viewpeople') #{collaborator}
                     if (person.hasOwnProperty("Directed"))
@@ -29,7 +29,7 @@ html(lang='en' dir='ltr')
                             #moviesdirectedcontainer.profileboxes
                                 each movie in person.Directed
                                     .iconboxes
-                                        img(src='./img/Video.png' alt='')
+                                        img(src='/img/Video.png' alt='')
                                         p
                                             a(href='/movieprofile') #{movie}
                     if (person.hasOwnProperty("Written"))
@@ -38,7 +38,7 @@ html(lang='en' dir='ltr')
                             #movieswrittencontainer.profileboxes
                                 each movie in person.Written
                                     .iconboxes
-                                        img(src='./img/Video.png' alt='')
+                                        img(src='/img/Video.png' alt='')
                                         p
                                           a(href='/movieprofile') #{movie}
                     if (person.hasOwnProperty("Acted"))
@@ -47,7 +47,6 @@ html(lang='en' dir='ltr')
                             #moviesactedincontainer.profileboxes
                                 each movie in person.Acted
                                     .iconboxes
-                                        img(src='./img/Video.png' alt='')
+                                        img(src='/img/Video.png' alt='')
                                         p
                                             a(href='/movieprofile') #{movie}
-        script(src='./javascript/viewingpeople.js' charset='utf-8')

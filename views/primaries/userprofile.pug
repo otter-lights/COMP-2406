@@ -2,8 +2,8 @@ doctype html
 html(lang='en' dir='ltr')
     head
         meta(charset='utf-8')
-        link(href='./css/userprofile.css' rel='stylesheet')
-        link(href='./css/menubar.css' rel='stylesheet')
+        link(href='/css/userprofile.css' rel='stylesheet')
+        link(href='/css/menubar.css' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
         title #{user.username}'s Profile
@@ -15,7 +15,7 @@ html(lang='en' dir='ltr')
                     p Welcome,
                     h3#username #{user.username.toUpperCase()}
                 .right
-                    img(src='./img/Profile.png' alt='user profile picture')
+                    img(src='/img/Profile.png' alt='user profile picture')
                     if(user.contributing === "True")
                         p CONTRIBUTING USER
                     else
@@ -29,7 +29,7 @@ html(lang='en' dir='ltr')
                         #peopleyoufollowcontainer.profileboxes
                             each person in user.peopleFollowing
                                 .iconboxes
-                                    img(src='./img/Profile.png' alt='')
+                                    img(src='/img/Profile.png' alt='')
                                     label(for='person')
                                         input(type='checkbox' id='person' name='person')
                                         a(href='/viewpeople') #{person}
@@ -39,7 +39,7 @@ html(lang='en' dir='ltr')
                             #usersyoufollowcontainer.profileboxes
                                 each u in user.usersFollowing
                                     .iconboxes
-                                        img(src='./img/Profile.png' alt='')
+                                        img(src='/img/Profile.png' alt='')
                                         label(for='u')
                                             input(type='checkbox' id='u' name='u')
                                             a(href='/viewuser') #{u}
@@ -49,7 +49,7 @@ html(lang='en' dir='ltr')
                             #watchlistcontainer.profileboxes
                                 each movie in watchlist
                                     .iconboxes
-                                        img(src='./img/Video.png' alt='')
+                                        img(src='/img/Video.png' alt='')
                                         label(for='movie.Title')
                                             input(type='checkbox' id='movie.id' name='movie.Title')
                                             a(href='/movieprofile') #{movie.Title}
@@ -58,7 +58,7 @@ html(lang='en' dir='ltr')
                             #recommendedmoviescontainer.profileboxes
                                 each movie in recommended
                                     .iconboxes
-                                        img(src='./img/Video.png' alt='')
+                                        img(src='/img/Video.png' alt='')
                                         label(for='movie')
                                             a(href='/movieprofile') #{movie}
                         div
@@ -74,7 +74,7 @@ html(lang='en' dir='ltr')
                                             | .
                                         br
                                     else if(notification.type === "1")
-                                        img(src='./img/watchlist.png')
+                                        img(src='/img/watchlist.png')
                                         p
                                             a(href='/viewuser') #{notification.name.toUpperCase()}
                                             |  added a !{' '}
@@ -82,7 +82,7 @@ html(lang='en' dir='ltr')
                                             |  to their watchlist.
                                         br
                                     else if(notification.type === "2")
-                                        img(src='./img/directed.png')
+                                        img(src='/img/directed.png')
                                         p
                                             a(href='/viewpeople') #{notification.name.toUpperCase()}
                                             |  directed a !{' '}
@@ -90,7 +90,7 @@ html(lang='en' dir='ltr')
                                             | .
                                         br
                                     else if(notification.type === "3")
-                                        img(src='./img/wrote.png')
+                                        img(src='/img/wrote.png')
                                         p
                                             a(href='/viewpeople') #{notification.name.toUpperCase()}
                                             |  wrote a !{' '}
@@ -98,11 +98,10 @@ html(lang='en' dir='ltr')
                                             | .
                                         br
                                     else if(notification.type === "4")
-                                        img(src='./img/acted.png')
+                                        img(src='/img/acted.png')
                                         p
                                             a(href='/viewpeople') #{notification.name.toUpperCase()}
                                             |  acted in a !{' '}
                                             a(href='/movieprofile') MOVIE
                                             | .
                                         br
-            script(src='./javascript/userprofile.js' charset='utf-8')

@@ -2,8 +2,8 @@ doctype html
 html(lang='en' dir='ltr')
   head
     meta(charset='utf-8')
-    link(href='./css/viewmovie.css' rel='stylesheet')
-    link(href='./css/menubar.css' rel='stylesheet')
+    link(href='/css/viewmovie.css' rel='stylesheet')
+    link(href='/css/menubar.css' rel='stylesheet')
     link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
     link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
     title #{movie.Title} Movie Card
@@ -27,17 +27,17 @@ html(lang='en' dir='ltr')
         h5 DIRECTORS
         #movieinfodirectors.castcontainers
           each director in movie.Director
-            a(href='./viewpeople') #{director}
+            a(href='/viewpeople') #{director}
             br
         h5 WRITERS
         #movieinfowriters.castcontainers
           each writer in movie.Writer
-            a(href='./viewpeople') #{writer}
+            a(href='/viewpeople') #{writer}
             br
         h5 ACTORS
         #movieinfoactors.castcontainers
           each actor in movie.Actors
-            a(href='./viewpeople') #{actor}
+            a(href='/viewpeople') #{actor}
             br
       #recommendedmovieinfocard.recommendedmovieinfocard
         h3 RECOMMENDED MOVIES
@@ -62,11 +62,11 @@ html(lang='en' dir='ltr')
           .review
             .left
               .rating
-                img(src='./img/Video.png' alt='')
+                img(src='/img/Video.png' alt='')
                 br
                 p #{review.rating}/10
               p
-                a(href='./viewuser') #{review.username}
+                a(href='/viewuser') #{review.username}
             .right
               if (review.hasOwnProperty("summary"))
                 h4 Summary
@@ -76,4 +76,3 @@ html(lang='en' dir='ltr')
                 h4 Full Review
                 p
                   | #{review.fullreview}
-    script(src='./javascript/viewmovie.js' charset='utf-8')

@@ -2,8 +2,8 @@ doctype html
 html(lang='en' dir='ltr')
     head
         meta(charset='utf-8')
-        link(href='./css/menubar.css' rel='stylesheet')
-        link(href='./css/homepage.css' rel='stylesheet')
+        link(href='/css/menubar.css' rel='stylesheet')
+        link(href='/css/homepage.css' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
         title RAZARA Homepage
@@ -11,16 +11,16 @@ html(lang='en' dir='ltr')
         include ../partials/menubar
         .homepagecontainer
             .imgcontainer
-                img(src='./img/rectangle1.png' alt='user profile picture')
-                img(src='./img/rectangle2.png' alt='user profile picture')
-                img(src='./img/rectangle3.png' alt='user profile picture')
-                img(src='./img/rectangle4.png' alt='user profile picture')
-                img(src='./img/rectangle5.png' alt='user profile picture')
+                img(src='/img/rectangle1.png' alt='user profile picture')
+                img(src='/img/rectangle2.png' alt='user profile picture')
+                img(src='/img/rectangle3.png' alt='user profile picture')
+                img(src='/img/rectangle4.png' alt='user profile picture')
+                img(src='/img/rectangle5.png' alt='user profile picture')
         .textcontainer
             h3 WELCOME TO
             h1 RAZARA
             p A WORLD FAMOUS MOVIE DATABASE
-            a(href='./signup')
+            a(href='/signup')
                 button#signup(type='button' name='signup') SIGN UP
-            a(href='./signin')
+            a(href='/signin')
                 button#signin(type='button' name='signin') SIGN IN

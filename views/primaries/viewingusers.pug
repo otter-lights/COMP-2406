@@ -2,8 +2,8 @@ doctype html
 html(lang='en' dir='ltr')
     head
         meta(charset='utf-8')
-        link(href='./css/viewingusers.css' rel='stylesheet')
-        link(href='./css/menubar.css' rel='stylesheet')
+        link(href='/css/viewingusers.css' rel='stylesheet')
+        link(href='/css/menubar.css' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
         title #{user.username}'s Profile
@@ -20,7 +20,7 @@ html(lang='en' dir='ltr')
                         #followingcontainer.profileboxes
                             each person in user.peopleFollowing
                                 .iconboxes
-                                    img(src='./img/Profile.png' alt='')
+                                    img(src='/img/Profile.png' alt='')
                                     p
                                         a(href='/viewpeople') #{person}
                     div
@@ -28,7 +28,7 @@ html(lang='en' dir='ltr')
                         #watchlistcontainer.profileboxes
                             each movie in watchlist
                                 .iconboxes
-                                    img(src='./img/Video.png' alt='')
+                                    img(src='/img/Video.png' alt='')
                                     p
                                         a(href='/movieprofile') #{movie.Title}
                     div
@@ -38,8 +38,8 @@ html(lang='en' dir='ltr')
                                 .review
                                     .left
                                         h2
-                                            a(href='./movieprofile') #{review.movieTitle}
-                                        img(src='./img/Video.png' alt='')
+                                            a(href='/movieprofile') #{review.movieTitle}
+                                        img(src='/img/Video.png' alt='')
                                         p #{review.rating}/10
                                     .right
                                         if(review.hasOwnProperty("summary"))
@@ -48,4 +48,3 @@ html(lang='en' dir='ltr')
                                         if(review.hasOwnProperty("fullreview"))
                                             h4 Full Review
                                             p #{review.fullreview}
-            script(src='./javascript/viewingusers.js' charset='utf-8')

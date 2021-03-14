@@ -2,8 +2,8 @@ doctype html
 html(lang='en' dir='ltr')
     head
         meta(charset='utf-8')
-        link(href='./css/addmovieaddperson.css' rel='stylesheet')
-        link(href='./css/menubar.css' rel='stylesheet')
+        link(href='/css/addmovieaddperson.css' rel='stylesheet')
+        link(href='/css/menubar.css' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
         title Add a Person
@@ -13,10 +13,9 @@ html(lang='en' dir='ltr')
             p ADD A PERSON
             .formbox
                 p
-                    label(for='name') NAME: 
+                    label(for='name') NAME:
                     input#name(type='text')
                     br
                 p
                     label
                     button#addbutton(type='button' name='add' onclick='addPerson()') ADD
-        script(src='./javascript/addperson.js' charset='utf-8')
