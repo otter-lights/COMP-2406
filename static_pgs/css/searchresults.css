@@ -31,7 +31,6 @@ body {
   height: 510px;
   left: 227px;
   top: 244px;
-
   border: 1px solid #000000;
   box-sizing: border-box;
   margin: auto;
@@ -40,7 +39,6 @@ body {
 .resultsbox{
     width: 986px;
     height: 440px;
-    padding: 2px;
 }
 
 .results button{
@@ -60,7 +58,7 @@ body {
 .searchresult{
   margin-bottom: 3px;
   height: 9%;
-  width: 978px;
+  width: 981px;
   border:1px solid black;
   color: black;
   background: #FFBAAB;
