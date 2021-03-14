@@ -35,54 +35,54 @@ let reviewsDummyData = {"2": {"id": "2", "username": "snapracklepop", "movieid":
 
 
 app.get(['/', '/logout'], (req, res) => {
-	res.render('./primaries/homepage.pug', {});
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+	res.render('./primaries/homepage.pug', {});
 })
 
 app.get('/signin', (req, res) => {
-  res.sendFile(path.join(__dirname + '/views/primaries/signin.html'));
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+  res.sendFile(path.join(__dirname + '/views/primaries/signin.html'));
 })
 
 app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname + '/views/primaries/signup.html'));
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+  res.sendFile(path.join(__dirname + '/views/primaries/signup.html'));
 })
 
 app.get('/addmovie', (req, res) => {
-	res.render('./primaries/addamovie', {});
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+	res.render('./primaries/addamovie', {});
 })
 
 app.get('/addperson', (req, res) => {
-	res.render('./primaries/addaperson', {});
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+	res.render('./primaries/addaperson', {});
 })
 
 app.get('/advancedsearch', (req, res) => {
-	res.render('./primaries/advancedsearch', {});
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+	res.render('./primaries/advancedsearch', {});
 })
 
 app.get('/searchresults', (req, res) => {
-	res.render('./primaries/searchresults', {movies: searchResults});
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+	res.render('./primaries/searchresults', {movies: searchResults})
 })
 
 app.get('/profile', (req, res) => {
   let watchlist = [{"id": "6", "Title": "Force Awakens"}, {"id": "43", "Title": "Split"}, {"id": "45", "Title": "To All The Boys"},
   {"id": "654", "Title": "The Ugly Truth"}, {"id": "12", "Title": "V for Vendetta"}, {"id": "64", "Title": "Bleach"}];
   let recommendedMovies = ["The Phantom Menace", "Heist", "Coraline", "SuckerPunch", "Wall-E"];
-	res.render('./primaries/userprofile', {user: userData, recommended: recommendedMovies, watchlist: watchlist});
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+	res.render('./primaries/userprofile', {user: userData, recommended: recommendedMovies, watchlist: watchlist});
 })
 
 app.get('/viewuser', (req, res) => {
@@ -92,17 +92,17 @@ app.get('/viewuser', (req, res) => {
 	if(userData.hasOwnProperty("Reviews")){
 		reviewObjects = getReviewObjects(userData);
 	}
-	res.render('./primaries/viewingusers', {user: userData, reviews: reviewObjects, watchlist: watchlist});
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+	res.render('./primaries/viewingusers', {user: userData, reviews: reviewObjects, watchlist: watchlist});
 })
 
 app.get('/viewpeople', (req, res) => {
   let frequentCollaborators = ["Scarlett Johansson", "Robert Downey Jr.", "Chris Hemsworth", "Jeremy Renner", "Mark Ruffalo"];
   actorDummyData["Collaborators"] = frequentCollaborators;
-	res.render('./primaries/viewingpeople', {person: actorDummyData});
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+	res.render('./primaries/viewingpeople', {person: actorDummyData});
 })
 
 app.get('/movieprofile', (req, res) => {
@@ -115,9 +115,9 @@ app.get('/movieprofile', (req, res) => {
 	if(avengersMovieDummyData.hasOwnProperty("Reviews")){
 		reviewObjects = getReviewObjects(avengersMovieDummyData);
 	}
-	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, reviews: reviewObjects, recommended: recommendedMovies});
   res.setHeader('content-type', 'text/html');
-  res.sendStatus(200);
+  res.status(200);
+	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, reviews: reviewObjects, recommended: recommendedMovies});
 })
 
 function getReviewObjects(data){
