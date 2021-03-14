@@ -7,7 +7,6 @@ app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(express.static("static_pgs"));
 let searchResults = require("./movie-data-10.json");
-console.log(searchResults);
 
 let avengersMovieDummyData = {"id": "3", "Title":"The Avengers",
 "Year":"2012", "Released":"04 May 2012", "Runtime":"143 min",
