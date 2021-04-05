@@ -1,28 +1,16 @@
+const mongoose = require('mongoose');
+
+const User = require("./models/UserModel");
+const Review = require("./models/ReviewModel");
+const Movie = require("./models/MovieModel");
+const Person = require("./models/PersonModel");
+const Notification = require("./models/NotificationModel");
+
+const fs = require("fs");
+const csv = require('csv-parser')
+const results = []
+
 const fileName = "./movie-data-10.json";
-
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
-let movieSchema = Schema({
-  title: {type: String, required: true},
-  year: {type: String},
-  runtime: {type: String},
-  genre: [String],
-  director: [{type: Schema.Types.ObjectId, ref: 'Person'}],
-  actor: [{type: Schema.Types.ObjectId, ref: 'Person'}],
-  writer: [{type: Schema.Types.ObjectId, ref: 'Person'}],
-  plot: [String]
-});
-
-let personSchema = Schema({
-  name: String,
-  director: [{type:Schema.Types.ObjectId, ref: 'Movie'}],
-  actor: [{type:Schema.Types.ObjectId, ref: 'Movie'}],
-  writer: [{type:Schema.Types.ObjectId, ref: 'Movie'}],
-});
-
-let Movie = mongoose.model("Movie", movieSchema);
-let Person = mongoose.model("Person", personSchema);
 
 //Array of all movie documents (no duplicates)
 let allMovies = []; 
