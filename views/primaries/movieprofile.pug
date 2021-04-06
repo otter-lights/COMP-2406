@@ -7,37 +7,37 @@ html(lang='en' dir='ltr')
     link(href='/css/menubar.css' rel='stylesheet')
     link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
     link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
-    title #{movie.Title} Movie Card
+    title #{movie.title} Movie Card
   body
     +menubar
     #movieinfoblackbackground
       #movieinfocard.movieinfocard
-        h1#movieinfotitle #{movie.Title}
-        h3#movierating #{movie.Rating}/10
+        h1#movieinfotitle #{movie.title}
+        h3#movierating #{movie.rating}/10
         button#addtowatchlistbutton(type='button') ADD TO WATCHLIST
         br
-        #movieinforeleasedate.moviedateduration #{movie.Released}
-        #movieinfoduration.moviedateduration #{movie.Runtime}
+        #movieinforeleasedate.moviedateduration #{movie.year}
+        #movieinfoduration.moviedateduration #{movie.runtime}
         #genres.moviedateduration
-          each genre in movie.Genre
+          each genre in movie.genres
             a(href='/searchresults') #{genre}
             | /
         br
         h5 OVERVIEW
-        #overviewdiv #{movie.Plot}
+        #overviewdiv #{movie.plot}
         h5 DIRECTORS
         #movieinfodirectors.castcontainers
-          each director in movie.Director
+          each director in movie.director
             a(href='/viewpeople') #{director}
             br
         h5 WRITERS
         #movieinfowriters.castcontainers
-          each writer in movie.Writer
+          each writer in movie.writer
             a(href='/viewpeople') #{writer}
             br
         h5 ACTORS
         #movieinfoactors.castcontainers
-          each actor in movie.Actors
+          each actor in movie.actor
             a(href='/viewpeople') #{actor}
             br
       #recommendedmovieinfocard.recommendedmovieinfocard
@@ -45,10 +45,10 @@ html(lang='en' dir='ltr')
         each movie in recommended
             div
               h4
-                a(href='/movieprofile') #{movie.Title} (#{movie.Rating}/10)
-              p #{movie.Plot.slice(0, 70)}...
+                a(href='/movieprofile') #{movie.title} (#{movie.rating}/10)
+              p #{movie.plot.slice(0, 70)}...
               p
-                each genre in movie.Genres
+                each genre in movie.genres
                   | #{' '} |#{genre}| #{' '}
     #reviewsonmoviepagecontainer.reviewsonmoviepagecontainer
       h5 ADD A SCORE OUT OF 10 (REQUIRED):
@@ -69,11 +69,11 @@ html(lang='en' dir='ltr')
               p
                 a(href='/viewuser') #{review.username}
             .right
-              if (review.hasOwnProperty("summary"))
+              if (review.hasOwnProperty("briefsummary"))
                 h4 Summary
                 p
                   | #{review.summary}
-              if (review.hasOwnProperty("fullreview"))
+              if (review.hasOwnProperty("review"))
                 h4 Full Review
                 p
                   | #{review.fullreview}
