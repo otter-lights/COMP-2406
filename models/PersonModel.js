@@ -9,13 +9,13 @@ let personSchema = Schema({
   followers: {
     type: [Schema.Types.ObjectId, ref: 'User']
   },
-  moviesDirected: {
+  director: {
     type: [Schema.Types.ObjectId, ref: 'Movie'],
   },
-  moviesWritten: {
+  writer: {
     type: [Schema.Types.ObjectId, ref: 'Movie'],
   },
-  moviesActed: {
+  actor: {
     type: [Schema.Types.ObjectId, ref: 'Movie'],
   },
   commonCollabs: {

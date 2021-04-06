@@ -11,6 +11,7 @@ const csv = require('csv-parser')
 const results = []
 
 const fileName = "./data/movie-data-10.json";
+const userDataFile = "./data/user-data.json";
 
 //Array of all movie documents (no duplicates)
 let allMovies = []; 
@@ -19,6 +20,7 @@ let people = {};
 //Array of all people documents (no duplicates)
 //(this is only used so we don't have to iterate over the people object later)
 let allPeople = [];
+let allUsers = [];
 
 //Takes a person name, movie document, and position ('actor', 'director', or 'writer' - matches the schema fields)
 //Creates a new person if one with that name doesn't exist already
@@ -105,6 +107,29 @@ data.forEach(movie=>{
   
   //Add the movie to our array of all movies (these are added to the database once we are finished)
   allMovies.push(newMovie)
+})
+
+let userData = require(userDataFile);
+data.forEach(movie=>{
+  /*
+  user is something like:
+    {
+      “username”: “snapracklepop”,
+      "password": "password123",
+      "accountType”: True
+    }
+  */
+  
+  //Create a new user document using the Mongoose model
+  //Copy over the required basic user data
+  let newUser = new User();
+  newUser._id = mongoose.Types.ObjectId();
+  newUser.username = movie.username;
+  newUser.password = movie.password;
+  newUser.accountType = movie.accountType;
+  
+  //Add the user to our array of all users (these are added to the database once we are finished)
+  allUsers.push(newUser)
 })
 
 /*
