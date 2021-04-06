@@ -12,6 +12,14 @@ app.set("views", "./views");
 app.use(express.static("public"));
 let searchResults = require("./movie-data-10.json");
 
+let usersRouter = require("./user-router");
+app.use("/users", usersRouter);
+let moviesRouter = require("./movies-router");
+app.use("/movies", moviesRouter);
+let peopleRouter = require("./people-router");
+app.use("/people", peopleRouter);
+let reviewsRouter = require("./reviews-router");
+app.use("/reviews", reviewsRouter);
 
 app.get(['/', '/logout'], (req, res) => {
 	res.setHeader('content-type', 'text/html');
