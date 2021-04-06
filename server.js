@@ -29,7 +29,7 @@ let avengersMovieDummyData = {"id": "3", "title":"The Avengers",
 "rating": "8.4",
 "reviews": ["2", "4", "34"]};
 let actorDummyData = {"name": "Chris Evans", "director": ["Before We Go"], "writer": ["Defending Jacob"], "actor":["The Avengers", "Avengers: Endgame", "Knives Out", "Fantastic Four"], "commonCollabs": []};
-let userData = {"username": "AngelOnFira", "password": "password", "accountType": "True",
+let userData = {"username": "AngelOnFira", "password": "password", "accountType": "true",
 "peopleFollowing": ["Chris Evans", "Chris Hemsworth", "Chris Pratt", "Chrissie Teigen"],
 "usersFollowing": ["zaraahlie", "snapracklepop", "LegitAdi", "eriicali", "veronicaSmiles", "preethi12", "kartho"],
 "watchlist": ["6", "43", "45", "654", "12", "64"],
