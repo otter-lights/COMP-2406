@@ -10,9 +10,9 @@ let app = express();
 app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(express.static("public"));
-let searchResults = require("./movie-data-10.json");
+let searchResults = require("./data/movie-data-10.json");
 
-let usersRouter = require("./user-router");
+let usersRouter = require("./users-router");
 app.use("/users", usersRouter);
 let moviesRouter = require("./movies-router");
 app.use("/movies", moviesRouter);

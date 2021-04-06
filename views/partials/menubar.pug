@@ -1,7 +1,9 @@
-.menubar
-    a.logo(href='/') RAZARA
-    a.menu(href='/logout') LOGOUT
-    a.menu(href='/profile') PROFILE
-    a.menu(href='/addmovie') ADD A MOVIE
-    a.menu(href='/addperson') ADD A PERSON
-    a.menu(href='/advancedsearch') SEARCH
+mixin menubar
+    .menubar
+        a.logo(href='/') RAZARA
+        a.menu(href='/logout') LOGOUT
+        a.menu(href='/profile') PROFILE
+        if(user.contributing === "True")
+            a.menu(href='/addmovie') ADD A MOVIE
+            a.menu(href='/addperson') ADD A PERSON
+        a.menu(href='/advancedsearch') SEARCH

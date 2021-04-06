@@ -1,3 +1,4 @@
+include ../partials/menubar
 doctype html
 html(lang='en' dir='ltr')
     head
@@ -8,7 +9,7 @@ html(lang='en' dir='ltr')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
         title Search Results for "___"
     body
-        include ../partials/menubar
+        +menubar
         .whitebackground
             h1 SEARCH RESULTS
             .results
