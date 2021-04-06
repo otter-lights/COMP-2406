@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 let personSchema = Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   followers: {
     type: [Schema.Types.ObjectId],
@@ -12,15 +13,15 @@ let personSchema = Schema({
   },
   director: {
     type: [Schema.Types.ObjectId],
-    ref: 'Person',
+    ref: 'Movie',
   },
   writer: {
     type: [Schema.Types.ObjectId],
-    ref: 'Person',
+    ref: 'Movie',
   },
   actor: {
     type: [Schema.Types.ObjectId],
-    ref: 'Person',
+    ref: 'Movie',
   },
   commonCollabs: {
     type: [Schema.Types.ObjectId],

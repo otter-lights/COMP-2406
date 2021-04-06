@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 let movieSchema = Schema({
   //movieID from the Data Model will be the associated MongoDB id
   title: {
-    type: String, 
-    required: true
+    type: String,
+    required: true,
+    unique: true
   },
   plot: {
     type: String,
@@ -44,7 +45,7 @@ let movieSchema = Schema({
   reviews: {
     type: [Schema.Types.ObjectId],
     ref: 'Review',
-  } 
+  }
 });
 
 module.exports = mongoose.model("Movie", movieSchema);

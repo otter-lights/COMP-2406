@@ -3,15 +3,16 @@ const Schema = mongoose.Schema;
 
 let userSchema = Schema({
   username: {
-    type: String, 
-    required: true
+    type: String,
+    required: true,
+    unique: true
   },
   password: {
-    type: String, 
+    type: String,
     required: true
   },
   accountType: {
-    type: Boolean, 
+    type: Boolean,
     required: true
   },
   peopleFollowing: {
@@ -26,6 +27,10 @@ let userSchema = Schema({
     type: [Schema.Types.ObjectId],
     ref: 'User'
   },
+  watchlist:{
+    type: [Schema.Types.ObjectID],
+    ref: 'Movie'
+  },
   reviews: {
     type: [Schema.Types.ObjectId],
     ref: 'Review'
@@ -33,7 +38,7 @@ let userSchema = Schema({
   notifications: {
     type: [Schema.Types.ObjectId],
     ref: 'Notification'
-  } 
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);
