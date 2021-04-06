@@ -23,23 +23,27 @@ let movieSchema = Schema({
     type: Number
   },
   genres: {
-    type: String,
+    type: [String],
     required: true
   },
   director: {
-    type: [Schema.Types.ObjectId, ref: 'Person'],
+    type: [Schema.Types.ObjectId],
+    ref: 'Person',
     required: true
   },
   actor: {
-    type: [Schema.Types.ObjectId, ref: 'Person'],
+    type: [Schema.Types.ObjectId],
+    ref: 'Person',
     required: true
   },
   writer: {
-    type: [Schema.Types.ObjectId, ref: 'Person'],
+    type: [Schema.Types.ObjectId],
+    ref: 'Person',
     required: true
   },
   reviews: {
-    type: [Schema.Types.ObjectId, ref: 'Reviews']
+    type: [Schema.Types.ObjectId],
+    ref: 'Review',
   } 
 });
 

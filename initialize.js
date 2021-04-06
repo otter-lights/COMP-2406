@@ -83,9 +83,9 @@ data.forEach(movie=>{
   let newMovie = new Movie();
   newMovie._id = mongoose.Types.ObjectId();
   newMovie.title = movie.Title;
-  newMovie.year = movie.year;
+  newMovie.year = movie.Year;
   newMovie.runtime = movie.Runtime;
-  newMovie.genre = movie.Genre;
+  newMovie.genres = movie.Genre;
   newMovie.plot = movie.Plot;
   
   //For each actor in this movies Actor array, call the addPersonToMovie function
@@ -109,8 +109,9 @@ data.forEach(movie=>{
   allMovies.push(newMovie)
 })
 
+
 let userData = require(userDataFile);
-data.forEach(movie=>{
+userData.forEach(user=>{
   /*
   user is something like:
     {
@@ -124,9 +125,9 @@ data.forEach(movie=>{
   //Copy over the required basic user data
   let newUser = new User();
   newUser._id = mongoose.Types.ObjectId();
-  newUser.username = movie.username;
-  newUser.password = movie.password;
-  newUser.accountType = movie.accountType;
+  newUser.username = user.username;
+  newUser.password = user.password;
+  newUser.accountType = user.accountType;
   
   //Add the user to our array of all users (these are added to the database once we are finished)
   allUsers.push(newUser)
@@ -161,15 +162,25 @@ db.once('open', function() {
     		  return;
     	  }
         
-        //Once all movies/people have been added, query for movie Toy Story and person Tom Hanks
-        Movie.findOne({title: "The Ballad of Cable Hogue"}).populate("director actor writer").exec(function(err, result){
-          if(err)throw err;
-          console.log(result);
-          
-          Person.findOne({name: "Joe Mantegna"}).populate("actor director writer").exec(function(err, result){
+        User.insertMany(allUsers, function(err, result){
+          if(err){
+            console.log(err);
+            return;
+          }
+          //Once all movies/people have been added, query for movie Toy Story and person Tom Hanks
+          Movie.findOne({title: "The Ballad of Cable Hogue"}).populate("director actor writer").exec(function(err, result){
             if(err)throw err;
             console.log(result);
-            mongoose.connection.close()
+
+            Person.findOne({name: "Joe Mantegna"}).populate("actor director writer").exec(function(err, result){
+              if(err)throw err;
+              console.log(result);
+              User.findOne({username: "snapracklepop"}).exec(function(err, result){
+                if(err)throw err;
+                console.log(result);
+                mongoose.connection.close()
+              })
+            })
           })
         })
       });

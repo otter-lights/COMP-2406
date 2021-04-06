@@ -15,19 +15,24 @@ let userSchema = Schema({
     required: true
   },
   peopleFollowing: {
-    type: [Schema.Types.ObjectId, ref: 'Person']
+    type: [Schema.Types.ObjectId],
+    ref: 'Person'
   },
   usersFollowing: {
-    type: [Schema.Types.ObjectId, ref: 'User']
+    type: [Schema.Types.ObjectId],
+    ref: 'User'
   },
   followers: {
-    type: [Schema.Types.ObjectId, ref: 'User']
+    type: [Schema.Types.ObjectId],
+    ref: 'User'
   },
   reviews: {
-    type: [Schema.Types.ObjectId, ref: 'Review']
+    type: [Schema.Types.ObjectId],
+    ref: 'Review'
   },
   notifications: {
-    type: [Schema.Types.ObjectId, ref: 'Notification']
+    type: [Schema.Types.ObjectId],
+    ref: 'Notification'
   } 
 });
 

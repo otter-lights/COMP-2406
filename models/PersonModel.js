@@ -7,19 +7,24 @@ let personSchema = Schema({
     required: true
   },
   followers: {
-    type: [Schema.Types.ObjectId, ref: 'User']
+    type: [Schema.Types.ObjectId],
+    ref: 'User',
   },
   director: {
-    type: [Schema.Types.ObjectId, ref: 'Movie'],
+    type: [Schema.Types.ObjectId],
+    ref: 'Person',
   },
   writer: {
-    type: [Schema.Types.ObjectId, ref: 'Movie'],
+    type: [Schema.Types.ObjectId],
+    ref: 'Person',
   },
   actor: {
-    type: [Schema.Types.ObjectId, ref: 'Movie'],
+    type: [Schema.Types.ObjectId],
+    ref: 'Person',
   },
   commonCollabs: {
-    type: [Schema.Types.ObjectId, ref: 'Person'],
+    type: [Schema.Types.ObjectId],
+    ref: 'Person',
   }
 });
 
