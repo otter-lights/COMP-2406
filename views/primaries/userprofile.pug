@@ -17,7 +17,7 @@ html(lang='en' dir='ltr')
                     h3#username #{user.username.toUpperCase()}
                 .right
                     img(src='/img/Profile.png' alt='user profile picture')
-                    if(user.contributing === "True")
+                    if(user.accountType === "True")
                         p CONTRIBUTING USER
                     else
                         p BASIC USER
@@ -28,22 +28,22 @@ html(lang='en' dir='ltr')
                         p PEOPLE YOU FOLLOW
                         button#removepeoplebutton(type='button' name='editpeople' onclick='removeFollow()') remove
                         #peopleyoufollowcontainer.profileboxes
-                            each person in user.peopleFollowing
+                            each person in peopleFollowing
                                 .iconboxes
                                     img(src='/img/Profile.png' alt='')
                                     label(for='person')
                                         input(type='checkbox' id='person' name='person')
-                                        a(href='/viewpeople') #{person}
+                                        a(href='/viewpeople') #{person.name}
                         div
                             p USERS YOU FOLLOW
                             button#removeusersbutton(type='button' name='removeusers') remove
                             #usersyoufollowcontainer.profileboxes
-                                each u in user.usersFollowing
+                                each u in usersFollowing
                                     .iconboxes
                                         img(src='/img/Profile.png' alt='')
                                         label(for='u')
                                             input(type='checkbox' id='u' name='u')
-                                            a(href='/viewuser') #{u}
+                                            a(href='/viewuser') #{u.username}
                         div
                             p WATCHLIST
                             button#removewatchbutton(type='button' name='removewatch') remove
@@ -51,22 +51,22 @@ html(lang='en' dir='ltr')
                                 each movie in watchlist
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
-                                        label(for='movie.Title')
-                                            input(type='checkbox' id='movie.id' name='movie.Title')
-                                            a(href='/movieprofile') #{movie.Title}
+                                        label(for='movie.title')
+                                            input(type='checkbox' id='movie.title' name='movie.title')
+                                            a(href='/movieprofile') #{movie.title}
                         div
                             p RECOMMENDED MOVIES
                             #recommendedmoviescontainer.profileboxes
-                                each movie in recommended
+                                each movie in recommendedMovies
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
                                         label(for='movie')
-                                            a(href='/movieprofile') #{movie}
+                                            a(href='/movieprofile') #{movie.title}
                         div
                             p NOTIFICATIONS
                             #notificationscontainer.profileboxes
-                                each notification in user.notifications
-                                    if(notification.type === "0")
+                                each notification in notifications
+                                    if(notification.nType === "0")
                                         img(src='./img/review.png')
                                         p
                                             a(href='/viewuser') #{notification.name.toUpperCase()}
@@ -74,7 +74,7 @@ html(lang='en' dir='ltr')
                                             a(href='/movieprofile') MOVIE
                                             | .
                                         br
-                                    else if(notification.type === "1")
+                                    else if(notification.nType === "1")
                                         img(src='/img/watchlist.png')
                                         p
                                             a(href='/viewuser') #{notification.name.toUpperCase()}
@@ -82,7 +82,7 @@ html(lang='en' dir='ltr')
                                             a(href='/movieprofile') MOVIE
                                             |  to their watchlist.
                                         br
-                                    else if(notification.type === "2")
+                                    else if(notification.nType === "2")
                                         img(src='/img/directed.png')
                                         p
                                             a(href='/viewpeople') #{notification.name.toUpperCase()}
@@ -90,7 +90,7 @@ html(lang='en' dir='ltr')
                                             a(href='/movieprofile') MOVIE
                                             | .
                                         br
-                                    else if(notification.type === "3")
+                                    else if(notification.nType === "3")
                                         img(src='/img/wrote.png')
                                         p
                                             a(href='/viewpeople') #{notification.name.toUpperCase()}
@@ -98,7 +98,7 @@ html(lang='en' dir='ltr')
                                             a(href='/movieprofile') MOVIE
                                             | .
                                         br
-                                    else if(notification.type === "4")
+                                    else if(notification.nType === "4")
                                         img(src='/img/acted.png')
                                         p
                                             a(href='/viewpeople') #{notification.name.toUpperCase()}

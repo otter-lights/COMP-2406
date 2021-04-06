@@ -7,47 +7,47 @@ html(lang='en' dir='ltr')
         link(href='/css/menubar.css' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
-        title #{person.Name}'s Page
+        title #{person.name}'s Page
     body
         +menubar
         .blackbackground
             .personheader
-                p #{person.Name.toUpperCase()}
+                p #{person.name.toUpperCase()}
                 button#followbutton(type='button' name='follow') follow
             .personcard
                 .sections
                     div
                         h2 FREQUENT COLLABORATORS
                         #frequentcollaboratorscontainer.profileboxes
-                            each collaborator in person.Collaborators
+                            each collaborator in commonCollaborators
                                 .iconboxes
                                     img(src='/img/Profile.png' alt='')
                                     p
-                                        a(href='/viewpeople') #{collaborator}
-                    if (person.hasOwnProperty("Directed"))
+                                        a(href='/viewpeople') #{collaborator.name}
+                    if (directedMovies.length > 0)
                         div
                             h2 MOVIES DIRECTED
                             #moviesdirectedcontainer.profileboxes
-                                each movie in person.Directed
+                                each movie in directedMovies
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
                                         p
-                                            a(href='/movieprofile') #{movie}
-                    if (person.hasOwnProperty("Written"))
+                                            a(href='/movieprofile') #{movie.title}
+                    if (writtenMovies.length > 0)
                         div
                             h2 MOVIES WRITTEN
                             #movieswrittencontainer.profileboxes
-                                each movie in person.Written
+                                each movie in writtenMovies
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
                                         p
-                                          a(href='/movieprofile') #{movie}
-                    if (person.hasOwnProperty("Acted"))
+                                          a(href='/movieprofile') #{movie.title}
+                    if (actedMovies.length > 0)
                         div
                             h2 MOVIES ACTED IN
                             #moviesactedincontainer.profileboxes
-                                each movie in person.Acted
+                                each movie in actedMovies
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
                                         p
-                                            a(href='/movieprofile') #{movie}
+                                            a(href='/movieprofile') #{movie.title}

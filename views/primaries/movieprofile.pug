@@ -27,22 +27,22 @@ html(lang='en' dir='ltr')
         #overviewdiv #{movie.plot}
         h5 DIRECTORS
         #movieinfodirectors.castcontainers
-          each director in movie.director
-            a(href='/viewpeople') #{director}
+          each director in directors
+            a(href='/viewpeople') #{director.name}
             br
         h5 WRITERS
         #movieinfowriters.castcontainers
-          each writer in movie.writer
-            a(href='/viewpeople') #{writer}
+          each writer in writers
+            a(href='/viewpeople') #{writer.name}
             br
         h5 ACTORS
         #movieinfoactors.castcontainers
-          each actor in movie.actor
-            a(href='/viewpeople') #{actor}
+          each actor in actors
+            a(href='/viewpeople') #{actor.name}
             br
       #recommendedmovieinfocard.recommendedmovieinfocard
         h3 RECOMMENDED MOVIES
-        each movie in recommended
+        each movie in recommendedMovies
             div
               h4
                 a(href='/movieprofile') #{movie.title} (#{movie.rating}/10)
@@ -72,8 +72,8 @@ html(lang='en' dir='ltr')
               if (review.hasOwnProperty("briefsummary"))
                 h4 Summary
                 p
-                  | #{review.summary}
+                  | #{review.briefsummary}
               if (review.hasOwnProperty("review"))
                 h4 Full Review
                 p
-                  | #{review.fullreview}
+                  | #{review.review}

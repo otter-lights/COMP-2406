@@ -19,11 +19,11 @@ html(lang='en' dir='ltr')
                     div
                         h2 WHO THEY'RE FOLLOWING
                         #followingcontainer.profileboxes
-                            each person in user.peopleFollowing
+                            each person in peopleFollowing
                                 .iconboxes
                                     img(src='/img/Profile.png' alt='')
                                     p
-                                        a(href='/viewpeople') #{person}
+                                        a(href='/viewpeople') #{person.name}
                     div
                         h2 WATCH LIST
                         #watchlistcontainer.profileboxes
@@ -31,7 +31,7 @@ html(lang='en' dir='ltr')
                                 .iconboxes
                                     img(src='/img/Video.png' alt='')
                                     p
-                                        a(href='/movieprofile') #{movie.Title}
+                                        a(href='/movieprofile') #{movie.title}
                     div
                         h2 REVIEWS
                         #reviewsboxcontainer.reviewsbox
@@ -43,9 +43,9 @@ html(lang='en' dir='ltr')
                                         img(src='/img/Video.png' alt='')
                                         p #{review.rating}/10
                                     .right
-                                        if(review.hasOwnProperty("summary"))
+                                        if(review.hasOwnProperty("briefsummary"))
                                             h4 Summary
-                                            p #{review.summary}
-                                        if(review.hasOwnProperty("fullreview"))
+                                            p #{review.briefsummary}
+                                        if(review.hasOwnProperty("review"))
                                             h4 Full Review
-                                            p #{review.fullreview}
+                                            p #{review.review}

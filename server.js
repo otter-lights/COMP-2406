@@ -10,7 +10,7 @@ let app = express();
 app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(express.static("public"));
-let searchResults = require("./data/movie-data-10.json");
+//let searchResults = require("./data/movie-data-10.json");
 
 let usersRouter = require("./users-router");
 app.use("/users", usersRouter);
@@ -21,31 +21,36 @@ app.use("/people", peopleRouter);
 let reviewsRouter = require("./reviews-router");
 app.use("/reviews", reviewsRouter);
 
-let avengersMovieDummyData = {"id": "3", "Title":"The Avengers",
-"Year":"2012", "Released":"04 May 2012", "Runtime":"143 min",
-"Genre":["Action","Adventure","Sci-Fi"],"Director":["Joss Whedon"],"Writer":["Joss Whedon","Zak Penn"],
-"Actors":["Robert Downey Jr.","Chris Evans","Mark Ruffalo","Chris Hemsworth"],
-"Plot":"Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.",
-"Rating": "8.4",
-"Reviews": ["2", "4", "34"]};
-let dummyIDTitleMovieData = {"1": {"Title": "Before We Go"}, "2": {"Title": "Knives Out"}, "3": {"Title": "The Avengers"}, "4": {"Title": "Avengers: Endgame"}, "5": {"Title": "Fantastic Four"}};
-let actorDummyData = {"Name": "Chris Evans", "Directed": ["Before We Go"], "Written": ["Defending Jacob"], "Acted":["The Avengers", "Avengers: Endgame", "Knives Out", "Fantastic Four"], "Collaborators": []};
-let userData = {"username": "AngelOnFira", "password": "password", "contributing": "True",
+let avengersMovieDummyData = {"id": "3", "title":"The Avengers",
+"year":"2012", "runtime":"143 min",
+"genres":["Action","Adventure","Sci-Fi"],"director":["Joss Whedon"],"writer":["Joss Whedon","Zak Penn"],
+"actor":["Robert Downey Jr.","Chris Evans","Mark Ruffalo","Chris Hemsworth"],
+"plot":"Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.",
+"rating": "8.4",
+"reviews": ["2", "4", "34"]};
+let actorDummyData = {"name": "Chris Evans", "director": ["Before We Go"], "writer": ["Defending Jacob"], "actor":["The Avengers", "Avengers: Endgame", "Knives Out", "Fantastic Four"], "commonCollabs": []};
+let userData = {"username": "AngelOnFira", "password": "password", "accountType": "True",
 "peopleFollowing": ["Chris Evans", "Chris Hemsworth", "Chris Pratt", "Chrissie Teigen"],
 "usersFollowing": ["zaraahlie", "snapracklepop", "LegitAdi", "eriicali", "veronicaSmiles", "preethi12", "kartho"],
 "watchlist": ["6", "43", "45", "654", "12", "64"],
-"Reviews": ["3", "4", "9"],
-"notifications": [{"name": "snapracklepop", "movieid": "43", "type": "0"},
-{"name": "zaraahlie", "movieid": "23", "type": "1"},
-{"name": "Zack Snyder", "movieid": "6", "type": "2"},
-{"name": "Rian Johnson", "movieid": "85", "type": "3"},
-{"name": "Chris Evans", "movieid": "3", "type": "4"}]};
-let reviewsDummyData = {"2": {"id": "2", "username": "snapracklepop", "movieid": "3", "movieTitle": "The Avengers", "rating": "9", "summary": "Chaotic but fun", "fullreview": "Loki is super cool. The Avengers are okay. But Loki is cool. He also wears green, which is cool."},
-    "4": {"id": "4", "username": "AngelOnFira", "movieid": "3", "movieTitle": "The Avengers", "rating": "7"},
-    "3": {"id": "3", "username": "AngelOnFira", "movieid": "5", "movieTitle": "Fantastic Four", "rating": "4", "summary": "Not as jampacked as advertised", "fullreview": "Very slow-paced. Not entertaining. I almost thought it was going to be one of those cool superhero movies. I was wrong."},
-    "9": {"id": "9", "username": "AngelOnFira", "movieid": "2", "movieTitle": "Knives Out", "rating": "10", "summary": "Chris Evans is really good in this.", "fullreview": "His character is *spoilers* one of the best villains I have seen. Master manipulator. Didn't expect him to be the bad guy."},
-    "34": {"id": "34", "username": "zaraahlie", "movieid": "3", "movieTitle": "The Avengers", "rating": "10", "summary": "Will rewatch for a long time", "fullreview": "One of my favourite movies of all time. Brings together a bunch of individual movies over the years and ties them into one two hour-long movie. Excited to see the rest."}};
-
+"reviews": ["3", "4", "9"]};
+let watchlist = [{"id": "6", "title": "Force Awakens"}, {"id": "43", "title": "Split"}, {"id": "45", "title": "To All The Boys"},
+{"id": "654", "title": "The Ugly Truth"}, {"id": "12", "title": "V for Vendetta"}, {"id": "64", "title": "Bleach"}];
+let users = [userData, userData, userData, userData, userData];
+let people = [actorDummyData, actorDummyData, actorDummyData, actorDummyData];
+let notificationsArray = [{"name": "snapracklepop", "movieid": "43", "nType": "0"},
+{"name": "zaraahlie", "movieId": "23", "nType": "1"},
+{"name": "Zack Snyder", "movieId": "6", "nType": "2"},
+{"name": "Rian Johnson", "movieId": "85", "nType": "3"},
+{"name": "Chris Evans", "movieId": "3", "nType": "4"}];
+let reviewsDummyData = {"2": {"id": "2", "username": "snapracklepop", "movieId": "3", "movieTitle": "The Avengers", "rating": "9", "briefsummary": "Chaotic but fun", "review": "Loki is super cool. The Avengers are okay. But Loki is cool. He also wears green, which is cool."},
+    "4": {"id": "4", "username": "AngelOnFira", "movieId": "3", "movieTitle": "The Avengers", "rating": "7"},
+    "3": {"id": "3", "username": "AngelOnFira", "movieId": "5", "movieTitle": "Fantastic Four", "rating": "4", "briefsummary": "Not as jampacked as advertised", "review": "Very slow-paced. Not entertaining. I almost thought it was going to be one of those cool superhero movies. I was wrong."},
+    "9": {"id": "9", "username": "AngelOnFira", "movieId": "2", "movieTitle": "Knives Out", "rating": "10", "briefsummary": "Chris Evans is really good in this.", "review": "His character is *spoilers* one of the best villains I have seen. Master manipulator. Didn't expect him to be the bad guy."},
+    "34": {"id": "34", "username": "zaraahlie", "movieId": "3", "movieTitle": "The Avengers", "rating": "10", "briefsummary": "Will rewatch for a long time", "review": "One of my favourite movies of all time. Brings together a bunch of individual movies over the years and ties them into one two hour-long movie. Excited to see the rest."}};
+let searchResults = [{"id": "6", "title": "Force Awakens", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "43", "title": "Split", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "45", "title": "To All The Boys","genres":["Action","Adventure","Sci-Fi"]},
+{"id": "654", "title": "The Ugly Truth", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "12", "title": "V for Vendetta","genres":["Action","Adventure","Sci-Fi"]}, {"id": "64", "title": "Bleach","genres":["Action","Adventure","Sci-Fi"]}, {"id": "6", "title": "Force Awakens", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "43", "title": "Split", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "45", "title": "To All The Boys", "genres":["Action","Adventure","Sci-Fi"]},
+{"id": "654", "title": "The Ugly Truth", "genres":["Action","Adventure","Sci-Fi"]}];
 
 app.get(['/', '/logout'], (req, res) => {
   res.setHeader('content-type', 'text/html');
@@ -90,52 +95,47 @@ app.get('/searchresults', (req, res) => {
 })
 
 app.get('/profile', (req, res) => {
-  let watchlist = [{"id": "6", "Title": "Force Awakens"}, {"id": "43", "Title": "Split"}, {"id": "45", "Title": "To All The Boys"},
-  {"id": "654", "Title": "The Ugly Truth"}, {"id": "12", "Title": "V for Vendetta"}, {"id": "64", "Title": "Bleach"}];
-  let recommendedMovies = ["The Phantom Menace", "Heist", "Coraline", "SuckerPunch", "Wall-E"];
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/userprofile', {user: userData, recommended: recommendedMovies, watchlist: watchlist});
+	res.render('./primaries/userprofile', {user: userData, recommendedMovies: watchlist, watchlist: watchlist,
+    usersFollowing: users, peopleFollowing: people, notifications: notificationsArray});
 })
 
 app.get('/viewuser', (req, res) => {
   let reviewObjects = [];
-  let watchlist = [{"id": "6", "Title": "Force Awakens"}, {"id": "43", "Title": "Split"}, {"id": "45", "Title": "To All The Boys"},
-  {"id": "654", "Title": "The Ugly Truth"}, {"id": "12", "Title": "V for Vendetta"}, {"id": "64", "Title": "Bleach"}];
-	if(userData.hasOwnProperty("Reviews")){
+	if(userData.hasOwnProperty("reviews")){
 		reviewObjects = getReviewObjects(userData);
 	}
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/viewingusers', {user: userData, reviews: reviewObjects, watchlist: watchlist});
+	res.render('./primaries/viewingusers', {user: userData, reviews: reviewObjects, watchlist: watchlist, peopleFollowing: people});
 })
 
 app.get('/viewpeople', (req, res) => {
-  let frequentCollaborators = ["Scarlett Johansson", "Robert Downey Jr.", "Chris Hemsworth", "Jeremy Renner", "Mark Ruffalo"];
-  actorDummyData["Collaborators"] = frequentCollaborators;
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/viewingpeople', {person: actorDummyData, user: userData});
-})
+	res.render('./primaries/viewingpeople', {person: actorDummyData, commonCollaborators: people, directedMovies: watchlist, actedMovies: watchlist, writtenMovies: watchlist,  user: userData});
+})  //if the cast does not have any directed movies or does not have acted movies, etc. then it is necessary to make whatever you are giving to the pug for directedMovies, actedMovies, etc. an EMPTY ARRAY for the pug to display things properly.
 
 app.get('/movieprofile', (req, res) => {
-  let recommendedMovies = [{"Title": "Guardians of the Galaxy", "Plot": "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.", "Rating": "8.0", "Genres": ["Action", "Adventure", "Comedy"]},
-  {"Title": "Ironman", "Plot": "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.", "Rating": "7.9", "Genres": ["Action", "Adventure", "Sci-Fi"]},
-  {"Title": "Sherlock Holmes", "Plot": "When the police are desperate they call upon Mr Sherlock Holmes and his unconventional methods of deduction to shed light on the matter.", "Rating": "9.1", "Genres": ["Crime", "Drama", "Mystery"]},
-  {"Title": "Knives Out", "Plot": "A detective investigates the death of a patriarch of an eccentric, combative family.", "Rating": "7.9", "Genres": ["Comedy", "Crime", "Drama"]},
-  {"Title": "Sucker Punch", "Plot": "A young girl institutionalized by her abusive stepfather retreats to an alternative reality as a coping strategy and envisions a plan to help her escape.", "Rating": "6.0", "Genres": ["Action", "Adventure", "Fantasy"]},];
+  let recommendedMovies = [{"title": "Guardians of the Galaxy", "plot": "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.", "rating": "8.0", "genres": ["Action", "Adventure", "Comedy"]},
+  {"title": "Ironman", "plot": "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.", "rating": "7.9", "genres": ["Action", "Adventure", "Sci-Fi"]},
+  {"title": "Sherlock Holmes", "plot": "When the police are desperate they call upon Mr Sherlock Holmes and his unconventional methods of deduction to shed light on the matter.", "rating": "9.1", "genres": ["Crime", "Drama", "Mystery"]},
+  {"title": "Knives Out", "plot": "A detective investigates the death of a patriarch of an eccentric, combative family.", "rating": "7.9", "genres": ["Comedy", "Crime", "Drama"]},
+  {"title": "Sucker Punch", "plot": "A young girl institutionalized by her abusive stepfather retreats to an alternative reality as a coping strategy and envisions a plan to help her escape.", "rating": "6.0", "genres": ["Action", "Adventure", "Fantasy"]},];
 	let reviewObjects = [];
-	if(avengersMovieDummyData.hasOwnProperty("Reviews")){
+	if(avengersMovieDummyData.hasOwnProperty("reviews")){
 		reviewObjects = getReviewObjects(avengersMovieDummyData);
 	}
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, reviews: reviewObjects, recommended: recommendedMovies, user: userData});
+	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, reviews: reviewObjects,
+    recommendedMovies: recommendedMovies, user: userData, actors: people, writers: [actorDummyData, actorDummyData], directors: [actorDummyData]});
 })
 
 function getReviewObjects(data){
 	let reviewObjects = [];
-	data["Reviews"].forEach(id =>{
+	data["reviews"].forEach(id =>{
 		if(reviewsDummyData.hasOwnProperty(id)){
 			reviewObjects.push(reviewsDummyData[id]);
 		}
