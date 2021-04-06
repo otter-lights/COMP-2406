@@ -1,9 +1,12 @@
 const mongoose = require("mongoose");
 const ObjectId= require('mongoose').Types.ObjectId
-const Product = require("./ProductModel");
+//const Product = require("./ProductModel");
 const express = require('express');
-const faker = require('faker');
+//const faker = require('faker');
 let router = express.Router();
+
+
+/*
 
 router.get("/:id", sendUser); //sends user with ID (PUG or JSON)
 router.post("/signup", express.json(), createAccount);
@@ -20,6 +23,7 @@ router.put("/:id/usersfollowing");
 router.put("/:id/watchlist");
 router.get("/:id/reviews", populateReviewIds, sendReviews); 
 
+*/
 
 //now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.
 

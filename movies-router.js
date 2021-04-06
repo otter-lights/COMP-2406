@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 const ObjectId= require('mongoose').Types.ObjectId
-const Product = require("./ProductModel");
+//const Product = require("./ProductModel");
 const express = require('express');
-const faker = require('faker');
+//const faker = require('faker');
 let router = express.Router();
+
+/*
 
 router.get("/", searchMovie); //or queryparser idk whatever we wanna call the functions
 router.post("/", express.json(), createMovie); //create a movie and add to the database
@@ -16,6 +18,7 @@ router.get("/:id/reviews", populateReviewIds, sendReviews);
 
 //now make these functions so the get requests and whatever can be executed :)
 
+*/
 
 //Export the router so it can be mounted in the main app
 module.exports = router;
