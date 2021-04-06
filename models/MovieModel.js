@@ -2,14 +2,45 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let movieSchema = Schema({
-  title: {type: String, required: true},
-  year: {type: String},
-  runtime: {type: String},
-  genre: [String],
-  director: [{type: Schema.Types.ObjectId, ref: 'Person'}],
-  actor: [{type: Schema.Types.ObjectId, ref: 'Person'}],
-  writer: [{type: Schema.Types.ObjectId, ref: 'Person'}],
-  plot: [String]
+  //movieID from the Data Model will be the associated MongoDB id
+  title: {
+    type: String, 
+    required: true
+  },
+  plot: {
+    type: String,
+    required: true
+  },
+  year: {
+    type: String,
+    required: true
+  },
+  runtime: {
+    type: String,
+    required: true
+  },
+  rating: {
+    type: Number
+  },
+  genres: {
+    type: String,
+    required: true
+  },
+  director: {
+    type: [Schema.Types.ObjectId, ref: 'Person'],
+    required: true
+  },
+  actor: {
+    type: [Schema.Types.ObjectId, ref: 'Person'],
+    required: true
+  },
+  writer: {
+    type: [Schema.Types.ObjectId, ref: 'Person'],
+    required: true
+  },
+  reviews: {
+    type: [Schema.Types.ObjectId, ref: 'Reviews']
+  } 
 });
 
 module.exports = mongoose.model("Movie", movieSchema);
