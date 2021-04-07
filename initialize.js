@@ -10,7 +10,7 @@ const fs = require("fs");
 const csv = require('csv-parser')
 const results = []
 
-const fileName = "./data/movie-data-10.json";
+const fileName = "./data/movie-data-100.json";
 const userDataFile = "./data/user-data.json";
 
 //Array of all movie documents (no duplicates)
@@ -168,11 +168,13 @@ db.once('open', function() {
             return;
           }
           //Once all movies/people have been added, query for movie Toy Story and person Tom Hanks
-          Movie.findOne({title: "The Ballad of Cable Hogue"}).populate("director actor writer").exec(function(err, result){
+          Movie.findOne({title: "The Ballad of Cable Hogue"}).populate("actor director writer").exec(function(err, result){
             if(err)throw err;
             console.log(result);
-
-            Person.findOne({name: "Joe Mantegna"}).populate("actor director writer").exec(function(err, result){
+            Movie.getSimilar(result, function(err, results){
+              if(err) throw err
+              console.log(results)
+              Person.findOne({name: "Joe Mantegna"}).populate("actor director writer", "title").exec(function(err, result){
               if(err)throw err;
               console.log(result);
               User.findOne({username: "snapracklepop"}).exec(function(err, result){
@@ -181,6 +183,9 @@ db.once('open', function() {
                 mongoose.connection.close()
               })
             })
+            })
+
+            
           })
         })
       });

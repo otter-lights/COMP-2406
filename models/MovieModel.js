@@ -48,4 +48,8 @@ let movieSchema = Schema({
   }
 });
 
+movieSchema.statics.getSimilar = function(movie, callback){
+	this.model("Movie").find({genres: {$in: movie.genres}}).select("title year genres").sort('-rating -year').limit(10).exec(callback)
+}
+
 module.exports = mongoose.model("Movie", movieSchema);
