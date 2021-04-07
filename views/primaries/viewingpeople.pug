@@ -19,7 +19,7 @@ html(lang='en' dir='ltr')
                     div
                         h2 FREQUENT COLLABORATORS
                         #frequentcollaboratorscontainer.profileboxes
-                            each collaborator in commonCollaborators
+                            each collaborator in person.commonCollabs
                                 .iconboxes
                                     img(src='/img/Profile.png' alt='')
                                     p
@@ -28,7 +28,7 @@ html(lang='en' dir='ltr')
                         div
                             h2 MOVIES DIRECTED
                             #moviesdirectedcontainer.profileboxes
-                                each movie in directedMovies
+                                each movie in person.director
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
                                         p
@@ -37,7 +37,7 @@ html(lang='en' dir='ltr')
                         div
                             h2 MOVIES WRITTEN
                             #movieswrittencontainer.profileboxes
-                                each movie in writtenMovies
+                                each movie in person.writer
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
                                         p
@@ -46,7 +46,7 @@ html(lang='en' dir='ltr')
                         div
                             h2 MOVIES ACTED IN
                             #moviesactedincontainer.profileboxes
-                                each movie in actedMovies
+                                each movie in person.actor
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
                                         p

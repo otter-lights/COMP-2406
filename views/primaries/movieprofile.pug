@@ -27,17 +27,17 @@ html(lang='en' dir='ltr')
         #overviewdiv #{movie.plot}
         h5 DIRECTORS
         #movieinfodirectors.castcontainers
-          each director in directors
+          each director in movie.director
             a(href='/viewpeople') #{director.name}
             br
         h5 WRITERS
         #movieinfowriters.castcontainers
-          each writer in writers
+          each writer in movie.writer
             a(href='/viewpeople') #{writer.name}
             br
         h5 ACTORS
         #movieinfoactors.castcontainers
-          each actor in actors
+          each actor in movie.actor
             a(href='/viewpeople') #{actor.name}
             br
       #recommendedmovieinfocard.recommendedmovieinfocard
@@ -59,7 +59,7 @@ html(lang='en' dir='ltr')
       textarea#fullreviewinput(rows='4' cols='50' type='text')
       button#submitreviewbutton(type='button') SUBMIT
       #allreviewscontainer
-        each review in reviews
+        each review in movie.reviews
           .review
             .left
               .rating

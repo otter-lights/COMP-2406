@@ -39,18 +39,36 @@ let watchlist = [{"id": "6", "title": "Force Awakens"}, {"id": "43", "title": "S
 let users = [userData, userData, userData, userData, userData];
 let people = [actorDummyData, actorDummyData, actorDummyData, actorDummyData];
 let notificationsArray = [{"name": "snapracklepop", "movieid": "43", "nType": "0"},
-{"name": "zaraahlie", "movieId": "23", "nType": "1"},
-{"name": "Zack Snyder", "movieId": "6", "nType": "2"},
-{"name": "Rian Johnson", "movieId": "85", "nType": "3"},
-{"name": "Chris Evans", "movieId": "3", "nType": "4"}];
-let reviewsDummyData = {"2": {"id": "2", "username": "snapracklepop", "movieId": "3", "movieTitle": "The Avengers", "rating": "9", "briefsummary": "Chaotic but fun", "review": "Loki is super cool. The Avengers are okay. But Loki is cool. He also wears green, which is cool."},
-    "4": {"id": "4", "username": "AngelOnFira", "movieId": "3", "movieTitle": "The Avengers", "rating": "7"},
-    "3": {"id": "3", "username": "AngelOnFira", "movieId": "5", "movieTitle": "Fantastic Four", "rating": "4", "briefsummary": "Not as jampacked as advertised", "review": "Very slow-paced. Not entertaining. I almost thought it was going to be one of those cool superhero movies. I was wrong."},
-    "9": {"id": "9", "username": "AngelOnFira", "movieId": "2", "movieTitle": "Knives Out", "rating": "10", "briefsummary": "Chris Evans is really good in this.", "review": "His character is *spoilers* one of the best villains I have seen. Master manipulator. Didn't expect him to be the bad guy."},
-    "34": {"id": "34", "username": "zaraahlie", "movieId": "3", "movieTitle": "The Avengers", "rating": "10", "briefsummary": "Will rewatch for a long time", "review": "One of my favourite movies of all time. Brings together a bunch of individual movies over the years and ties them into one two hour-long movie. Excited to see the rest."}};
+{"name": "zaraahlie", "movieId": avengersMovieDummyData, "nType": "1"},
+{"name": "Zack Snyder", "movieId": avengersMovieDummyData, "nType": "2"},
+{"name": "Rian Johnson", "movieId": avengersMovieDummyData, "nType": "3"},
+{"name": "Chris Evans", "movieId": avengersMovieDummyData, "nType": "4"}];
+let reviewsDummyData = {"2": {"id": "2", "username": "snapracklepop", "movieId": avengersMovieDummyData, "movieTitle": "The Avengers", "rating": "9", "briefsummary": "Chaotic but fun", "review": "Loki is super cool. The Avengers are okay. But Loki is cool. He also wears green, which is cool."},
+    "4": {"id": "4", "username": "AngelOnFira", "movieId": avengersMovieDummyData, "movieTitle": "The Avengers", "rating": "7"},
+    "3": {"id": "3", "username": "AngelOnFira", "movieId": avengersMovieDummyData, "movieTitle": "Fantastic Four", "rating": "4", "briefsummary": "Not as jampacked as advertised", "review": "Very slow-paced. Not entertaining. I almost thought it was going to be one of those cool superhero movies. I was wrong."},
+    "9": {"id": "9", "username": "AngelOnFira", "movieId": avengersMovieDummyData, "movieTitle": "Knives Out", "rating": "10", "briefsummary": "Chris Evans is really good in this.", "review": "His character is *spoilers* one of the best villains I have seen. Master manipulator. Didn't expect him to be the bad guy."},
+    "34": {"id": "34", "username": "zaraahlie", "movieId": avengersMovieDummyData, "movieTitle": "The Avengers", "rating": "10", "briefsummary": "Will rewatch for a long time", "review": "One of my favourite movies of all time. Brings together a bunch of individual movies over the years and ties them into one two hour-long movie. Excited to see the rest."}};
 let searchResults = [{"id": "6", "title": "Force Awakens", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "43", "title": "Split", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "45", "title": "To All The Boys","genres":["Action","Adventure","Sci-Fi"]},
 {"id": "654", "title": "The Ugly Truth", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "12", "title": "V for Vendetta","genres":["Action","Adventure","Sci-Fi"]}, {"id": "64", "title": "Bleach","genres":["Action","Adventure","Sci-Fi"]}, {"id": "6", "title": "Force Awakens", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "43", "title": "Split", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "45", "title": "To All The Boys", "genres":["Action","Adventure","Sci-Fi"]},
 {"id": "654", "title": "The Ugly Truth", "genres":["Action","Adventure","Sci-Fi"]}];
+
+actorDummyData.commonCollabs = people;
+actorDummyData.director = watchlist;
+actorDummyData.actor = watchlist;
+actorDummyData.writer = watchlist;
+avengersMovieDummyData.director = [actorDummyData];
+avengersMovieDummyData.writer = [actorDummyData,actorDummyData];
+avengersMovieDummyData.cast = people;
+userData.peopleFollowing = people;
+userData.usersFollowing = users;
+userData.watchlist = watchlist;
+userData.notifications = notificationsArray;
+if(avengersMovieDummyData.hasOwnProperty("reviews")){
+  avengersMovieDummyData.reviews = getReviewObjects(avengersMovieDummyData);
+}
+if(userData.hasOwnProperty("reviews")){
+  userData.reviews = getReviewObjects(userData);
+}
 
 app.get(['/', '/logout'], (req, res) => {
   res.setHeader('content-type', 'text/html');
@@ -91,46 +109,36 @@ app.get('/advancedsearch', (req, res) => {
 app.get('/searchresults', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/searchresults', {movies: searchResults, user: userData})
+	res.render('./primaries/searchresults', {movies: searchResults, user: userData});
 })
 
 app.get('/profile', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/userprofile', {user: userData, recommendedMovies: watchlist, watchlist: watchlist,
-    usersFollowing: users, peopleFollowing: people, notifications: notificationsArray});
+	res.render('./primaries/userprofile', {user: userData, recommendedMovies: watchlist});
 })
 
 app.get('/viewuser', (req, res) => {
-  let reviewObjects = [];
-	if(userData.hasOwnProperty("reviews")){
-		reviewObjects = getReviewObjects(userData);
-	}
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/viewingusers', {user: userData, reviews: reviewObjects, watchlist: watchlist, peopleFollowing: people});
+
+	res.render('./primaries/viewingusers', {user: userData});
 })
 
 app.get('/viewpeople', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/viewingpeople', {person: actorDummyData, commonCollaborators: people, directedMovies: watchlist, actedMovies: watchlist, writtenMovies: watchlist,  user: userData});
-})  //if the cast does not have any directed movies or does not have acted movies, etc. then it is necessary to make whatever you are giving to the pug for directedMovies, actedMovies, etc. an EMPTY ARRAY for the pug to display things properly.
-
+	res.render('./primaries/viewingpeople', {person: actorDummyData,  user: userData});
+})  
 app.get('/movieprofile', (req, res) => {
   let recommendedMovies = [{"title": "Guardians of the Galaxy", "plot": "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.", "rating": "8.0", "genres": ["Action", "Adventure", "Comedy"]},
   {"title": "Ironman", "plot": "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.", "rating": "7.9", "genres": ["Action", "Adventure", "Sci-Fi"]},
   {"title": "Sherlock Holmes", "plot": "When the police are desperate they call upon Mr Sherlock Holmes and his unconventional methods of deduction to shed light on the matter.", "rating": "9.1", "genres": ["Crime", "Drama", "Mystery"]},
   {"title": "Knives Out", "plot": "A detective investigates the death of a patriarch of an eccentric, combative family.", "rating": "7.9", "genres": ["Comedy", "Crime", "Drama"]},
   {"title": "Sucker Punch", "plot": "A young girl institutionalized by her abusive stepfather retreats to an alternative reality as a coping strategy and envisions a plan to help her escape.", "rating": "6.0", "genres": ["Action", "Adventure", "Fantasy"]},];
-	let reviewObjects = [];
-	if(avengersMovieDummyData.hasOwnProperty("reviews")){
-		reviewObjects = getReviewObjects(avengersMovieDummyData);
-	}
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, reviews: reviewObjects,
-    recommendedMovies: recommendedMovies, user: userData, actors: people, writers: [actorDummyData, actorDummyData], directors: [actorDummyData]});
+	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, recommendedMovies: recommendedMovies, user: userData});
 })
 
 function getReviewObjects(data){

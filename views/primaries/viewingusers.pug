@@ -19,7 +19,7 @@ html(lang='en' dir='ltr')
                     div
                         h2 WHO THEY'RE FOLLOWING
                         #followingcontainer.profileboxes
-                            each person in peopleFollowing
+                            each person in user.peopleFollowing
                                 .iconboxes
                                     img(src='/img/Profile.png' alt='')
                                     p
@@ -27,7 +27,7 @@ html(lang='en' dir='ltr')
                     div
                         h2 WATCH LIST
                         #watchlistcontainer.profileboxes
-                            each movie in watchlist
+                            each movie in user.watchlist
                                 .iconboxes
                                     img(src='/img/Video.png' alt='')
                                     p
@@ -35,11 +35,11 @@ html(lang='en' dir='ltr')
                     div
                         h2 REVIEWS
                         #reviewsboxcontainer.reviewsbox
-                            each review in reviews
+                            each review in user.reviews
                                 .review
                                     .left
                                         h2
-                                            a(href='/movieprofile') #{review.movieTitle}
+                                            a(href='/movieprofile') #{review.movieId.title}
                                         img(src='/img/Video.png' alt='')
                                         p #{review.rating}/10
                                     .right

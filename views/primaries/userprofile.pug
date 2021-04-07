@@ -28,7 +28,7 @@ html(lang='en' dir='ltr')
                         p PEOPLE YOU FOLLOW
                         button#removepeoplebutton(type='button' name='editpeople' onclick='removeFollow()') remove
                         #peopleyoufollowcontainer.profileboxes
-                            each person in peopleFollowing
+                            each person in user.peopleFollowing
                                 .iconboxes
                                     img(src='/img/Profile.png' alt='')
                                     label(for='person')
@@ -38,7 +38,7 @@ html(lang='en' dir='ltr')
                             p USERS YOU FOLLOW
                             button#removeusersbutton(type='button' name='removeusers') remove
                             #usersyoufollowcontainer.profileboxes
-                                each u in usersFollowing
+                                each u in user.usersFollowing
                                     .iconboxes
                                         img(src='/img/Profile.png' alt='')
                                         label(for='u')
@@ -48,7 +48,7 @@ html(lang='en' dir='ltr')
                             p WATCHLIST
                             button#removewatchbutton(type='button' name='removewatch') remove
                             #watchlistcontainer.profileboxes
-                                each movie in watchlist
+                                each movie in user.watchlist
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
                                         label(for='movie.title')
@@ -65,7 +65,7 @@ html(lang='en' dir='ltr')
                         div
                             p NOTIFICATIONS
                             #notificationscontainer.profileboxes
-                                each notification in notifications
+                                each notification in user.notifications
                                     if(notification.nType === "0")
                                         img(src='./img/review.png')
                                         p
