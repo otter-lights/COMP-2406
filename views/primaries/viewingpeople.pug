@@ -24,7 +24,7 @@ html(lang='en' dir='ltr')
                                     img(src='/img/Profile.png' alt='')
                                     p
                                         a(href='/viewpeople') #{collaborator.name}
-                    if (directedMovies.length > 0)
+                    if (person.director.length > 0)
                         div
                             h2 MOVIES DIRECTED
                             #moviesdirectedcontainer.profileboxes
@@ -33,7 +33,7 @@ html(lang='en' dir='ltr')
                                         img(src='/img/Video.png' alt='')
                                         p
                                             a(href='/movieprofile') #{movie.title}
-                    if (writtenMovies.length > 0)
+                    if (person.writer.length > 0)
                         div
                             h2 MOVIES WRITTEN
                             #movieswrittencontainer.profileboxes
@@ -42,7 +42,7 @@ html(lang='en' dir='ltr')
                                         img(src='/img/Video.png' alt='')
                                         p
                                           a(href='/movieprofile') #{movie.title}
-                    if (actedMovies.length > 0)
+                    if (person.actor.length > 0)
                         div
                             h2 MOVIES ACTED IN
                             #moviesactedincontainer.profileboxes

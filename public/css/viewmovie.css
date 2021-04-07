@@ -50,14 +50,14 @@ body{
   display:inline-block;
   font-style: normal;
   font-weight: normal;
-  font-size: 70px;
+  font-size: 46px;
   margin-left: 75px;
   margin-top: 25px;
   margin-bottom:0px;
 }
 
 .moviedateduration{
-  width: 150px;
+  width: 70px;
   height: 30px;
   background: #FFBAAB;
   border-radius: 15px;

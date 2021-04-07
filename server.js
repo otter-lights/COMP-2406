@@ -2,8 +2,8 @@ const express = require('express');
 const http = require("http");
 const pug = require("pug");
 let mongo = require('mongodb');
+const mongoose = require("mongoose");
 let MongoClient = mongo.MongoClient;
-let db;
 
 var path = require('path');
 let app = express();
@@ -58,7 +58,7 @@ actorDummyData.actor = watchlist;
 actorDummyData.writer = watchlist;
 avengersMovieDummyData.director = [actorDummyData];
 avengersMovieDummyData.writer = [actorDummyData,actorDummyData];
-avengersMovieDummyData.cast = people;
+avengersMovieDummyData.actor = people;
 userData.peopleFollowing = people;
 userData.usersFollowing = users;
 userData.watchlist = watchlist;
@@ -129,13 +129,13 @@ app.get('/viewpeople', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
 	res.render('./primaries/viewingpeople', {person: actorDummyData,  user: userData});
-})  
+})
 app.get('/movieprofile', (req, res) => {
   let recommendedMovies = [{"title": "Guardians of the Galaxy", "plot": "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.", "rating": "8.0", "genres": ["Action", "Adventure", "Comedy"]},
   {"title": "Ironman", "plot": "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.", "rating": "7.9", "genres": ["Action", "Adventure", "Sci-Fi"]},
   {"title": "Sherlock Holmes", "plot": "When the police are desperate they call upon Mr Sherlock Holmes and his unconventional methods of deduction to shed light on the matter.", "rating": "9.1", "genres": ["Crime", "Drama", "Mystery"]},
   {"title": "Knives Out", "plot": "A detective investigates the death of a patriarch of an eccentric, combative family.", "rating": "7.9", "genres": ["Comedy", "Crime", "Drama"]},
-  {"title": "Sucker Punch", "plot": "A young girl institutionalized by her abusive stepfather retreats to an alternative reality as a coping strategy and envisions a plan to help her escape.", "rating": "6.0", "genres": ["Action", "Adventure", "Fantasy"]},];
+  {"title": "Sucker Punch", "plot": "A young girl institutionalized by her abusive stepfather retreats to an alternative reality as a coping strategy and envisions a plan to help her escape.", "rating": "6.0", "genres": ["Action", "Adventure", "Fantasy"]}];
   res.setHeader('content-type', 'text/html');
   res.status(200);
 	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, recommendedMovies: recommendedMovies, user: userData});
@@ -150,6 +150,10 @@ function getReviewObjects(data){
 	});
 	return reviewObjects;
 }
+
+mongoose.connect('mongodb://localhost/moviedata', {useNewUrlParser: true});
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
 app.listen(3000);
 console.log("Server listening at http://localhost:3000");
