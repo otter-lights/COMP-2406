@@ -14,7 +14,7 @@ const fileName = "./data/movie-data-100.json";
 const userDataFile = "./data/user-data.json";
 
 //Array of all movie documents (no duplicates)
-let allMovies = []; 
+let allMovies = [];
 //Object to find people by name easier than using array (works since people names are assumed unique)
 let people = {};
 //Array of all people documents (no duplicates)
@@ -33,12 +33,12 @@ function addPersonToMovie(personName, movie, position){
   if(!people.hasOwnProperty(personName)){
     //Create a new Person document, set initial state
     let newPerson = new Person();
-    
+
     //This is a key piece of functionality
     //We can use Mongoose to generate ObjectIDs OUTSIDE of the database
-    //So we can use these IDs before we have actually inserted anything    
+    //So we can use these IDs before we have actually inserted anything
     newPerson._id = mongoose.Types.ObjectId();
-    
+
     newPerson.name = personName;
     newPerson.director = [];
     newPerson.actor = [];
@@ -48,7 +48,7 @@ function addPersonToMovie(personName, movie, position){
     //Update the people object (name -> person document)
     people[newPerson.name] = newPerson;
   }
-  
+
   //At this point, we know the movie and person are defined documents
   //Retrieve the current person using their name, update the movie and person
   let curPerson = people[personName];
@@ -77,7 +77,7 @@ data.forEach(movie=>{
       "Poster":"https://m.media-amazon.com/images/M/MV5BMTQwMjkwNjE0Ml5BMl5BanBnXkFtZTgwOTU5ODIyMTE@._V1_SX300.jpg"
     }
   */
-  
+
   //Create a new movie document using the Mongoose model
   //Copy over the required basic movie data
   let newMovie = new Movie();
@@ -87,24 +87,24 @@ data.forEach(movie=>{
   newMovie.runtime = movie.Runtime;
   newMovie.genres = movie.Genre;
   newMovie.plot = movie.Plot;
-  
+
   //For each actor in this movies Actor array, call the addPersonToMovie function
   //This function will create a new person if one with the given name doesn't exist
   //It will also update that person document and movie document
   movie.Actors.forEach(actorName => {
     addPersonToMovie(actorName, newMovie, "actor");
   })
-  
+
   //Repeat for directors
   movie.Director.forEach(directorName => {
     addPersonToMovie(directorName, newMovie, "director");
   })
-  
+
   //Repeast for writers
   movie.Writer.forEach(directorName => {
     addPersonToMovie(directorName, newMovie, "writer");
   })
-  
+
   //Add the movie to our array of all movies (these are added to the database once we are finished)
   allMovies.push(newMovie)
 })
@@ -120,7 +120,7 @@ userData.forEach(user=>{
       "accountType”: True
     }
   */
-  
+
   //Create a new user document using the Mongoose model
   //Copy over the required basic user data
   let newUser = new User();
@@ -128,7 +128,7 @@ userData.forEach(user=>{
   newUser.username = user.username;
   newUser.password = user.password;
   newUser.accountType = user.accountType;
-  
+
   //Add the user to our array of all users (these are added to the database once we are finished)
   allUsers.push(newUser)
 })
@@ -154,14 +154,14 @@ db.once('open', function() {
   		  console.log(err);
   		  return;
   	  }
-  	  
+
       //Add all of the people documents to the database
       Person.insertMany(allPeople, function(err, result){
     	  if(err){
     		  console.log(err);
     		  return;
     	  }
-        
+
         User.insertMany(allUsers, function(err, result){
           if(err){
             console.log(err);
@@ -184,8 +184,6 @@ db.once('open', function() {
               })
             })
             })
-
-            
           })
         })
       });
