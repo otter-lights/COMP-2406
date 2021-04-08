@@ -28,11 +28,11 @@ router.get("/:id/reviews", populateReviewIds, sendReviews);
 
 let watchlist = [{"id": "6", "title": "Force Awakens"}, {"id": "43", "title": "Split"}, {"id": "45", "title": "To All The Boys"},
 {"id": "654", "title": "The Ugly Truth"}, {"id": "12", "title": "V for Vendetta"}, {"id": "64", "title": "Bleach"}];
-router.post("/logout", loginCheck, logoutUser);
-router.get("/:id", loginCheck, sendUser);
+router.post("/logout", validateUserSession, logoutUser);
+router.get("/:id", validateUserSession, sendUser);
 router.post("/login", notLoggedinCheck, loginUser, sendUser);
 router.post("/signup", notLoggedinCheck, createUser, loginUser, sendUser)
-
+router.post("/:id/accountType", validateUserSession, changeAccountType); //this needs to be a put
 //we will find the user
 router.param("id", function(req, res, next, value){
     User.findById(value, function(err, result){
@@ -75,12 +75,12 @@ function notLoggedinCheck(req, res, next){
 
 
 //checks if a user is logged in before continuing, otherwise sends an error
-function loginCheck(req, res, next){
+function validateUserSession(req, res, next){
   if(req.session.loggedin){
     next();
   }
   else{
-    res.status(400).send('Not logged in.');
+    res.status(404).send('Not logged in.');
   }
 }
 
@@ -176,6 +176,26 @@ function sendUser(req, res, next){
 	next();
 }
 
+
+function changeAccountType(req, res, next){
+  if(req.session.username === req.user.username){
+    req.user.accountType = !req.user.accountType;
+    req.user.save(function(err, user) {
+        if (err) {
+            console.log(err);
+            res.status(400).send("Something went wrong.");
+        }
+        else{
+          console.log(req.user);
+          req.session.admin = req.user.accountType;
+          res.status(201).redirect(`/users/${req.session.userID}`);
+        }
+      });
+  }
+  else{
+    res.status(404).send("Accessing account that is not logged in.");
+  }
+}
 //now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.
 
 //Export the router so it can be mounted in the main app

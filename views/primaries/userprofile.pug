@@ -17,11 +17,12 @@ html(lang='en' dir='ltr')
                     h3#username #{user.username.toUpperCase()}
                 .right
                     img(src='/img/Profile.png' alt='user profile picture')
-                    if(user.accountType === "True")
+                    if(user.accountType)
                         p CONTRIBUTING USER
                     else
                         p BASIC USER
-                    button#switchaccount(type='button' onclick='switchAccount()') SWITCH ACCOUNT TYPE
+                    form(method='POST' action=`/users/${session.userID}/accountType` name='accountType')
+                        button#switchaccount(type='submit' onclick='document.accountType.submit();') SWITCH ACCOUNT TYPE
             .profilecard
                 .sections
                     div
