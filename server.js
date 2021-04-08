@@ -81,7 +81,7 @@ app.get(['/', '/homepage'], (req, res) => {
 	res.render('./primaries/homepage.pug', {session:req.session});
 })
 
-app.get('/signin', (req, res) => {
+app.get('/login', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
   res.sendFile(path.join(__dirname + '/views/primaries/signin.html'));
