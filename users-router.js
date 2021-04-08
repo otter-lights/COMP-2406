@@ -4,6 +4,7 @@ const Movie = require("./models/MovieModel");
 const User = require("./models/UserModel");
 const Person = require("./models/PersonModel");
 const Review = require("./models/ReviewModel");
+const Notifcation = require("./models/NotificationModel");
 const express = require('express');
 let router = express.Router();
 
@@ -35,12 +36,27 @@ router.post("/signup", (req, res) => {
     res.status(300).redirect("/signup");
   }
   else{
-    let username = req.body.username;
-    let password = req.body.password;
     console.log(req.body);
-    res.status(200).redirect("/profile");
+
+    //Create a new user document using the Mongoose model
+    //Copy over the required basic user data
+    let newUser = new User();
+    newUser._id = mongoose.Types.ObjectId();
+    newUser.username = req.body.username;
+    newUser.password = req.body.password;
+    newUser.accountType = false; //make them basic users by default
+    newUser.save(function(err, user) {
+        if (err) {
+            console.log(err);
+            res.send(400);
+        }
+        else{
+          console.log(newUser);
+          res.status(200).redirect(`/users/${newUser._id}`);
+        }
+      });
   }
-});
+})
 
 router.post("/login", (req, res) => {
   if(!req.body.username || !req.body.password){

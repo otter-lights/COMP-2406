@@ -4,7 +4,7 @@ const Movie = require("./models/MovieModel");
 const User = require("./models/UserModel");
 const Person = require("./models/PersonModel");
 const Review = require("./models/ReviewModel");
-
+const Notifcation = require("./models/NotificationModel");
 const express = require('express');
 let router = express.Router();
 
