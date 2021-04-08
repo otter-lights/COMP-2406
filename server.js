@@ -78,7 +78,7 @@ if(userData.hasOwnProperty("reviews")){
 app.get(['/', '/homepage'], (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/homepage.pug', {user: userData});
+	res.render('./primaries/homepage.pug', {session:req.session});
 })
 
 app.get('/signin', (req, res) => {
@@ -96,44 +96,44 @@ app.get('/signup', (req, res) => {
 app.get('/addmovie', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/addamovie', {user: userData});
+	res.render('./primaries/addamovie', {session:req.session});
 })
 
 app.get('/addperson', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/addaperson', {user: userData});
+	res.render('./primaries/addaperson', {session:req.session});
 })
 
 app.get('/advancedsearch', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/advancedsearch', {user: userData});
+	res.render('./primaries/advancedsearch', {session:req.session});
 })
 
 app.get('/searchresults', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/searchresults', {movies: searchResults, user: userData});
+	res.render('./primaries/searchresults', {movies: searchResults, session:req.session});
 })
 
 app.get('/profile', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/userprofile', {user: userData, recommendedMovies: watchlist});
+	res.render('./primaries/userprofile', {user: userData, recommendedMovies: watchlist, session:req.session});
 })
 
 app.get('/viewuser', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
 
-	res.render('./primaries/viewingusers', {user: userData});
+	res.render('./primaries/viewingusers', {user: userData, session:req.session});
 })
 
 app.get('/viewpeople', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/viewingpeople', {person: actorDummyData,  user: userData});
+	res.render('./primaries/viewingpeople', {person: actorDummyData,  session:req.session});
 })
 app.get('/movieprofile', (req, res) => {
   let recommendedMovies = [{"title": "Guardians of the Galaxy", "plot": "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.", "rating": "8.0", "genres": ["Action", "Adventure", "Comedy"]},
@@ -143,7 +143,7 @@ app.get('/movieprofile', (req, res) => {
   {"title": "Sucker Punch", "plot": "A young girl institutionalized by her abusive stepfather retreats to an alternative reality as a coping strategy and envisions a plan to help her escape.", "rating": "6.0", "genres": ["Action", "Adventure", "Fantasy"]}];
   res.setHeader('content-type', 'text/html');
   res.status(200);
-	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, recommendedMovies: recommendedMovies, user: userData});
+	res.render('./primaries/movieprofile', {movie: avengersMovieDummyData, recommendedMovies: recommendedMovies, session:req.session});
 })
 
 function getReviewObjects(data){
