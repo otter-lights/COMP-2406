@@ -13,34 +13,35 @@ html(lang='en' dir='ltr')
         .whitebackground
             p ADD A MOVIE
             .formbox
-                p
-                    label(for='title') TITLE:
-                    input#title(type='text')
-                    br
-                p
-                    label(for='releaseYear') RELEASE YEAR:
-                    input#releaseYear(type='text')
-                    br
-                p
-                    label(for='runtime') RUNTIME:
-                    input#runtime(type='text')
-                    br
-                p
-                    label(for='genres') GENRES:
-                    input#genres(type='text')
-                    br
-                p
-                    label(for='writers') WRITERS:
-                    input#writers(type='text')
-                    br
-                p
-                    label(for='directors') DIRECTORS:
-                    input#directors(type='text')
-                    br
-                p
-                    label(for='actors') ACTORS:
-                    input#actors(type='text')
-                    br
-                p
-                    label
-                    button#addbutton(type='button' name='add' onclick='addMovie()') ADD
+                form(method="GET" action="/movieprofile")
+                    p
+                        label(for='title') TITLE:
+                        input#title(type='text' name='title' required)
+                        br
+                    p
+                        label(for='releaseYear') RELEASE YEAR:
+                        input#releaseYear(type='text' name='releaseYear' required)
+                        br
+                    p
+                        label(for='runtime') RUNTIME:
+                        input#runtime(type='text' name='runtime' required)
+                        br
+                    p
+                        label(for='genres') GENRES:
+                        input#genres(type='text' name='genres' required)
+                        br
+                    p
+                        label(for='writers') WRITERS:
+                        input#writers(type='text' name='writers' required)
+                        br
+                    p
+                        label(for='directors') DIRECTORS:
+                        input#directors(type='text' name='directors' required)
+                        br
+                    p
+                        label(for='actors') ACTORS:
+                        input#actors(type='text' name='actors' required)
+                        br
+                    p
+                        label
+                        button#addbutton(type='submit') ADD

@@ -1,15 +1,19 @@
 const express = require('express');
+//const session = require('express-session');
 const http = require("http");
 const pug = require("pug");
 let mongo = require('mongodb');
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 let MongoClient = mongo.MongoClient;
+
 
 var path = require('path');
 let app = express();
 app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(express.static("public"));
+app.use(express.urlencoded({extended:true})); //for form data. It converts the stream to strings.
+
 //let searchResults = require("./data/movie-data-10.json");
 
 let usersRouter = require("./users-router");

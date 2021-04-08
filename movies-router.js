@@ -6,7 +6,6 @@ const Person = require("./models/PersonModel");
 const Review = require("./models/ReviewModel");
 
 const express = require('express');
-//const faker = require('faker');
 let router = express.Router();
 
 /*
@@ -51,7 +50,7 @@ router.param("id", function(req, res, next, value){
     });
   });
 
-
+//sessions for logging in and user ID, maybe watchlist.
 
 function recommendMovies(req, res, next){
   req.recommendedMovies = [{"title": "Guardians of the Galaxy", "plot": "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.", "rating": "8.0", "genres": ["Action", "Adventure", "Comedy"]},

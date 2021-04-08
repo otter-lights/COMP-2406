@@ -13,10 +13,11 @@ html(lang='en' dir='ltr')
         .whitebackground
             p ADD A PERSON
             .formbox
-                p
-                    label(for='name') NAME:
-                    input#name(type='text')
-                    br
-                p
-                    label
-                    button#addbutton(type='button' name='add' onclick='addPerson()') ADD
+                form(method="POST" action="/people")
+                    p
+                        label(for='name') NAME:
+                        input(type='text' name='name' required)
+                        br
+                    p
+                        label
+                        button#addbutton(type='submit') ADD

@@ -5,7 +5,6 @@ const User = require("./models/UserModel");
 const Person = require("./models/PersonModel");
 const Review = require("./models/ReviewModel");
 const express = require('express');
-//const faker = require('faker');
 let router = express.Router();
 
 
@@ -30,6 +29,30 @@ router.get("/:id/reviews", populateReviewIds, sendReviews);
 //probs have to make a populate function
 
 router.get("/:id", sendUser);
+
+router.post("/signup", (req, res) => {
+  if(!req.body.username || !req.body.password){
+    res.status(300).redirect("/signup");
+  }
+  else{
+    let username = req.body.username;
+    let password = req.body.password;
+    console.log(req.body);
+    res.status(200).redirect("/profile");
+  }
+});
+
+router.post("/login", (req, res) => {
+  if(!req.body.username || !req.body.password){
+    res.status(300).redirect("/login");
+  }
+  else{
+    let username = req.body.username;
+    let password = req.body.password;
+    console.log(req.body);
+    res.status(200).redirect("/profile");
+  }
+})
 
 
 let watchlist = [{"id": "6", "title": "Force Awakens"}, {"id": "43", "title": "Split"}, {"id": "45", "title": "To All The Boys"},

@@ -13,7 +13,7 @@ html(lang='en' dir='ltr')
     #movieinfoblackbackground
       #movieinfocard.movieinfocard
         h1#movieinfotitle #{movie.title}
-        if (movie.hasOwnProperty(rating))
+        if (movie.hasOwnProperty('rating'))
           h3#movierating #{movie.rating}/10
         else
           h3#movierating N/A

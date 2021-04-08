@@ -16,6 +16,12 @@ router.get("/:id", sendUser); //sends person with ID (PUG or JSON)
 router.get("/:id", sendPerson);
 userData = {"accountType": "true"};
 
+router.post("/", (req, res) => {
+  let name = req.body.name;
+  console.log(req.body);
+  res.status(200).redirect("/viewpeople");
+})
+
 //we will find the user
 router.param("id", function(req, res, next, value){
     Person.findById(value, function(err, result){
