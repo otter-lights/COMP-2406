@@ -13,7 +13,7 @@ let router = express.Router();
 (done) router.get("/:id", sendUser); //sends user with ID (PUG or JSON)
 (done) router.post("/signup", express.json(), createAccount);
 (done) router.post("/login", loginUser);
-router.post("/logout", logoutUserSession);
+(done) router.post("/logout", logoutUserSession);
 router.get("/:id/accountType", validateUserSession);
 router.put("/:id/accountType", validateUserSession, changeAccountType);
 router.get("/:id/peoplefollowing", validateUserSession);
@@ -28,7 +28,7 @@ router.get("/:id/reviews", populateReviewIds, sendReviews);
 
 let watchlist = [{"id": "6", "title": "Force Awakens"}, {"id": "43", "title": "Split"}, {"id": "45", "title": "To All The Boys"},
 {"id": "654", "title": "The Ugly Truth"}, {"id": "12", "title": "V for Vendetta"}, {"id": "64", "title": "Bleach"}];
-
+router.get("/:id", sendUser);
 router.post("/login", findUser, sendUser);
 router.post("/logout", logoutUser);
 router.post("/signup", (req, res) => {
@@ -37,7 +37,6 @@ router.post("/signup", (req, res) => {
   }
   else{
     console.log(req.body);
-router.get("/:id", sendUser);
     //Create a new user document using the Mongoose model
     //Copy over the required basic user data
     let newUser = new User();
@@ -79,6 +78,7 @@ function findUser(req, res, next){
           req.user = results;
           req.session.username = results.username;
           req.session.loggedin = true;
+          req.session.admin = results.accountType;
           req.session.userID = results._id;
           next();
         }
@@ -123,10 +123,10 @@ function sendUser(req, res, next){
 		},
 		"text/html": () => {
       if(req.session.username === req.user.username){
-        res.render('./primaries/userprofile', {user: req.user, recommendedMovies: watchlist});
+        res.render('./primaries/userprofile', {user: req.user, recommendedMovies: watchlist, session:req.session});
       }
       else{
-        res.render('./primaries/viewingusers', {user: req.user, recommendedMovies: watchlist});
+        res.render('./primaries/viewingusers', {user: req.user, recommendedMovies: watchlist, session:req.session});
       }
     }
 	});
