@@ -30,6 +30,7 @@ router.get("/:id/reviews", populateReviewIds, sendReviews);
 //probs have to make a populate function
 
 router.get("/:id", sendUser);
+router.post("/login", findUser, sendUser);
 
 router.post("/signup", (req, res) => {
   if(!req.body.username || !req.body.password){
@@ -58,17 +59,33 @@ router.post("/signup", (req, res) => {
   }
 })
 
-router.post("/login", (req, res) => {
+function findUser(req, res, next){
   if(!req.body.username || !req.body.password){
     res.status(300).redirect("/login");
   }
   else{
     let username = req.body.username;
     let password = req.body.password;
-    console.log(req.body);
-    res.status(200).redirect("/profile");
+    User.findByUsername(username, function(err, results){
+      if (err) {
+          console.log(err);
+          res.status(400).send('Something went wrong.');
+      }
+      else if(results.length == 0){
+        res.status(400).send('Something went wrong.');
+      }
+      else{
+        if (password === results[0].password){
+          req.user = results[0];
+          next();
+        }
+        else{
+          res.status(400).send('Password incorrect.');
+        }
+      }
+    });
   }
-})
+}
 
 
 let watchlist = [{"id": "6", "title": "Force Awakens"}, {"id": "43", "title": "Split"}, {"id": "45", "title": "To All The Boys"},
@@ -100,6 +117,7 @@ router.param("id", function(req, res, next, value){
 
 
 function sendUser(req, res, next){
+    console.log(req.user);
     res.format({
 		"application/json": function(){
 			res.status(200).json(req.user);
