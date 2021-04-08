@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./css/userprofile.css" rel="stylesheet">
-    <link href="./css/menubar.css" rel="stylesheet">
+    <link href="/css/userprofile.css" rel="stylesheet">
+    <link href="/css/menubar.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
     <title></title>
@@ -13,12 +13,15 @@
 
     <div class="menubar">
       <a href="/" class ="logo">RAZARA</a>
-      <a href="/logout" class ="menu">LOGOUT</a>
+      <form method="POST" action="/users/logout" name="logout" class="menu">
+        <a onclick="document.logout.submit();">LOGOUT</a>
+      </form>
       <a href="/profile" class ="menu">PROFILE</a>
       <a href="/addmovie" class ="menu">ADD A MOVIE</a>
       <a href="/addperson" class ="menu">ADD A PERSON</a>
       <a href="/advancedsearch" class ="menu">SEARCH</a>
     </div>
+
 
 
       <div class="blackbackground">
@@ -28,7 +31,7 @@
               <h3 id="username">USERNAME</h3>
             </div>
             <div class="right">
-                <img src="./img/Profile.png" alt="user profile picture"/>
+                <img src="/img/Profile.png" alt="user profile picture"/>
                 <p>ACCOUNT TYPE</p><br>
                 <button type="button" id="switchaccount" onclick="switchAccount()">SWITCH ACCOUNT TYPE</button>
             </div>
@@ -41,7 +44,7 @@
               <button type="button" id="removepeoplebutton" name="editpeople" onclick="removeFollow()">remove</button>
               <div class = "profileboxes" id="peopleyoufollowcontainer">
                 <div class = "iconboxes">
-                  <img src="./img/Profile.png" alt=""/>
+                  <img src="/img/Profile.png" alt=""/>
                   <label for="person#1"><input type="checkbox" id="person#1" name="person#1"><a href= "/userprofile.html">Forest Anderson</a></label>
                   <!-- MAKE LABELS LIKE THIS, WITH INPUT NESTED IN. If the names are longer than
                       the label, then it completely separates from the checbox. This ensures that some of the text
@@ -55,7 +58,7 @@
               <button type="button" id="removeusersbutton" name="removeusers">remove</button>
               <div class = "profileboxes" id="usersyoufollowcontainer">
                 <div class = "iconboxes">
-                  <img src="./img/Profile.png" alt=""/>
+                  <img src="/img/Profile.png" alt=""/>
                   <label for="user#1"><input type="checkbox" id="user#1" name="user#1">USER #1</label>
 
                 </div>
@@ -66,7 +69,7 @@
               <button type="button" id="removewatchbutton" name="removewatch">remove</button>
               <div class = "profileboxes" id="watchlistcontainer">
                 <div class = "iconboxes">
-                  <img src="./img/Video.png" alt=""/>
+                  <img src="/img/Video.png" alt=""/>
                   <label for="movie#1">  <input type="checkbox" id="movie#1" name="movie#1">MOVIE #1</label>
                 </div>
               </div>
@@ -75,7 +78,7 @@
               <p>RECOMMENDED MOVIES</p>
                 <div class = "profileboxes" id="recommendedmoviescontainer">
                   <div class = "iconboxes">
-                    <img src="./img/Video.png" alt=""/>
+                    <img src="/img/Video.png" alt=""/>
                     <label for="recommended#1">MOVIE #1</label>
                   </div>
                 </div>
@@ -97,6 +100,6 @@
       </div>
       </div>
 
-      <script src="./javascript/userprofile.js" charset="utf-8"></script>
+      <script src="/javascript/userprofile.js" charset="utf-8"></script>
   </body>
 </html>

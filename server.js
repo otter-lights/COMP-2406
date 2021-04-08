@@ -1,5 +1,5 @@
 const express = require('express');
-//const session = require('express-session');
+const session = require('express-session');
 const http = require("http");
 const pug = require("pug");
 let mongo = require('mongodb');
@@ -14,7 +14,8 @@ app.set("views", "./views");
 app.use(express.static("public"));
 app.use(express.urlencoded({extended:true})); //for form data. It converts the stream to strings.
 
-//let searchResults = require("./data/movie-data-10.json");
+app.use(session({secret: "A very huge secret goes here."}));
+//this is our session object. Can also add a maxAge if we want.
 
 let usersRouter = require("./users-router");
 app.use("/users", usersRouter);
@@ -74,7 +75,7 @@ if(userData.hasOwnProperty("reviews")){
   userData.reviews = getReviewObjects(userData);
 }
 
-app.get(['/', '/logout'], (req, res) => {
+app.get(['/', '/homepage'], (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
 	res.render('./primaries/homepage.pug', {user: userData});

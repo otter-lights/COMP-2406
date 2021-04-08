@@ -42,7 +42,7 @@ let userSchema = Schema({
 });
 
 userSchema.statics.findByUsername = function(username, callback){
-  this.find({username: new RegExp(username, 'i')}, callback);
+  this.findOne({username: new RegExp(username, 'i')}, callback);
 }
 
 module.exports = mongoose.model("User", userSchema);

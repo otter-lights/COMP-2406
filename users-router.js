@@ -10,10 +10,9 @@ let router = express.Router();
 
 
 /*
-
-router.get("/:id", sendUser); //sends user with ID (PUG or JSON)
-router.post("/signup", express.json(), createAccount);
-router.post("/login", loginUser);
+(done) router.get("/:id", sendUser); //sends user with ID (PUG or JSON)
+(done) router.post("/signup", express.json(), createAccount);
+(done) router.post("/login", loginUser);
 router.post("/logout", logoutUserSession);
 router.get("/:id/accountType", validateUserSession);
 router.put("/:id/accountType", validateUserSession, changeAccountType);
@@ -25,20 +24,20 @@ router.put("/:id/peoplefollowing"); //i got lazy here but you can fill in the fu
 router.put("/:id/usersfollowing");
 router.put("/:id/watchlist");
 router.get("/:id/reviews", populateReviewIds, sendReviews);
-
 */
-//probs have to make a populate function
 
-router.get("/:id", sendUser);
+let watchlist = [{"id": "6", "title": "Force Awakens"}, {"id": "43", "title": "Split"}, {"id": "45", "title": "To All The Boys"},
+{"id": "654", "title": "The Ugly Truth"}, {"id": "12", "title": "V for Vendetta"}, {"id": "64", "title": "Bleach"}];
+
 router.post("/login", findUser, sendUser);
-
+router.post("/logout", logoutUser);
 router.post("/signup", (req, res) => {
   if(!req.body.username || !req.body.password){
     res.status(300).redirect("/signup");
   }
   else{
     console.log(req.body);
-
+router.get("/:id", sendUser);
     //Create a new user document using the Mongoose model
     //Copy over the required basic user data
     let newUser = new User();
@@ -71,12 +70,16 @@ function findUser(req, res, next){
           console.log(err);
           res.status(400).send('Something went wrong.');
       }
-      else if(results.length == 0){
-        res.status(400).send('Something went wrong.');
+      else if(!results){
+        res.status(400).send('User not found.');
       }
       else{
-        if (password === results[0].password){
-          req.user = results[0];
+        console.log(results);
+        if (password === results.password){
+          req.user = results;
+          req.session.username = results.username;
+          req.session.loggedin = true;
+          req.session.userID = results._id;
           next();
         }
         else{
@@ -86,10 +89,6 @@ function findUser(req, res, next){
     });
   }
 }
-
-
-let watchlist = [{"id": "6", "title": "Force Awakens"}, {"id": "43", "title": "Split"}, {"id": "45", "title": "To All The Boys"},
-{"id": "654", "title": "The Ugly Truth"}, {"id": "12", "title": "V for Vendetta"}, {"id": "64", "title": "Bleach"}];
 
 //we will find the user
 router.param("id", function(req, res, next, value){
@@ -117,14 +116,26 @@ router.param("id", function(req, res, next, value){
 
 
 function sendUser(req, res, next){
-    console.log(req.user);
+    console.log(req.session);
     res.format({
 		"application/json": function(){
 			res.status(200).json(req.user);
 		},
-		"text/html": () => { res.render('./primaries/userprofile', {user: req.user, recommendedMovies: watchlist});}
+		"text/html": () => {
+      if(req.session.username === req.user.username){
+        res.render('./primaries/userprofile', {user: req.user, recommendedMovies: watchlist});
+      }
+      else{
+        res.render('./primaries/viewingusers', {user: req.user, recommendedMovies: watchlist});
+      }
+    }
 	});
 	next();
+}
+
+function logoutUser(req, res, next){
+  req.session.destroy();
+  res.status(200).redirect("/")
 }
 
 //now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.

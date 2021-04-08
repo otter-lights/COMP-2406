@@ -1,9 +1,10 @@
 mixin menubar
     .menubar
-        a.logo(href='/') RAZARA
-        a.menu(href='/logout') LOGOUT
+        form.menu(method='POST' action='/users/logout' name='logout')
+          a(onclick='document.logout.submit();') LOGOUT
         a.menu(href='/profile') PROFILE
         if(user.accountType === "true")
             a.menu(href='/addmovie') ADD A MOVIE
             a.menu(href='/addperson') ADD A PERSON
         a.menu(href='/advancedsearch') SEARCH
+        a.logo(href='/') RAZARA
