@@ -13,11 +13,11 @@ html(lang='en' dir='ltr')
         .whitebackground
             p ADD A PERSON
             .formbox
-                form(method="POST" action="/people")
-                    p
-                        label(for='name') NAME:
-                        input(type='text' name='name' required)
-                        br
-                    p
-                        label
-                        button#addbutton(type='submit') ADD
+                  p
+                      label(for='name') NAME:
+                      input(type='text' name='name' id='name')
+                      br
+                  p
+                      label
+                      button#addbutton(type='button' onclick='addPerson()') ADD
+    script(src='/javascript/addperson.js' charset='utf-8')

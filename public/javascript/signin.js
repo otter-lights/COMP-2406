@@ -16,7 +16,6 @@ function signInUser(){
     return;
   }
   if(findUser(username, password)){
-    //enter website
     document.getElementById("username").value = "";
     document.getElementById("password").value = "";
     return;

@@ -1,16 +1,3 @@
-
-function reloadPage(){
-  let xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if(this.readyState==4 && this.status==200){
-			merge(JSON.parse(this.responseText));
-			renderList(); //call function to fill in the list div
-		}
-	};
-	xhttp.open("GET", "http://localhost:3000/list", true);
-	xhttp.send();
-}
-
 function switchAccountType(){
   let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {

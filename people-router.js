@@ -15,8 +15,6 @@ router.get("/:id", sendUser); //sends person with ID (PUG or JSON)
 
 */
 router.get("/:id", sendPerson);
-userData = {"accountType": "true"};
-
 router.post("/", (req, res) => {
   let name = req.body.name;
   console.log(req.body);
@@ -53,7 +51,7 @@ function sendPerson(req, res, next){
 		"application/json": function(){
 			res.status(200).json(req.person);
 		},
-		"text/html": () => { res.render('./primaries/viewingpeople', {user: userData, person: req.person});}
+		"text/html": () => { res.render('./primaries/viewingpeople', {session: req.session, person: req.person});}
 	});
 	next();
 }

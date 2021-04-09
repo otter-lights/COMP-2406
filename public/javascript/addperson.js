@@ -1,13 +1,4 @@
-
-function doesPersonExist(name){
-  //checks server to see if person with this name exists already
-  //if they do, return true
-  //if not, return false
-  return false;
-}
-
 function verifyLetters(name){
-  //input verification, make sure it's an actual name.
   if(name.length == 0){
     return false;
   }
@@ -20,15 +11,25 @@ function addPerson(){
     alert("Please input a valid name into the textfield.")
     return;
   }
-  if(!doesPersonExist(name)){
-    let newPersonObject = {"Name":name}; //add more
-    //add person to database:
-    //create new person json object
-    //send this object to the server
-    document.getElementById("name").value = ""; //clear the content
-  }
-    else{
-      alert("This person already exists in Razara's database.")
-      return;
-    }
+  let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if(this.readyState==4){
+      if(this.status==201){
+        let id = (JSON.parse(this.responseText))._id;
+        window.location.replace(`/people/${id}`);
+      }
+      else if(this.status==401){
+        alert("You are not authorized to add a person to the database.");
+      }
+      else if(this.status==409){
+        alert("This person already exists in the database. You can search for them in the search tab.");
+      }
+      else{
+        alert("There was a problem with the server. Try again.");
+      }
+		}
+	};
+	xhttp.open("POST", "/addperson", true);
+	xhttp.setRequestHeader("Content-Type", "application/json");
+	xhttp.send(JSON.stringify({"name": name}));
 }

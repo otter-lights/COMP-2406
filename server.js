@@ -4,6 +4,12 @@ const http = require("http");
 const pug = require("pug");
 let mongo = require('mongodb');
 const mongoose = require('mongoose');
+const ObjectId= require('mongoose').Types.ObjectId
+const Movie = require("./models/MovieModel");
+const User = require("./models/UserModel");
+const Person = require("./models/PersonModel");
+const Review = require("./models/ReviewModel");
+const Notifcation = require("./models/NotificationModel");
 let MongoClient = mongo.MongoClient;
 
 
@@ -26,6 +32,8 @@ let peopleRouter = require("./people-router");
 app.use("/people", peopleRouter);
 let reviewsRouter = require("./reviews-router");
 app.use("/reviews", reviewsRouter);
+
+app.post("/addperson", createPerson);
 
 let avengersMovieDummyData = {"id": "3", "title":"The Avengers",
 "year":"2012", "runtime":"143 min",
@@ -156,6 +164,37 @@ function getReviewObjects(data){
 	});
 	return reviewObjects;
 }
+
+function createPerson(req, res, next){
+  console.log("Here.");
+  if(req.session.loggedin && req.session.admin){
+    console.log(req.body);
+    //Create a new person document using the Mongoose model
+    //Copy over the required basic person data
+    let newPerson = new Person();
+    newPerson._id = mongoose.Types.ObjectId();
+    newPerson.name = req.body.name;
+    newPerson.save(function(err, user) {
+        if (err) {
+          if(err.code == 11000){ //this is duplicate-key error (someone already exists with that name)
+            res.send(409); //409 is the correct status code for duplicate resource or resource already exists.
+            //it means conflict
+          }
+          else{
+            console.log(err);
+            res.send(400);
+          }
+        }
+        else{
+          res.status(201).send(newPerson);
+        }
+      });
+  }
+  else{
+    res.sendStatus(401); //or whatever to indicate unauthorized
+  }
+}
+
 
 mongoose.connect('mongodb://localhost/moviedata', {useNewUrlParser: true});
 let db = mongoose.connection;

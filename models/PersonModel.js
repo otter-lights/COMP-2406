@@ -29,4 +29,12 @@ let personSchema = Schema({
   }
 });
 
+personSchema.statics.startsWith = function(username, callback){
+  this.find({username: new RegExp(username, 'i')}, callback);
+}
+
+personSchema.statics.findByName = function(name, callback){
+  this.findOne({username: new RegExp(username, 'i')}, callback);
+}
+
 module.exports = mongoose.model("Person", personSchema);

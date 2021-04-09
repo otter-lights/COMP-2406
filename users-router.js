@@ -59,9 +59,6 @@ router.param("id", function(req, res, next, value){
   });
 
 
-
-
-
 //makes sure there is no logged in user before continuing, otherwise sends them their profile page so they can log out
 function notLoggedinCheck(req, res, next){
   if(!req.session.loggedin){
@@ -71,9 +68,6 @@ function notLoggedinCheck(req, res, next){
     res.status(300).redirect(`/users/${req.session.userID}`);
   }
 }
-
-
-
 
 //checks if a user is logged in before continuing, otherwise sends an error
 function validateUserSession(req, res, next){
@@ -85,8 +79,6 @@ function validateUserSession(req, res, next){
     res.status(404).send('Not logged in.');
   }
 }
-
-
 
 
 function createUser(req, res, next){
@@ -139,7 +131,7 @@ function loginUser(req, res, next){
           req.session.loggedin = true;
           req.session.admin = results.accountType;
           req.session.userID = results._id;
-          next();
+          res.status(201).redirect(`/users/${req.session.userID}`);
         }
         else{
           res.status(400).send('Password incorrect.');
