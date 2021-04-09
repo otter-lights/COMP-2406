@@ -21,7 +21,8 @@ html(lang='en' dir='ltr')
                         p CONTRIBUTING USER
                     else
                         p BASIC USER
-                    button#switchaccount(type='button' onclick='switchAccountType()') SWITCH ACCOUNT TYPE
+                    form(method='POST' action=`/users/${session.userID}/accountType` name='accountType')
+                        button#switchaccount(type='submit' onclick='document.accountType.submit();') SWITCH ACCOUNT TYPE
             .profilecard
                 .sections
                     div
@@ -106,4 +107,3 @@ html(lang='en' dir='ltr')
                                             a(href='/movieprofile') MOVIE
                                             | .
                                         br
-    script(src='/javascript/userprofile.js' charset='utf-8')
