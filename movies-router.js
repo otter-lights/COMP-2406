@@ -18,9 +18,7 @@ router.get("/:id", sendMovie); //sends movie with ID (PUG or JSON)
 router.get("/:id/reviews", populateReviewIds, sendReviews);
 //- Supports response types application/json
 //- Retrieves the array of reviews about a particular movie
-
 //now make these functions so the get requests and whatever can be executed :)
-
 */
 
 router.get("/:id", recommendMovies, sendMovie);
@@ -62,11 +60,14 @@ function recommendMovies(req, res, next){
 }
 
 function sendMovie(req, res, next){
-    res.format({
+  //get the current logged in user, and send the watchlist
+  //
+  //if req.movie._id is in the user's watchlist, give boolean.
+  res.format({
 		"application/json": function(){
 			res.status(200).json(req.movie);
 		},
-		"text/html": () => { res.render('./primaries/movieprofile', {movie: req.movie, recommendedMovies: req.recommendedMovies, user: userData});}
+		"text/html": () => { res.render('./primaries/movieprofile', {movie: req.movie, recommendedMovies: req.recommendedMovies, session: req.session});}
 	});
 	next();
 }

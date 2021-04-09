@@ -8,14 +8,7 @@ const Notifcation = require("./models/NotificationModel");
 const express = require('express');
 let router = express.Router();
 
-
 /*
-(done) router.get("/:id", sendUser); //sends user with ID (PUG or JSON)
-(done) router.post("/signup", express.json(), createAccount);
-(done) router.post("/login", loginUser);
-(done) router.post("/logout", logoutUserSession);
-router.get("/:id/accountType", validateUserSession);
-router.put("/:id/accountType", validateUserSession, changeAccountType);
 router.get("/:id/peoplefollowing", validateUserSession);
 router.get("/:id/usersfollowing", validateUserSession);
 router.get("/:id/watchlist", validateUserSession);

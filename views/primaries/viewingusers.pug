@@ -43,9 +43,9 @@ html(lang='en' dir='ltr')
                                         img(src='/img/Video.png' alt='')
                                         p #{review.rating}/10
                                     .right
-                                        if(review.hasOwnProperty("briefsummary"))
+                                        if(review.briefsummary)
                                             h4 Summary
                                             p #{review.briefsummary}
-                                        if(review.hasOwnProperty("review"))
+                                        if(review.review)
                                             h4 Full Review
                                             p #{review.review}

@@ -60,7 +60,7 @@ html(lang='en' dir='ltr')
       textarea#briefsummaryinput(rows='4' cols='50')
       h5 WRITE A FULL REVIEW (OPTIONAL):
       textarea#fullreviewinput(rows='4' cols='50' type='text')
-      button#submitreviewbutton(type='button') SUBMIT
+      button#submitreviewbutton(type='button' onclick='addReview()') SUBMIT
       #allreviewscontainer
         each review in movie.reviews
           .review
@@ -72,11 +72,12 @@ html(lang='en' dir='ltr')
               p
                 a(href='/viewuser') #{review.username}
             .right
-              if (review.hasOwnProperty("briefsummary"))
+              if (review.briefsummary)
                 h4 Summary
                 p
                   | #{review.briefsummary}
-              if (review.hasOwnProperty("review"))
+              if (review.review)
                 h4 Full Review
                 p
                   | #{review.review}
+    script(src='/javascript/viewmovie.js' charset='utf-8')
