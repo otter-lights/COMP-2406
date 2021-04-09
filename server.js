@@ -13,7 +13,8 @@ app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(express.static("public"));
 app.use(express.urlencoded({extended:true})); //for form data. It converts the stream to strings.
-
+//Automatically parse application/json data
+app.use(express.json());
 app.use(session({secret: "A very huge secret goes here."}));
 //this is our session object. Can also add a maxAge if we want.
 

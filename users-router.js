@@ -32,7 +32,8 @@ router.post("/logout", validateUserSession, logoutUser);
 router.get("/:id", validateUserSession, sendUser);
 router.post("/login", notLoggedinCheck, loginUser, sendUser);
 router.post("/signup", notLoggedinCheck, createUser, loginUser, sendUser)
-router.post("/:id/accountType", validateUserSession, changeAccountType); //this needs to be a put
+router.put("/:id/accountType", validateUserSession, changeAccountType); //this needs to be a put
+router.get("/:id/accountType", validateUserSession, sendAccountType);
 //we will find the user
 router.param("id", function(req, res, next, value){
     User.findById(value, function(err, result){
@@ -80,6 +81,7 @@ function validateUserSession(req, res, next){
     next();
   }
   else{
+    console.log("Something wonky here.");
     res.status(404).send('Not logged in.');
   }
 }
@@ -176,24 +178,33 @@ function sendUser(req, res, next){
 	next();
 }
 
+function sendAccountType(req, res, next){
+  if(req.session.username === req.user.username){
+    res.setHeader('content-type', 'application/json');
+    res.status(200).send({"accountType": req.user.accountType});
+  }
+  else{
+    res.sendStatus(404);
+  }
+}
 
 function changeAccountType(req, res, next){
   if(req.session.username === req.user.username){
-    req.user.accountType = !req.user.accountType;
+    req.user.accountType = req.body.accountType;
     req.user.save(function(err, user) {
         if (err) {
             console.log(err);
-            res.status(400).send("Something went wrong.");
+            res.sendStatus(300);
         }
         else{
-          console.log(req.user);
           req.session.admin = req.user.accountType;
-          res.status(201).redirect(`/users/${req.session.userID}`);
+          res.sendStatus(200);
         }
       });
   }
   else{
-    res.status(404).send("Accessing account that is not logged in.");
+    console.log("No.");
+    res.sendStatus(404);
   }
 }
 //now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.
