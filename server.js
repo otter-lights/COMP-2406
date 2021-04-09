@@ -91,27 +91,47 @@ app.get(['/', '/homepage'], (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-  res.setHeader('content-type', 'text/html');
-  res.status(200);
-  res.sendFile(path.join(__dirname + '/views/primaries/signin.html'));
+  if(!req.session.loggedin){
+    res.setHeader('content-type', 'text/html');
+    res.status(200);
+    res.sendFile(path.join(__dirname + '/views/primaries/signin.html'));
+  }
+  else{
+    res.status(400).redirect(`/users/${req.session.userID}`);
+  }
 })
 
 app.get('/signup', (req, res) => {
-  res.setHeader('content-type', 'text/html');
-  res.status(200);
-  res.sendFile(path.join(__dirname + '/views/primaries/signup.html'));
+  if(!req.session.loggedin){
+    res.setHeader('content-type', 'text/html');
+    res.status(200);
+    res.sendFile(path.join(__dirname + '/views/primaries/signup.html'));
+  }
+  else{
+    res.status(400).redirect(`/users/${req.session.userID}`);
+  }
 })
 
 app.get('/addmovie', (req, res) => {
-  res.setHeader('content-type', 'text/html');
-  res.status(200);
-	res.render('./primaries/addamovie', {session:req.session});
+  if(session.loggedin && session.admin){
+    res.setHeader('content-type', 'text/html');
+    res.status(200);
+  	res.render('./primaries/addamovie', {session:req.session});
+  }
+  else{
+    res.status(401).redirect("/");
+  }
 })
 
 app.get('/addperson', (req, res) => {
-  res.setHeader('content-type', 'text/html');
-  res.status(200);
-	res.render('./primaries/addaperson', {session:req.session});
+  if(req.session.loggedin && req.session.admin){
+    res.setHeader('content-type', 'text/html');
+    res.status(200);
+  	res.render('./primaries/addaperson', {session:req.session});
+  }
+  else{
+    res.status(401).redirect("/");
+  }
 })
 
 app.get('/advancedsearch', (req, res) => {
@@ -166,7 +186,6 @@ function getReviewObjects(data){
 }
 
 function createPerson(req, res, next){
-  console.log("Here.");
   if(req.session.loggedin && req.session.admin){
     console.log(req.body);
     //Create a new person document using the Mongoose model
