@@ -39,6 +39,14 @@ router.param("id", function(req, res, next, value){
   		}
 
       Movie.findById(value).populate("director writer actor reviews").exec(function(err, result){
+        /*
+        result.reviews.populate("id").exec(function(err, result){
+            if(err) throw err;
+            req.movie = result;
+            //error codes here check if empty, blah blah blah blah.
+            next();
+        });
+        */
           if(err) throw err;
           req.movie = result;
           console.log(result);
