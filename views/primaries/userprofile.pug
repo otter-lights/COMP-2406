@@ -33,7 +33,7 @@ html(lang='en' dir='ltr')
                                     img(src='/img/Profile.png' alt='')
                                     label(for='person')
                                         input(type='checkbox' id='person' name='person')
-                                        a(href='/viewpeople') #{person.name}
+                                        a(href=`/people/`+ person._id) #{person.name}
                         div
                             p USERS YOU FOLLOW
                             button#removeusersbutton(type='button' name='removeusers') remove
@@ -43,7 +43,7 @@ html(lang='en' dir='ltr')
                                         img(src='/img/Profile.png' alt='')
                                         label(for='u')
                                             input(type='checkbox' id='u' name='u')
-                                            a(href='/viewuser') #{u.username}
+                                            a(href=`/users/`+ u._id) #{u.username}
                         div
                             p WATCHLIST
                             button#removewatchbutton(type='button' name='removewatch') remove
@@ -53,7 +53,7 @@ html(lang='en' dir='ltr')
                                         img(src='/img/Video.png' alt='')
                                         label(for='movie.title')
                                             input(type='checkbox' id='movie.title' name='movie.title')
-                                            a(href='/movieprofile') #{movie.title}
+                                            a(href=`/movies/`+ movie._id) #{movie.title}
                         div
                             p RECOMMENDED MOVIES
                             #recommendedmoviescontainer.profileboxes

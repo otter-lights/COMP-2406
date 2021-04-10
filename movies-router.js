@@ -45,28 +45,6 @@ router.param("id", function(req, res, next, value){
           //error codes here check if empty, blah blah blah blah.
           next();
       });
-      /*Movie.findById(value).populate("director writer actor reviews").exec(function(err, result){
-
-        result.reviews.populate("id").exec(function(err, result){
-            if(err) throw err;
-            req.movie = result;
-            //error codes here check if empty, blah blah blah blah.
-            next();
-        });
-
-          if(err){
-            throw err;
-            res.sendStatus(500);
-            //500 Internal Server Error
-            //the server can't populate the data that it has already verified, making it a server error.
-          }
-          req.movie = result;
-          console.log(result);
-          //error codes here check if empty, blah blah blah blah.
-          next();
-      });*/
-
-
     });
   });
 

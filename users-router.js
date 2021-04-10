@@ -27,9 +27,18 @@ router.post("/login", loginUser);
 router.post("/signup", createUser, loginUser)
 router.put("/:id/accountType", changeAccountType); //this needs to be a put
 router.get("/:id/accountType", sendAccountType);
+router.get("/:id/watchlist", sendWatchlist);
+router.put("/:id/watchlist", changeWatchlist);
+router.get("/:id/peopleFollowing", sendPeopleFollowing);
+router.put("/:id/peopleFollowing", changePeopleFollowing);
+router.get("/:id/usersFollowing", sendUsersFollowing);
+router.put("/:id/usersFollowing", changeUsersFollowing);
+
+
 //we will find the user
 router.param("id", function(req, res, next, value){
     User.findById(value, function(err, result){
+      console.log(value);
   		if(err || !result){
   			console.log(err);
   			res.sendStatus(404);   //404 Not Found
@@ -174,7 +183,7 @@ function sendAccountType(req, res, next){
   if(req.session.loggedin){
     if(req.session.username === req.user.username){
       res.setHeader('content-type', 'application/json');
-      res.status(200).send({"accountType": req.user.accountType});
+      res.status(200).json({"accountType": req.user.accountType});
     }
     else{
       res.sendStatus(403);
@@ -217,6 +226,159 @@ function changeAccountType(req, res, next){
   else{
     res.sendStatus(401);
     //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
+  }
+}
+
+function sendWatchlist(req, res, next){
+  if(req.session.loggedin){
+    if(req.session.username === req.user.username){
+      res.setHeader('content-type', 'application/json');
+      res.status(200).send({"watchlist": req.user.watchlist});
+    }
+    else{
+      res.sendStatus(403);
+      //403 forbidden, the server understood the request, but is refusing to fulfill it.
+    }
+  }
+  else{
+    res.sendStatus(401);
+    //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
+  }
+}
+
+function changeWatchlist(req, res, next){
+    if(req.session.loggedin){
+      if(req.session.username === req.user.username){
+        req.user.watchlist = req.body.watchlist;
+        req.user.save(function(err, user) {
+            if (err) {
+              console.log(err);
+              if(err.name === 'ValidationError'){
+                res.sendStatus(400); //Bad request, the data send by the client failed to get verified and added.
+              }
+              else{
+                res.sendStatus(500);
+                //500 Internal Server Error
+                //A generic error message, given when an unexpected condition was
+                //encountered and no more specific message is suitable.
+              }
+            }
+            else{
+              console.log(req.user.watchlist);
+              res.status(200).send({"watchlist": req.user.watchlist});
+            }
+          });
+      }
+      else{
+        res.sendStatus(403);
+        //403 forbidden, the server understood the request, but is refusing to fulfill it.
+      }
+    }
+    else{
+      res.sendStatus(403);
+      //403 forbidden, the server understood the request, but is refusing to fulfill it.
+    }
+}
+
+function sendPeopleFollowing(req, res, next){
+  if(req.session.loggedin){
+    if(req.session.username === req.user.username){
+      res.setHeader('content-type', 'application/json');
+      res.status(200).send({"peopleFollowing": req.user.peopleFollowing});
+    }
+    else{
+      res.sendStatus(403);
+      //403 forbidden, the server understood the request, but is refusing to fulfill it.
+    }
+  }
+  else{
+    res.sendStatus(401);
+    //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
+  }
+}
+
+function changePeopleFollowing(req, res, next){
+  if(req.session.loggedin){
+    if(req.session.username === req.user.username){
+      req.user.peopleFollowing = req.body.peopleFollowing;
+      req.user.save(function(err, user) {
+          if (err) {
+            console.log(err);
+            if(err.name === 'ValidationError'){
+              res.sendStatus(400); //Bad request, the data send by the client failed to get verified and added.
+            }
+            else{
+              res.sendStatus(500);
+              //500 Internal Server Error
+              //A generic error message, given when an unexpected condition was
+              //encountered and no more specific message is suitable.
+            }
+          }
+          else{
+            console.log(req.user.peopleFollowing);
+            res.status(200).send({"watchlist": req.user.peopleFollowing});
+          }
+        });
+    }
+    else{
+      res.sendStatus(403);
+      //403 forbidden, the server understood the request, but is refusing to fulfill it.
+    }
+  }
+  else{
+    res.sendStatus(403);
+    //403 forbidden, the server understood the request, but is refusing to fulfill it.
+  }
+}
+
+function sendUsersFollowing(req, res, next){
+  if(req.session.loggedin){
+    if(req.session.username === req.user.username){
+      res.setHeader('content-type', 'application/json');
+      res.status(200).send({"usersFollowing": req.user.usersFollowing});
+    }
+    else{
+      res.sendStatus(403);
+      //403 forbidden, the server understood the request, but is refusing to fulfill it.
+    }
+  }
+  else{
+    res.sendStatus(401);
+    //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
+  }
+}
+
+function changeUsersFollowing(req, res, next){
+  if(req.session.loggedin){
+    if(req.session.username === req.user.username){
+      req.user.usersFollowing = req.body.usersFollowing;
+      req.user.save(function(err, user) {
+          if (err) {
+            console.log(err);
+            if(err.name === 'ValidationError'){
+              res.sendStatus(400); //Bad request, the data send by the client failed to get verified and added.
+            }
+            else{
+              res.sendStatus(500);
+              //500 Internal Server Error
+              //A generic error message, given when an unexpected condition was
+              //encountered and no more specific message is suitable.
+            }
+          }
+          else{
+            console.log(req.user.usersFollowing);
+            res.status(200).send({"usersFollowing": req.user.usersFollowing});
+          }
+        });
+    }
+    else{
+      res.sendStatus(403);
+      //403 forbidden, the server understood the request, but is refusing to fulfill it.
+    }
+  }
+  else{
+    res.sendStatus(403);
+    //403 forbidden, the server understood the request, but is refusing to fulfill it.
   }
 }
 //now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.

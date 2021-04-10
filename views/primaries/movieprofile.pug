@@ -17,31 +17,31 @@ html(lang='en' dir='ltr')
           h3#movierating #{movie.rating}/10
         else
           h3#movierating N/A
-        button#addtowatchlistbutton(type='button') ADD TO WATCHLIST
+        button#addtowatchlistbutton(type='button' onclick="addToWatchlist()") ADD TO WATCHLIST
         br
         #movieinforeleasedate.moviedateduration #{movie.year}
         #movieinfoduration.moviedateduration #{movie.runtime}
         #genres.moviedateduration
           each genre in movie.genres
             a(href='/searchresults') #{genre}
-            | /
+            | #{' '}
         br
         h5 OVERVIEW
         #overviewdiv #{movie.plot}
         h5 DIRECTORS
         #movieinfodirectors.castcontainers
           each director in movie.director
-            a(href='/viewpeople') #{director.name}
+            a(href=`/people/`+ director._id) #{director.name}
             br
         h5 WRITERS
         #movieinfowriters.castcontainers
           each writer in movie.writer
-            a(href='/viewpeople') #{writer.name}
+            a(href=`/people/`+ writer._id) #{writer.name}
             br
         h5 ACTORS
         #movieinfoactors.castcontainers
           each actor in movie.actor
-            a(href='/viewpeople') #{actor.name}
+            a(href=`/people/`+ actor._id) #{actor.name}
             br
       #recommendedmovieinfocard.recommendedmovieinfocard
         h3 RECOMMENDED MOVIES
@@ -80,4 +80,6 @@ html(lang='en' dir='ltr')
                 h4 Full Review
                 p
                   | #{review.review}
+    script.
+      let userID = !{JSON.stringify(session.userID)}
     script(src='/javascript/viewmovie.js' charset='utf-8')

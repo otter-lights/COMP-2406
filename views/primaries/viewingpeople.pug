@@ -9,45 +9,48 @@ html(lang='en' dir='ltr')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
         title #{person.name}'s Page
     body
-        +menubar
-        .blackbackground
-            .personheader
-                p #{person.name.toUpperCase()}
-                button#followbutton(type='button' name='follow') follow
-            .personcard
-                .sections
+    +menubar
+    .blackbackground
+        .personheader
+            p #{person.name.toUpperCase()}
+            button#followbutton(type='button' name='follow' onclick='startFollowing()') follow
+        .personcard
+            .sections
+                div
+                    h2 FREQUENT COLLABORATORS
+                    #frequentcollaboratorscontainer.profileboxes
+                        each collaborator in person.commonCollabs
+                            .iconboxes
+                                img(src='/img/Profile.png' alt='')
+                                p
+                                    a(href=`/people/`+ collaborator._id) #{collaborator.name}
+                if (person.director.length > 0)
                     div
-                        h2 FREQUENT COLLABORATORS
-                        #frequentcollaboratorscontainer.profileboxes
-                            each collaborator in person.commonCollabs
+                        h2 MOVIES DIRECTED
+                        #moviesdirectedcontainer.profileboxes
+                            each movie in person.director
                                 .iconboxes
-                                    img(src='/img/Profile.png' alt='')
+                                    img(src='/img/Video.png' alt='')
                                     p
-                                        a(href='/viewpeople') #{collaborator.name}
-                    if (person.director.length > 0)
-                        div
-                            h2 MOVIES DIRECTED
-                            #moviesdirectedcontainer.profileboxes
-                                each movie in person.director
-                                    .iconboxes
-                                        img(src='/img/Video.png' alt='')
-                                        p
-                                            a(href='/movieprofile') #{movie.title}
-                    if (person.writer.length > 0)
-                        div
-                            h2 MOVIES WRITTEN
-                            #movieswrittencontainer.profileboxes
-                                each movie in person.writer
-                                    .iconboxes
-                                        img(src='/img/Video.png' alt='')
-                                        p
-                                          a(href='/movieprofile') #{movie.title}
-                    if (person.actor.length > 0)
-                        div
-                            h2 MOVIES ACTED IN
-                            #moviesactedincontainer.profileboxes
-                                each movie in person.actor
-                                    .iconboxes
-                                        img(src='/img/Video.png' alt='')
-                                        p
-                                            a(href='/movieprofile') #{movie.title}
+                                        a(href=`/movies/`+ movie._id) #{movie.title}
+                if (person.writer.length > 0)
+                    div
+                        h2 MOVIES WRITTEN
+                        #movieswrittencontainer.profileboxes
+                            each movie in person.writer
+                                .iconboxes
+                                    img(src='/img/Video.png' alt='')
+                                    p
+                                      a(href=`/movies/`+ movie._id) #{movie.title}
+                if (person.actor.length > 0)
+                    div
+                        h2 MOVIES ACTED IN
+                        #moviesactedincontainer.profileboxes
+                            each movie in person.actor
+                                .iconboxes
+                                    img(src='/img/Video.png' alt='')
+                                    p
+                                        a(href=`/movies/`+ movie._id) #{movie.title}
+    script.
+        let userID = !{JSON.stringify(session.userID)}
+    script(src='/javascript/viewingpeople.js' charset='utf-8')

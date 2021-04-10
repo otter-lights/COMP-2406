@@ -51,6 +51,8 @@ let movieSchema = Schema({
 movieSchema.statics.getSimilar = function(movie, callback){
 	this.find({genres: {$in: movie.genres}}).select("title year genres").sort('-rating -year').limit(5).exec(callback)
 }
+
+
 movieSchema.methods.calcAvRating = function(newRating){
   if(this.reviews.length === 0){
     return newRating
@@ -59,6 +61,7 @@ movieSchema.methods.calcAvRating = function(newRating){
     return(((this.rating * this.reviews.length) + newRating)/this.reviews.length+1)
   }
 }
+
 movieSchema.methods.getPeople = function(){
   let people = [];
   people = people.concat(this.actor);

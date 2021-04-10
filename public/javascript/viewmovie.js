@@ -48,3 +48,72 @@ function addReview(){
 	xhttp.setRequestHeader("Content-Type", "application/json");
 	xhttp.send(JSON.stringify(reviewObject));
 }
+
+function getLoggedinUser(){
+
+}
+
+function addToWatchlist(){
+  let movieID = window.location.pathname.slice(8);
+
+  let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if(this.readyState==4){
+      if (this.status==200){
+        let watchlist =  JSON.parse(this.responseText);
+        createObject(watchlist.watchlist);
+      }
+      else if(this.status==403){
+        //accessing another user's account, redirect
+        window.location.replace("/");
+      }
+      else if(this.status==404){
+        alert("The user account you are requesting from can't be found. Try to log in again.")
+      }
+      else if(this.status == 401){
+        window.location.replace("/");
+        //not logged in
+      }
+      else{ //500 error code (internal server error)
+        alert("The server failed to get retrieve your watchlist. Please try again.");
+      }
+    }
+	};
+	xhttp.open("GET", "/users/"+userID+"/watchlist", true);
+  xhttp.setRequestHeader("Content-Type", "application/json");
+	xhttp.send();
+}
+
+function changeWatchlist(watchlist){
+  if(watchlist){
+    let movieID = window.location.pathname.slice(8);
+    let xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+  		if(this.readyState==4){
+        if(this.status==200){
+          alert("Added to watchlist.");
+        }
+        else if(this.status==401){
+          alert("You are not authorized to add this movie to your watchlist.");
+        }
+        else{
+          alert("There was a problem with the server. Try again.");
+        }
+  		}
+  	};
+  	xhttp.open("PUT", "/users/"+userID+"/watchlist", true);
+  	xhttp.setRequestHeader("Content-Type", "application/json");
+  	xhttp.send(JSON.stringify({"watchlist": watchlist}));
+  }
+  else{
+    alert("Something went wrong with adding this movie to your watchlist.")
+  }
+}
+
+
+function createObject(watchlist){
+  let movieID = window.location.pathname.slice(8);
+  watchlist.push(movieID);
+  console.log(watchlist);
+  changeWatchlist(watchlist);
+}

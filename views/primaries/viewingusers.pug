@@ -9,43 +9,46 @@ html(lang='en' dir='ltr')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
         title #{user.username}'s Profile
     body
-        +menubar
-        .blackbackground
-            .userheader
-                p #{user.username.toUpperCase()}
-                button#followbutton(type='button' name='follow') follow
-            .usercard
-                .sections
-                    div
-                        h2 WHO THEY'RE FOLLOWING
-                        #followingcontainer.profileboxes
-                            each person in user.peopleFollowing
-                                .iconboxes
-                                    img(src='/img/Profile.png' alt='')
-                                    p
-                                        a(href='/viewpeople') #{person.name}
-                    div
-                        h2 WATCH LIST
-                        #watchlistcontainer.profileboxes
-                            each movie in user.watchlist
-                                .iconboxes
+    +menubar
+    .blackbackground
+        .userheader
+            p #{user.username.toUpperCase()}
+            button#followbutton(type='button' name='follow' onclick='startFollowing()') follow
+        .usercard
+            .sections
+                div
+                    h2 WHO THEY'RE FOLLOWING
+                    #followingcontainer.profileboxes
+                        each person in user.peopleFollowing
+                            .iconboxes
+                                img(src='/img/Profile.png' alt='')
+                                p
+                                    a(href=`/people/`+ person._id) #{person.name}
+                div
+                    h2 WATCH LIST
+                    #watchlistcontainer.profileboxes
+                        each movie in user.watchlist
+                            .iconboxes
+                                img(src='/img/Video.png' alt='')
+                                p
+                                    a(href=`/movies/`+ movie._id) #{movie.title}
+                div
+                    h2 REVIEWS
+                    #reviewsboxcontainer.reviewsbox
+                        each review in user.reviews
+                            .review
+                                .left
+                                    h2
+                                        a(href=`/movies/`+ review.movieId._id) #{review.movieId.title}
                                     img(src='/img/Video.png' alt='')
-                                    p
-                                        a(href='/movieprofile') #{movie.title}
-                    div
-                        h2 REVIEWS
-                        #reviewsboxcontainer.reviewsbox
-                            each review in user.reviews
-                                .review
-                                    .left
-                                        h2
-                                            a(href=`/movies/`+ review.movieId._id) #{review.movieId.title}
-                                        img(src='/img/Video.png' alt='')
-                                        p #{review.rating}/10
-                                    .right
-                                        if(review.briefsummary)
-                                            h4 Summary
-                                            p #{review.briefsummary}
-                                        if(review.review)
-                                            h4 Full Review
-                                            p #{review.review}
+                                    p #{review.rating}/10
+                                .right
+                                    if(review.briefsummary)
+                                        h4 Summary
+                                        p #{review.briefsummary}
+                                    if(review.review)
+                                        h4 Full Review
+                                        p #{review.review}
+    script.
+        let userID = !{JSON.stringify(session.userID)}
+    script(src='/javascript/viewingusers.js' charset='utf-8')
