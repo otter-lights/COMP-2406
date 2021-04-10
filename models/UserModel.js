@@ -45,4 +45,8 @@ userSchema.statics.findByUsername = function(username, callback){
   this.findOne({username: new RegExp(username, 'i')}, callback);
 }
 
+userSchema.methods.isInWatchlist = function(movieID){
+  return this.watchlist.includes(this.movieID))
+}
+
 module.exports = mongoose.model("User", userSchema);

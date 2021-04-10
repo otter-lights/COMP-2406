@@ -52,6 +52,7 @@ function pushReviewIDtoUser(req, res, next){
   { "new": true, "upsert": true },
   function(err, result){
     if(err){
+      console.log(err);
       res.sendStatus(400); //bad content
     }
     else{
@@ -67,6 +68,7 @@ function pushReviewIDtoMovie(req, res, next){
   { "new": true, "upsert": true },
   function(err, result){
     if(err){
+      console.log(err);
       res.sendStatus(400); //bad content
     }
     else{
