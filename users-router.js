@@ -35,7 +35,8 @@ router.param("id", function(req, res, next, value){
   			res.sendStatus(404);   //404 Not Found
   			return;
   		}
-      User.findById(value).populate("usersFollowing peopleFollowing followers reviews notifications watchlist").exec(function(err, result){
+      //need to add nested population for notifications as well
+      User.findById(value).populate("usersFollowing peopleFollowing followers watchlist").populate({path: "reviews", populate: {path: "movieId",  select: 'title'}}).exec(function(err, result){
           if(err){
             throw err;
             res.sendStatus(500);

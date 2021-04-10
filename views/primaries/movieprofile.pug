@@ -70,7 +70,7 @@ html(lang='en' dir='ltr')
                 br
                 p #{review.rating}/10
               p
-                a(href='/viewuser') #{review.username}
+                a(href=`/users/`+ review.username._id) #{review.username.username}
             .right
               if (review.briefsummary)
                 h4 Summary

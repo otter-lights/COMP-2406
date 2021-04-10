@@ -119,8 +119,10 @@ body {
 }
 
 .reviewsbox h2{
-  padding-top: 10px;
+  padding-top: 8px;
   font-size: 20px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 .reviewsbox a{
