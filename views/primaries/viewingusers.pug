@@ -39,7 +39,7 @@ html(lang='en' dir='ltr')
                                 .review
                                     .left
                                         h2
-                                            a(href='/movieprofile') #{review.movieId.title}
+                                            a(href=`/movies/`+ review.movieId._id) #{review.movieId.title}
                                         img(src='/img/Video.png' alt='')
                                         p #{review.rating}/10
                                     .right
