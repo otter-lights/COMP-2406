@@ -32,7 +32,7 @@ function createReview(req, res, next){
     newReview.save(function(err, user) {
         if (err) {
             console.log(err);
-            res.send(400);
+            res.send(400); //bad content
           }
         else{
           console.log(newReview);
@@ -52,7 +52,7 @@ function pushReviewIDtoUser(req, res, next){
   { "new": true, "upsert": true },
   function(err, result){
     if(err){
-      res.sendStatus(400);
+      res.sendStatus(400); //bad content
     }
     else{
       console.log("user results" + result);
@@ -67,7 +67,7 @@ function pushReviewIDtoMovie(req, res, next){
   { "new": true, "upsert": true },
   function(err, result){
     if(err){
-      res.sendStatus(400);
+      res.sendStatus(400); //bad content
     }
     else{
         console.log("movie results" + result);

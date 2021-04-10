@@ -48,7 +48,7 @@ router.param("id", function(req, res, next, value){
           next();
       });
     });
-  });
+});
 
 
 function createUser(req, res, next){
