@@ -46,7 +46,7 @@ userSchema.statics.findByUsername = function(username, callback){
 }
 
 userSchema.methods.isInWatchlist = function(movieID){
-  return this.watchlist.includes(this.movieID))
+  return this.watchlist.includes(this.movieID)
 }
 
 module.exports = mongoose.model("User", userSchema);

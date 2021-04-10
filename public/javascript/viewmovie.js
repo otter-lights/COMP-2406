@@ -112,6 +112,8 @@ function changeWatchlist(watchlist){
 
 
 function createObject(watchlist){
+  console.log(watchlist)
+  console.log(typeof watchlist)
   let movieID = window.location.pathname.slice(8);
   watchlist.push(movieID);
   console.log(watchlist);
