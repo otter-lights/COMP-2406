@@ -13,12 +13,12 @@
       <p>SIGN UP</p>
 
         <div class = "gradientform">
-          <form method="POST" action="/users/signup">
-            <p><label for="username">USERNAME:</label><input type="text" name="username" required> </p>
-            <p><label for="password">PASSWORD:</label><input type="text" name="password" required> </p>
-            <p><label></label><button type="submit">SIGN UP</button></p>
-          </form>
+            <p><label for="username">USERNAME:</label><input type="text" name="username" id="username"> </p>
+            <p><label for="password">PASSWORD:</label><input type="text" name="password" id="password"> </p>
+            <p><label></label><button type="button" onclick="signUpUser()">SIGN UP</button></p>
         </div>
     </div>
+
+    <script src="./javascript/signup.js" charset="utf-8"></script>
   </body>
 </html>

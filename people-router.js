@@ -24,21 +24,21 @@ router.post("/", (req, res) => {
 //we will find the user
 router.param("id", function(req, res, next, value){
     Person.findById(value, function(err, result){
-  		if(err){
+  		if(err || !result){
   			console.log(err);
-  			res.status(500).send("Error finding user.");
-  			return;
-  		}
-
-  		if(!result){
-  			res.status(404).send("Person ID " + value + " does not exist.");
+  			res.sendStatus(404);
+        //404 Not Found
   			return;
   		}
 
       Person.findById(value).populate("director writer actor followers commonCollabs").exec(function(err, result){
-          if(err) throw err;
-          req.person = result;
-          console.log(result);
+          if(err){
+            throw err;
+            res.sendStatus(500);
+            //500 Internal Server Error
+            //the server can't populate the data that it has already verified, making it a server error.
+          }
+          req.person = result
           //error codes here check if empty, blah blah blah blah.
           next();
       });
@@ -47,15 +47,20 @@ router.param("id", function(req, res, next, value){
 
 
 function sendPerson(req, res, next){
-    res.format({
-		"application/json": function(){
-			res.status(200).json(req.person);
-		},
-		"text/html": () => { res.render('./primaries/viewingpeople', {session: req.session, person: req.person});}
-	});
-	next();
+  if(req.session.loggedin){
+      res.format({
+  		"application/json": function(){
+  			res.status(200).json(req.person);
+  		},
+  		"text/html": () => { res.render('./primaries/viewingpeople', {session: req.session, person: req.person});}
+  	});
+  	next();
+  }
+  else{
+    res.status(401).redirect("/");
+    //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
+  }
 }
-
 //now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.
 
 //Export the router so it can be mounted in the main app

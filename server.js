@@ -113,7 +113,7 @@ app.get('/signup', (req, res) => {
 })
 
 app.get('/addmovie', (req, res) => {
-  if(session.loggedin && session.admin){
+  if(req.session.loggedin && req.session.admin){
     res.setHeader('content-type', 'text/html');
     res.status(200);
   	res.render('./primaries/addamovie', {session:req.session});
@@ -135,15 +135,25 @@ app.get('/addperson', (req, res) => {
 })
 
 app.get('/advancedsearch', (req, res) => {
-  res.setHeader('content-type', 'text/html');
-  res.status(200);
-	res.render('./primaries/advancedsearch', {session:req.session});
+  if(req.session.loggedin){
+    res.setHeader('content-type', 'text/html');
+    res.status(200);
+  	res.render('./primaries/advancedsearch', {session:req.session});
+  }
+  else{
+    res.status(401).redirect("/");
+  }
 })
 
 app.get('/searchresults', (req, res) => {
-  res.setHeader('content-type', 'text/html');
-  res.status(200);
-	res.render('./primaries/searchresults', {movies: searchResults, session:req.session});
+  if(req.session.loggedin){
+    res.setHeader('content-type', 'text/html');
+    res.status(200);
+  	res.render('./primaries/searchresults', {movies: searchResults, session:req.session});
+  }
+  else{
+    res.status(401).redirect("/");
+  }
 })
 
 app.get('/profile', (req, res) => {

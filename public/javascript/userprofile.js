@@ -3,10 +3,20 @@ function switchAccountType(){
 	xhttp.onreadystatechange = function() {
 		if(this.readyState==4){
       if (this.status==200){
-        console.log(JSON.parse(this.responseText));
-        sendChangeRequest(JSON.parse(this.responseText));
+       sendChangeRequest(JSON.parse(this.responseText));
       }
-      else{
+      else if(this.status==403){
+        //accessing another user's account, redirect
+        window.location.replace("/");
+      }
+      else if(this.status==404){
+        alert("The user account you are requesting can't be found. Try to log in again.")
+      }
+      else if(this.status == 401){
+        window.location.replace("/");
+        //not logged in
+      }
+      else{ //500 error code (internal server error)
         alert("The server failed to get your account type. Please try again.");
       }
     }
@@ -23,8 +33,25 @@ function sendChangeRequest(accountType){
       if(this.status==200){
         location.reload();
       }
-      else{
-        alert("The server failed to change your account type.");
+      else if(this.status == 400){
+        alert("Bad request. Try again.");
+      }
+      else if(this.status == 500){
+        alert("Your changed account type couldn't be saved. Tru again.");
+      }
+      else if(this.status == 403){
+        window.location.replace("/");
+        // session has expired trying to access an account that isn't theirs
+      }
+      else if(this.status == 401){
+        window.location.replace("/");
+        //not logged in
+      }
+      else if(this.status==404){
+        alert("The user account you are requesting can't be found. Try to log in again.")
+      }
+      else{ //500 error code (internal server error)
+        alert("The server failed to change your account type. Please try again.");
       }
 		}
 	};

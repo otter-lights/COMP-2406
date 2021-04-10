@@ -12,12 +12,12 @@
     <div class="gradientcontainer">
       <p>LOG IN</p>
         <div class = "gradientform">
-          <form method="POST" action="/users/login">
-            <p><label for="username">USERNAME:</label><input type="text" name="username" required> </p>
-            <p><label for="password">PASSWORD:</label><input type="text" name="password" required> </p>
-            <p><label></label><button type="submit">LOG IN</button></p>
-          </form>
+            <p><label for="username">USERNAME:</label><input type="text" name="username" id="username"> </p>
+            <p><label for="password">PASSWORD:</label><input type="text" name="password" id="password"> </p>
+            <p><label></label><button type="button" onclick="loginUser()">LOG IN</button></p>
         </div>
     </div>
+
+    <script src="./javascript/signin.js" charset="utf-8"></script>
   </body>
 </html>

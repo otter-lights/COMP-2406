@@ -18,9 +18,7 @@ router.get("/:id", sendMovie); //sends movie with ID (PUG or JSON)
 router.get("/:id/reviews", populateReviewIds, sendReviews);
 //- Supports response types application/json
 //- Retrieves the array of reviews about a particular movie
-
 //now make these functions so the get requests and whatever can be executed :)
-
 */
 
 router.get("/:id", recommendMovies, sendMovie);
@@ -29,19 +27,27 @@ userData = {"accountType": "true"};
 //we will find the user
 router.param("id", function(req, res, next, value){
     Movie.findById(value, function(err, result){
-  		if(err){
-  			console.log(err);
-  			res.status(500).send("Error finding movie.");
-  			return;
-  		}
-
-  		if(!result){
-  			res.status(404).send("Movie ID " + value + " does not exist.");
-  			return;
-  		}
+      if(err || !result){
+        console.log(err);
+        res.sendStatus(404);   //404 Not Found
+        return;
+      }
 
       Movie.findById(value).populate("director writer actor reviews").exec(function(err, result){
-          if(err) throw err;
+        /*
+        result.reviews.populate("id").exec(function(err, result){
+            if(err) throw err;
+            req.movie = result;
+            //error codes here check if empty, blah blah blah blah.
+            next();
+        });
+        */
+          if(err){
+            throw err;
+            res.sendStatus(500);
+            //500 Internal Server Error
+            //the server can't populate the data that it has already verified, making it a server error.
+          }
           req.movie = result;
           console.log(result);
           //error codes here check if empty, blah blah blah blah.
@@ -62,13 +68,22 @@ function recommendMovies(req, res, next){
 }
 
 function sendMovie(req, res, next){
+  if(req.session.loggedin){
+    //get the current logged in user, and send the watchlist
+    //
+    //if req.movie._id is in the user's watchlist, give boolean.
     res.format({
-		"application/json": function(){
-			res.status(200).json(req.movie);
-		},
-		"text/html": () => { res.render('./primaries/movieprofile', {movie: req.movie, recommendedMovies: req.recommendedMovies, user: userData});}
-	});
-	next();
+  		"application/json": function(){
+  			res.status(200).json(req.movie);
+  		},
+  		"text/html": () => { res.render('./primaries/movieprofile', {movie: req.movie, recommendedMovies: req.recommendedMovies, session: req.session});}
+  	});
+  	next();
+  }
+  else{
+      res.status(401).redirect("/");
+      //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
+  }
 }
 
 //Export the router so it can be mounted in the main app
