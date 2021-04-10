@@ -61,7 +61,7 @@ function addToWatchlist(){
 		if(this.readyState==4){
       if (this.status==200){
         let watchlist =  JSON.parse(this.responseText);
-        createObject(watchlist.watchlist);
+        createMovieObject(watchlist.watchlist);
       }
       else if(this.status==403){
         //accessing another user's account, redirect
@@ -111,8 +111,9 @@ function changeWatchlist(watchlist){
 }
 
 
-function createObject(watchlist){
+function createMovieObject(watchlist){
   let movieID = window.location.pathname.slice(8);
+  console.log(watchlist);
   watchlist.push(movieID);
   console.log(watchlist);
   changeWatchlist(watchlist);
