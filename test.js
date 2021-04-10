@@ -2,6 +2,21 @@
 function getOccurrence(array, value) {
     return array.filter((v) => (v === value)).length;
 }
+
+function sortByFrequency(array) {
+    var frequency = {};
+
+    array.forEach(function(value) { frequency[value] = 0; });
+
+    var uniques = array.filter(function(value) {
+        return ++frequency[value] == 1;
+    });
+
+    return uniques.sort(function(a, b) {
+        return frequency[b] - frequency[a];
+    });
+}
+
 const mongoose = require('mongoose');
 const User = require("./models/UserModel");
 const Review = require("./models/ReviewModel");
@@ -14,11 +29,8 @@ db.once('open', function() {
   Person.findOne({name: "Robin Williams"}).exec(function(err, result){
     if(err)throw err;
     console.log(result);
-    result.frequentCollabs(function(result){
+    Person.frequentCollabs(result, function(result){
       console.log(result);
-      console.log(result[4] === result[5]);
-      console.log(result[0]);
-      console.log(getOccurrence(result, result[0]))
     });
 })
 })
