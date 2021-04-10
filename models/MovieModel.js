@@ -49,7 +49,23 @@ let movieSchema = Schema({
 });
 
 movieSchema.statics.getSimilar = function(movie, callback){
-	this.model("Movie").find({genres: {$in: movie.genres}}).select("title year genres").sort('-rating -year').limit(10).exec(callback)
+	this.find({genres: {$in: movie.genres}}).select("title year genres").sort('-rating -year').limit(5).exec(callback)
+}
+movieSchema.methods.calcAvRating = function(newRating){
+  if(this.reviews.length === 0){
+    return newRating
+  }
+  else{
+    return(((this.rating * this.reviews.length) + newRating)/this.reviews.length+1)
+  }
+}
+movieSchema.methods.getPeople = function(){
+  let people = [];
+  people = people.concat(this.actor);
+  people = people.concat(this.director);
+  people = people.concat(this.writer);
+  console.log(people)
+  return(people)
 }
 
 module.exports = mongoose.model("Movie", movieSchema);
