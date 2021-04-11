@@ -37,6 +37,7 @@ router.put("/:id/usersFollowing", changeUsersFollowing);
 
 //we will find the user
 router.param("id", function(req, res, next, value){
+  if(req.session.loggedin){
     User.findById(value, function(err, result){
       console.log(value);
   		if(err || !result){
@@ -58,6 +59,10 @@ router.param("id", function(req, res, next, value){
           next();
       });
     });
+  }
+  else{
+    res.redirect("/");
+  }
 });
 
 

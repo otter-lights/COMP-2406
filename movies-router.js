@@ -26,6 +26,7 @@ userData = {"accountType": "true"};
 
 //we will find the user
 router.param("id", function(req, res, next, value){
+  if(req.session.loggedin){
     Movie.findById(value, function(err, result){
       if(err || !result){
         console.log(err);
@@ -46,7 +47,12 @@ router.param("id", function(req, res, next, value){
           next();
       });
     });
-  });
+  }
+  else{
+    res.status(403);
+    res.redirect("/");
+  }
+});
 
 //sessions for logging in and user ID, maybe watchlist.
 
