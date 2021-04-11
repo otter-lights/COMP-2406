@@ -9,13 +9,6 @@ const express = require('express');
 let router = express.Router();
 
 /*
-router.get("/:id/peoplefollowing", validateUserSession);
-router.get("/:id/usersfollowing", validateUserSession);
-router.get("/:id/watchlist", validateUserSession);
-router.get("/:id/reviews", validateUserSession);
-router.put("/:id/peoplefollowing"); //i got lazy here but you can fill in the functions as you go.
-router.put("/:id/usersfollowing");
-router.put("/:id/watchlist");
 router.get("/:id/reviews", populateReviewIds, sendReviews);
 */
 
@@ -33,7 +26,6 @@ router.get("/:id/peopleFollowing", sendPeopleFollowing);
 router.put("/:id/peopleFollowing", changePeopleFollowing);
 router.get("/:id/usersFollowing", sendUsersFollowing);
 router.put("/:id/usersFollowing", changeUsersFollowing);
-
 
 //we will find the user
 router.param("id", function(req, res, next, value){
@@ -61,7 +53,7 @@ router.param("id", function(req, res, next, value){
     });
   }
   else{
-    res.status(403);
+    res.status(401);
     res.redirect("/");
   }
 });

@@ -26,36 +26,36 @@ html(lang='en' dir='ltr')
                 .sections
                     div
                         p PEOPLE YOU FOLLOW
-                        button#removepeoplebutton(type='button' name='editpeople' onclick='removeFollow()') remove
+                        button#removepeoplebutton(type='button' name='editpeople' onclick='editPeople()') remove
                         #peopleyoufollowcontainer.profileboxes
                             each person in user.peopleFollowing
-                                .iconboxes
+                                .iconboxes(id=person._id)
                                     img(src='/img/Profile.png' alt='')
                                     br
                                     label(for='person')
-                                        input(type='checkbox' id='person' name='person')
+                                        input(type='checkbox')
                                         a(href=`/people/`+ person._id) #{person.name}
                         div
                             p USERS YOU FOLLOW
-                            button#removeusersbutton(type='button' name='removeusers') remove
+                            button#removeusersbutton(type='button' onclick='editUsers()') remove
                             #usersyoufollowcontainer.profileboxes
                                 each u in user.usersFollowing
-                                    .iconboxes
+                                    .iconboxes(id=u._id)
                                         img(src='/img/Profile.png' alt='')
                                         br
                                         label(for='u')
-                                            input(type='checkbox' id='u' name='u')
+                                            input(type='checkbox')
                                             a(href=`/users/`+ u._id) #{u.username}
                         div
                             p WATCHLIST
-                            button#removewatchbutton(type='button' name='removewatch') remove
+                            button#removewatchbutton(type='button' onclick='editWatchlist()') remove
                             #watchlistcontainer.profileboxes
                                 each movie in user.watchlist
-                                    .iconboxes
+                                    .iconboxes(id=movie._id)
                                         img(src='/img/Video.png' alt='')
                                         br
                                         label(for='movie.title')
-                                            input(type='checkbox' id='movie.title' name='movie.title')
+                                            input(type='checkbox')
                                             a(href=`/movies/`+ movie._id) #{movie.title}
                         div
                             p RECOMMENDED MOVIES
