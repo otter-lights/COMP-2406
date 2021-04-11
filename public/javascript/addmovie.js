@@ -1,3 +1,6 @@
+let directors=[];
+let writers=[];
+let actors=[];
 
 function verifynumber(year){
   if (typeof year == 'number'){
@@ -10,6 +13,62 @@ function movieIsInServer(){
   return false;
 }
 
+function getDirectors(){
+  let input = document.getElementById("directors").value;
+  if(input.length > 0){
+    sendRequest("directors", input);
+  }
+}
+function getActors(){
+  let input = document.getElementById("actors").value;
+  if(input.length > 0){
+    sendRequest("actors", input);
+  }
+}
+
+function getWriters(){
+  let input = document.getElementById("writers").value;
+  if(input.length > 0){
+    sendRequest("writers", input);
+  }
+}
+
+function sendRequest(path, input){
+  let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if(this.readyState==4){
+      if (this.status==200){
+        let result = JSON.parse(this.responseText);
+        display(result, path);
+      }
+      else{ //500 error code (internal server error)
+        alert("The server failed to get retrieve the list. Please try again.");
+      }
+    }
+	};
+	xhttp.open("GET", `/people?chars=${input}`, true);
+	xhttp.send();
+}
+
+function display(result, path){
+  let div;
+  if (path === "writers"){
+    div = document.getElementById("writerNames");
+  }
+  else if(path==="actors"){
+    div = document.getElementById("actorNames");
+  }
+  else if(path==="directors"){
+    div = document.getElementById("directorNames");
+  }
+  else{
+    return;
+  }
+  let names = "";
+  (result.names).forEach(name => names+= name.name + "<br>");
+  console.log(names);
+  div.innerHTML = names;
+}
 //The page must give the user a way to dynamically search for people within the
 //database to add to the movie (e.g., using AJAX).
 //The user should not be required to type in the full name of the person,
@@ -20,14 +79,14 @@ function movieIsInServer(){
 
 function addMovie(){
   let title = document.getElementById("title").value;
-  let releaseyear = document.getElementById("releaseYear").value;
+  let year = document.getElementById("year").value;
   let runtime = document.getElementById("runtime").value;
   let genres = document.getElementById("genres").value;
   let writers = document.getElementById("writers").value;
   let directors = document.getElementById("directors").value;
   let actors = document.getElementById("actors").value;
 
-	if(title.length == 0 || releaseyear.length == 0 || runtime.length == 0 || genres.length == 0 || writers.length == 0 || directors.length == 0 || actors.length == 0 ){
+	if(title.length == 0 || year.length == 0 || runtime.length == 0 || genres.length == 0){
 		alert("All fields are required to add a movie.");
 		return;
 	}

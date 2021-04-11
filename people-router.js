@@ -15,6 +15,7 @@ router.get("/:id", sendUser); //sends person with ID (PUG or JSON)
 
 */
 router.get("/:id", sendPerson);
+router.get("/", getCharacters);
 
 //we will find the user
 router.param("id", function(req, res, next, value){
@@ -62,6 +63,26 @@ function sendPerson(req, res, next){
   }
 }
 //now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.
+
+function getCharacters(req, res, next){
+  const MAX_RESULTS = 10;
+  console.log(req.query.chars);
+  if(req.query.chars){
+    Person.startsWith(req.query.chars, function(err, result){
+      if(err){
+        console.log(err);
+        res.sendStatus(404);
+      }
+      else{
+        console.log(result);
+        res.status(200).send({names: result});
+      }
+    });
+  }
+  else{
+    res.sendStatus(400); //bad content
+  }
+}
 
 //Export the router so it can be mounted in the main app
 module.exports = router;

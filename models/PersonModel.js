@@ -31,12 +31,12 @@ let personSchema = Schema({
   }
 });
 
-personSchema.statics.startsWith = function(username, callback){
-  this.find({username: new RegExp(username, 'i')}, callback);
+personSchema.statics.startsWith = function(name, callback){
+  this.find({name: new RegExp(name, 'i')}, callback).select("name").limit(10);
 }
 
 personSchema.statics.findByName = function(name, callback){
-  this.findOne({username: new RegExp(username, 'i')}, callback);
+  this.findOne({name: new RegExp(name, 'i')}, callback);
 }
 /*
 personSchema.methods.frequentCollabs = function(callback){
@@ -54,7 +54,7 @@ personSchema.methods.frequentCollabs = function(callback){
       thisFilm = thisFilm.concat(film.actor, film.director, film.writer)
       console.log(thisFilm)
       let dist = unique(thisFilm)
-      collabs = collabs.concat(dist); 
+      collabs = collabs.concat(dist);
     })
     console.log(collabs)
     personSchema.find({})
@@ -71,7 +71,7 @@ personSchema.statics.frequentCollabs = function(person, callback){
   films = films.concat(person.director);
   films = films.concat(person.writer);
   console.log(films)
-  
+
   Movie.find({_id: {$in: films}}).populate("actor director writer", "name").exec(function(err, result){
     let collabs = []
     result.forEach(film=>{
@@ -80,7 +80,7 @@ personSchema.statics.frequentCollabs = function(person, callback){
       thisFilm = thisFilm.concat(film.actor, film.director, film.writer)
       console.log(thisFilm)
       let dist = unique(thisFilm)
-      collabs = collabs.concat(dist); 
+      collabs = collabs.concat(dist);
     })
     let final = sortByFrequency(collabs)
     callback(final.slice(0,5))
