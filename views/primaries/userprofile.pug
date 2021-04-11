@@ -24,17 +24,17 @@ html(lang='en' dir='ltr')
                     button#switchaccount(type='button' onclick='switchAccountType()') SWITCH ACCOUNT TYPE
             .profilecard
                 .sections
-                    div
-                        p PEOPLE YOU FOLLOW
-                        button#removepeoplebutton(type='button' name='editpeople' onclick='editPeople()') remove
-                        #peopleyoufollowcontainer.profileboxes
-                            each person in user.peopleFollowing
-                                .iconboxes(id=person._id)
-                                    img(src='/img/Profile.png' alt='')
-                                    br
-                                    label(for='person')
-                                        input(type='checkbox')
-                                        a(href=`/people/`+ person._id) #{person.name}
+                        div
+                          p PEOPLE YOU FOLLOW
+                          button#removepeoplebutton(type='button' name='editpeople' onclick='editPeople()') remove
+                          #peopleyoufollowcontainer.profileboxes
+                              each person in user.peopleFollowing
+                                  .iconboxes(id=person._id)
+                                      img(src='/img/Profile.png' alt='')
+                                      br
+                                      label(for='person')
+                                          input(type='checkbox')
+                                          a(href=`/people/`+ person._id) #{person.name}`
                         div
                             p USERS YOU FOLLOW
                             button#removeusersbutton(type='button' onclick='editUsers()') remove
