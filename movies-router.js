@@ -51,12 +51,13 @@ router.param("id", function(req, res, next, value){
 //sessions for logging in and user ID, maybe watchlist.
 
 function recommendMovies(req, res, next){
-  req.recommendedMovies = [{"title": "Guardians of the Galaxy", "plot": "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.", "rating": "8.0", "genres": ["Action", "Adventure", "Comedy"]},
-  {"title": "Ironman", "plot": "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.", "rating": "7.9", "genres": ["Action", "Adventure", "Sci-Fi"]},
-  {"title": "Sherlock Holmes", "plot": "When the police are desperate they call upon Mr Sherlock Holmes and his unconventional methods of deduction to shed light on the matter.", "rating": "9.1", "genres": ["Crime", "Drama", "Mystery"]},
-  {"title": "Knives Out", "plot": "A detective investigates the death of a patriarch of an eccentric, combative family.", "rating": "7.9", "genres": ["Comedy", "Crime", "Drama"]},
-  {"title": "Sucker Punch", "plot": "A young girl institutionalized by her abusive stepfather retreats to an alternative reality as a coping strategy and envisions a plan to help her escape.", "rating": "6.0", "genres": ["Action", "Adventure", "Fantasy"]}];
-  next();
+  Movie.getSimilar(req.movie, function(err, result){
+    if(err) throw err
+    console.log(result)
+    req.recommendedMovies = result
+    console.log(req.reccomendMovies)
+    next();
+  })
 }
 
 function sendMovie(req, res, next){

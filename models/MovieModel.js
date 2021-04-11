@@ -49,13 +49,10 @@ let movieSchema = Schema({
 });
 
 movieSchema.statics.getSimilar = function(movie, callback){
-	this.find({genres: {$in: movie.genres}}).select("title year genres").sort('-rating -year').limit(5).exec(callback)
+	this.find({genres: {$in: movie.genres}}).select("title year genres plot").sort('-rating -year').limit(5).exec(callback)
 }
 
-
 movieSchema.methods.calcAvRating = function(newRating){
-  console.log("FUCK")
-  console.log(this.reviews.length)
   if(this.reviews.length === 0){
     return newRating
   }
