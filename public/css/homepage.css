@@ -1,6 +1,7 @@
 body {
   margin: 0px;
   background: black;
+  margin-bottom: 70px;
 }
 
 .homepagecontainer{
@@ -61,6 +62,5 @@ body {
   font-size: 20px;
   background: #FFBAAB;
   color: black;
-  margin-bottom: 100px;
   margin-top: 10px;
 }

@@ -34,7 +34,7 @@ html(lang='en' dir='ltr')
                                       br
                                       label(for='person')
                                           input(type='checkbox')
-                                          a(href=`/people/`+ person._id) #{person.name}`
+                                          a(href=`/people/`+ person._id) #{person.name}
                         div
                             p USERS YOU FOLLOW
                             button#removeusersbutton(type='button' onclick='editUsers()') remove
@@ -109,4 +109,5 @@ html(lang='en' dir='ltr')
                                             a(href='/movieprofile') MOVIE
                                             | .
                                         br
-    script(src='/javascript/userprofile.js' charset='utf-8')
+    script
+      include ../../public/javascript/userprofile.js

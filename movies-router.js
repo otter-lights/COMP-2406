@@ -49,8 +49,7 @@ router.param("id", function(req, res, next, value){
     });
   }
   else{
-    res.status(403);
-    res.redirect("/");
+    res.status(401).render('./primaries/homepage.pug', {session:req.session});
   }
 });
 
@@ -80,7 +79,7 @@ function sendMovie(req, res, next){
   	next();
   }
   else{
-      res.status(401).redirect("/");
+      res.status(401).render('./primaries/homepage.pug', {session:req.session});
       //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
   }
 }

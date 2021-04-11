@@ -15,11 +15,6 @@ router.get("/:id", sendUser); //sends person with ID (PUG or JSON)
 
 */
 router.get("/:id", sendPerson);
-router.post("/", (req, res) => {
-  let name = req.body.name;
-  console.log(req.body);
-  res.status(200).redirect("/viewpeople");
-})
 
 //we will find the user
 router.param("id", function(req, res, next, value){
@@ -46,8 +41,7 @@ router.param("id", function(req, res, next, value){
     });
   }
   else{
-      res.status(403);
-      res.redirect("/");
+      res.status(401).render('./primaries/homepage.pug', {session:req.session});
   }
 });
 
@@ -63,7 +57,7 @@ function sendPerson(req, res, next){
   	next();
   }
   else{
-    res.status(401).redirect("/");
+    res.status(401).render('./primaries/homepage.pug', {session:req.session});
     //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
   }
 }
