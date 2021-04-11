@@ -31,6 +31,7 @@ html(lang='en' dir='ltr')
                             each person in user.peopleFollowing
                                 .iconboxes
                                     img(src='/img/Profile.png' alt='')
+                                    br
                                     label(for='person')
                                         input(type='checkbox' id='person' name='person')
                                         a(href=`/people/`+ person._id) #{person.name}
@@ -41,6 +42,7 @@ html(lang='en' dir='ltr')
                                 each u in user.usersFollowing
                                     .iconboxes
                                         img(src='/img/Profile.png' alt='')
+                                        br
                                         label(for='u')
                                             input(type='checkbox' id='u' name='u')
                                             a(href=`/users/`+ u._id) #{u.username}
@@ -51,6 +53,7 @@ html(lang='en' dir='ltr')
                                 each movie in user.watchlist
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
+                                        br
                                         label(for='movie.title')
                                             input(type='checkbox' id='movie.title' name='movie.title')
                                             a(href=`/movies/`+ movie._id) #{movie.title}

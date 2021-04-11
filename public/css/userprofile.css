@@ -132,11 +132,13 @@ body {
 
 .iconboxes{
   width: 130px;
-  height: 130px;
   display: inline-block;
+  word-wrap: break-word;
   overflow: auto;
   margin: 5px;
   margin-right: 0px;
+  text-align: center;
+
 }
 
 .iconboxes img{
@@ -145,12 +147,12 @@ body {
   border: 1px solid #000000;
   box-sizing: border-box;
   margin-bottom: 0px;
-  display: block;
+  display: inline-block;
 }
 
 .iconboxes label{
   font-size: 13.5px;
-  display: inline-block;
+  display: block;
   word-wrap: break-word;
 }
 
