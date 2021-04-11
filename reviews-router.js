@@ -35,7 +35,7 @@ function createReview(req, res, next){
             res.send(400); //bad content
           }
         else{
-          console.log(newReview);
+          //console.log(newReview);
           req.reviewObject = newReview;
           next();
         }
@@ -56,7 +56,7 @@ function pushReviewIDtoUser(req, res, next){
       res.sendStatus(400); //bad content
     }
     else{
-      console.log("user results" + result);
+      //console.log("user results" + result);
       next();
     }
   });
@@ -72,7 +72,16 @@ function pushReviewIDtoMovie(req, res, next){
       res.sendStatus(400); //bad content
     }
     else{
-        console.log("movie results" + result);
+        //console.log("movie results" + result);
+        if(!result.rating){
+          console.log("test")
+          result.rating = req.body.rating;
+          result.save()
+        }
+        else{
+          result.rating = result.calcAvRating(req.body.rating);
+          result.save()
+        }
         res.status(201).send(req.reviewObject);
     }
   });

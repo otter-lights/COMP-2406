@@ -21,7 +21,7 @@ let movieSchema = Schema({
     required: true
   },
   rating: {
-    type: Number
+    type: String
   },
   genres: {
     type: [String],
@@ -54,11 +54,13 @@ movieSchema.statics.getSimilar = function(movie, callback){
 
 
 movieSchema.methods.calcAvRating = function(newRating){
+  console.log("FUCK")
+  console.log(this.reviews.length)
   if(this.reviews.length === 0){
     return newRating
   }
   else{
-    return(((this.rating * this.reviews.length) + newRating)/this.reviews.length+1)
+    return(((parseFloat(this.rating) * (this.reviews.length-1)) + parseFloat(newRating))/this.reviews.length)
   }
 }
 

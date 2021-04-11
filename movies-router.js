@@ -41,7 +41,7 @@ router.param("id", function(req, res, next, value){
             //the server can't populate the data that it has already verified, making it a server error.
           }
           req.movie = result;
-          console.log(result);
+          //console.log(result);
           //error codes here check if empty, blah blah blah blah.
           next();
       });
