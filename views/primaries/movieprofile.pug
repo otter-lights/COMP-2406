@@ -48,7 +48,11 @@ html(lang='en' dir='ltr')
         each movie in recommendedMovies
             div
               h4
-                a(href='/movieprofile') #{movie.title} (#{movie.rating}/10)
+                a(href=`/movies/`+ movie._id) #{movie.title}
+                if(movie.rating)
+                  |#{' '}(#{movie.rating}/10)
+                else
+                  |#{' '}(Not Rated)
               p #{movie.plot.slice(0, 70)}...
               p
                 each genre in movie.genres
