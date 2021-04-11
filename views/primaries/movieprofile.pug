@@ -14,7 +14,7 @@ html(lang='en' dir='ltr')
       #movieinfocard.movieinfocard
         h1#movieinfotitle #{movie.title}
         if (movie.rating)
-          h3#movierating #{movie.rating}/10
+          h3#movierating #{movie.rating.substring(0, 4)}/10
         else
           h3#movierating N/A
         br
@@ -50,7 +50,7 @@ html(lang='en' dir='ltr')
               h4
                 a(href=`/movies/`+ movie._id) #{movie.title}
                 if(movie.rating)
-                  |#{' '}(#{movie.rating}/10)
+                  |#{' '}(#{movie.rating.substring(0,4)}/10)
                 else
                   |#{' '}(Not Rated)
               p #{movie.plot.slice(0, 70)}...
