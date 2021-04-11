@@ -65,25 +65,26 @@ html(lang='en' dir='ltr')
       h5 WRITE A FULL REVIEW (OPTIONAL):
       textarea#fullreviewinput(rows='4' cols='50' type='text')
       button#submitreviewbutton(type='button' onclick='addReview()') SUBMIT
-      #allreviewscontainer
-        each review in movie.reviews
-          .review
-            .left
-              .rating
-                img(src='/img/Video.png' alt='')
-                br
-                p #{review.rating}/10
-              p
-                a(href=`/users/`+ review.username._id) #{review.username.username}
-            .right
-              if (review.briefsummary)
-                h4 Summary
+      if(movie.reviews.length > 0)
+        #allreviewscontainer
+          each review in movie.reviews
+            .review
+              .left
+                .rating
+                  img(src='/img/Video.png' alt='')
+                  br
+                  p #{review.rating}/10
                 p
-                  | #{review.briefsummary}
-              if (review.review)
-                h4 Full Review
-                p
-                  | #{review.review}
+                  a(href=`/users/`+ review.username._id) #{review.username.username}
+              .right
+                if (review.briefsummary)
+                  h4 Summary
+                  p
+                    | #{review.briefsummary}
+                if (review.review)
+                  h4 Full Review
+                  p
+                    | #{review.review}
     script.
       let userID = !{JSON.stringify(session.userID)}
     script(src='/javascript/viewmovie.js' charset='utf-8')
