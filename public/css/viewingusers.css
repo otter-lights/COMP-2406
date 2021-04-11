@@ -82,11 +82,13 @@ body {
 
 .iconboxes{
   width: 130px;
-  height: 130px;
   display: inline-block;
   overflow: auto;
   margin: 5px;
   margin-right: 0px;
+  text-align: center;
+  word-wrap: break-word;
+  vertical-align: top;
 }
 
 .iconboxes img{
@@ -96,8 +98,7 @@ body {
   box-sizing: border-box;
   margin: 8px;
   margin-bottom: 0px;
-  display: block;
-
+  display: inline-block;
 }
 
 .iconboxes p{
