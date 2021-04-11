@@ -1,7 +1,6 @@
 body {
   margin: 0px;
   background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
-  height: 1700px;
   background-repeat: no-repeat;
 }
 
@@ -11,6 +10,7 @@ body {
   background: black;
   margin: auto;
   margin-top: 50px;
+  margin-bottom: 50px;
   width: 1235px;
   height: 1560px;
   border: 1px solid #FFFFFF;

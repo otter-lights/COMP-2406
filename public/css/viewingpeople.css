@@ -1,7 +1,6 @@
 body {
   margin: 0;
   background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
-  height: 1450px;
   background-repeat: no-repeat;
   overflow-x: hidden;
 }
@@ -11,7 +10,6 @@ body {
   margin: auto;
   margin-top: 50px;
   width: 1236px;
-  height: 1264px;
   border: 1px solid #FFFFFF;
   border-radius: 20px;
 }
@@ -50,7 +48,6 @@ body {
   background: white;
   margin: auto;
   width: 1117px;
-  height: 927px;
   margin-bottom: 55px;
   border-radius: 20px;
 }
@@ -61,7 +58,7 @@ body {
   font-style: normal;
   font-weight: bold;
   width: 986px;
-  height: 181px;
+  padding-bottom: 55px;
   margin: auto;
 }
 
