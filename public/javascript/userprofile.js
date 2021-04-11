@@ -93,7 +93,9 @@ function buildList(divs, path){
     }
   }
   console.log(stillFollowing);
-  sendItemsToServer(stillFollowing, path);
+  if(stillFollowing.length < divs.length){
+    sendItemsToServer(stillFollowing, path);
+  }
 }
 
 function sendItemsToServer(following, path){
