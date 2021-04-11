@@ -90,6 +90,8 @@ body{
   border-radius: 15px;
   color: white;
   padding-top: 10px;
+  float: right;
+  margin-right: 70px;
 }
 
 #movierating{
