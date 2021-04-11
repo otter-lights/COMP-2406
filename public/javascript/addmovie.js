@@ -54,6 +54,7 @@ function display(result, path){
   let div;
   if (path === "writers"){
     div = document.getElementById("writerNames");
+    console.log(div);
   }
   else if(path==="actors"){
     div = document.getElementById("actorNames");
@@ -65,7 +66,7 @@ function display(result, path){
     return;
   }
   let names = "";
-  (result.names).forEach(name => names+= name.name + "<br>");
+  (result.names).forEach(name => names+= "<option value='"+name.name + "'/>");
   console.log(names);
   div.innerHTML = names;
 }

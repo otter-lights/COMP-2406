@@ -31,18 +31,18 @@ html(lang='en' dir='ltr')
                     br
                 p
                     label(for='writers') WRITERS:
-                    input#writers(type='text' name='writers' oninput='getWriters()')
-                    div(id='writerNames')
+                    input#writers(type='text' name='writers' oninput='getWriters()' list='writerNames')
+                    datalist(id='writerNames')
                     br
                 p
                     label(for='directors') DIRECTORS:
-                    input#directors(type='text' name='directors' oninput='getDirectors()')
-                    div(id='directorNames')
+                    input#directors(type='text' name='directors' oninput='getDirectors()' list='directorNames')
+                    datalist(id='directorNames')
                     br
                 p
                     label(for='actors') ACTORS:
-                    input#actors(type='text' name='actors' oninput='getActors()')
-                    div(id='actorNames')
+                    input#actors(type='text' name='actors' oninput='getActors()' list='actorNames')
+                    datalist(id='actorNames')
                     br
                 p
                     label
