@@ -29,6 +29,10 @@ html(lang='en' dir='ltr')
                     input#runtime(type='number' name='runtime')
                     br
                 p
+                    label(for='plot') PLOT:
+                    input#plot(type='text' name='plot')
+                    br
+                p
                     label(for='genres') GENRES:
                     input#genres(type='text' name='genres')
                     button#addGenres(type='button' onclick='addGenres()') ADD GENRE

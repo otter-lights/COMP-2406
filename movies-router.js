@@ -58,9 +58,7 @@ router.param("id", function(req, res, next, value){
 function recommendMovies(req, res, next){
   Movie.getSimilar(req.movie, function(err, result){
     if(err) throw err
-    console.log(result)
     req.recommendedMovies = result
-    console.log(req.reccomendMovies)
     next();
   })
 }

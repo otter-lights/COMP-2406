@@ -136,6 +136,7 @@ function addMovie(){
   let title = document.getElementById("title").value.trim();
   let year = document.getElementById("year").value.trim();
   let runtime = document.getElementById("runtime").value.trim();
+  let plot = document.getElementById("plot").value.trim();
 
   if((!verifynumber(year)|| !verifynumber(runtime)) && genres.length > 0 && title.length > 0){
     console.log(year);
@@ -143,7 +144,7 @@ function addMovie(){
     alert("Please make sure you are entering your answers in numerical format for the year and release year.");
   }
 
-	else if(title.length == 0 || year.length == 0 || runtime.length == 0 || genres.length == 0){
+	else if(title.length === 0 || year.length === 0 || runtime.length === 0 || plot.length === 0){
 		alert("All fields are required to add a movie.");
 		return;
 	}
@@ -154,7 +155,7 @@ function addMovie(){
     alert("At least one genre must be added.");
   }
   else{
-    createObject(title, year, runtime);
+    createObject(title, year, runtime, plot);
   }
     //now have array of each.
     //let newMovie = {"Title": title, "Year":releaseyear, "Runtime": runtime + " min", "Genre":genres, "Director": directors, "Writer": writers, "Actors": actors};
@@ -162,37 +163,42 @@ function addMovie(){
   //}
 }
 
-function createObject(title, year, runtime){
+function createObject(title, year, runtime, plot){
   let movie = {};
   movie.title = title;
   movie.year = year;
-  movie.runtime = runtime;
+  movie.runtime = runtime + " mins"
+  movie.plot = plot;
   movie.genres = genres;
   movie.director = directors;
   movie.actor = actors;
   movie.writer = writers;
+  sendServerRequest(movie);
 }
 
-function sendServerRequest(){
+function sendServerRequest(movie){
     let xhttp = new XMLHttpRequest();
   	xhttp.onreadystatechange = function() {
   		if(this.readyState==4){
         if(this.status==201){
           let id = (JSON.parse(this.responseText))._id;
-          window.location.replace(`/people/${id}`);
+          window.location.replace(`/movies/${id}`);
         }
         else if(this.status==401){
-          alert("You are not authorized to add a person to the database.");
+          alert("You are not authorized to add a movie to the database.");
         }
         else if(this.status==409){
-          alert("This person already exists in the database. You can search for them in the search tab.");
+          alert("A movie with this title already exists in the database. You can search for them in the search tab.");
+        }
+        else if(this.status == 400){
+          alert("Something is wrong with the content.");
         }
         else{
           alert("There was a problem with the server. Try again.");
         }
   		}
   	};
-  	xhttp.open("POST", "/addperson", true);
+  	xhttp.open("POST", "/addmovie", true);
   	xhttp.setRequestHeader("Content-Type", "application/json");
-  	xhttp.send(JSON.stringify({"name": name}));
+  	xhttp.send(JSON.stringify(movie));
 }

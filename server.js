@@ -34,6 +34,7 @@ let reviewsRouter = require("./reviews-router");
 app.use("/reviews", reviewsRouter);
 
 app.post("/addperson", createPerson);
+app.post("/addmovie", getIDs, createMovie, addMovieToPeople);
 
 
 let searchResults = [{"id": "6", "title": "Force Awakens", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "43", "title": "Split", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "45", "title": "To All The Boys","genres":["Action","Adventure","Sci-Fi"]},
@@ -141,6 +142,130 @@ function createPerson(req, res, next){
     res.sendStatus(401); //or whatever to indicate unauthorized
   }
 }
+
+function getIDs(req, res, next){
+  if(req.session.loggedin && req.session.admin){
+    Person.findArrayByName(req.body.director, function(err, result){
+      if(err){
+        console.log(err);
+      }
+      else{
+        req.directors = result;
+        Person.findArrayByName(req.body.actor, function(err, result){
+          if(err){
+            console.log(err);
+          }
+          else{
+            req.actors = result;
+            Person.findArrayByName(req.body.writer, function(err, result){
+              if(err){
+                console.log(err);
+              }
+              else{
+                req.writers = result;
+                next();
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+  else{
+    res.sendStatus(401); //or whatever to indicate unauthorized
+  }
+}
+
+function createMovie(req, res, next){
+    console.log(req.body);
+    //Create a new person document using the Mongoose model
+    //Copy over the required basic person data
+    let newMovie = new Movie();
+    newMovie._id = mongoose.Types.ObjectId();
+    newMovie.title = req.body.title;
+    newMovie.year = req.body.year;
+    newMovie.plot = req.body.plot;
+    newMovie.runtime = req.body.runtime;
+    newMovie.writer = req.writers;
+    newMovie.actor = req.actors;
+    newMovie.director = req.directors;
+    newMovie.genres = req.body.genres;
+    console.log(newMovie);
+    newMovie.save(function(err, movie) {
+        if (err) {
+          if(err.code == 11000){ //this is duplicate-key error (someone already exists with that name)
+            res.send(409); //409 is the correct status code for duplicate resource or resource already exists.
+            //it means conflict
+          }
+          else{
+            console.log(err);
+            res.send(400);
+          }
+        }
+        else{
+          res.movie = movie;
+          next();
+        }
+    });
+}
+
+function addMovieToPeople(req, res, next){
+  Person.updateMany({'_id': {$in: res.movie.director}}, { $push: { "director": res.movie._id }}, function(err, results){
+    if(err){
+      console.log(err);
+    }
+    else{
+      Person.updateMany({'_id': {$in: res.movie.actor}}, { $push: { "actor": res.movie._id }}, function(err, results){
+        if(err){
+          console.log(err);
+        }
+        else{
+          Person.updateMany({'_id': {$in: res.movie.writer}}, { $push: { "writer": res.movie._id }}, function(err, results){
+            if(err){
+              console.log(err);
+            }
+            else{
+              res.status(201).send(res.movie);
+            }
+          });
+        }
+      });
+    }
+  });
+}
+
+/*function addMovieToPeople(req, res, next){
+  Person.addMovieToArray(res.movie.director, "director", res.movie._id, function(err, results) {
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("director");
+      console.log(results);
+      Person.addMovieToArray(res.movie.actor, "actor", res.movie._id, function(err, results) {
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log("writer");
+
+          console.log(results);
+          Person.addMovieToArray(res.movie.writer, "writer", res.movie._id, function(err, results) {
+            if(err){
+              console.log(err);
+            }
+            else{
+              console.log("actor");
+
+              console.log(results);
+              res.status(201).send(res.movie);
+            }
+          });
+        }
+      });
+    }
+  });
+}*/
 
 mongoose.connect('mongodb://localhost/moviedata', {useNewUrlParser: true});
 let db = mongoose.connection;
