@@ -39,25 +39,6 @@ personSchema.statics.findArrayByName = function(array, callback){
   this.find({'name': {$in: array}}, callback);
 }
 
-personSchema.statics.addMovieToArray = function(array, position, id, callback){
-
-  if(position === 'director'){
-    this.find({$in: array}, callback);
-    //this.updateMany(condition, {$push: {"director": id}}, {"multi": true}, callback);
-  }
-  else if(position === 'actor'){
-    this.find({$in: array}, callback);
-
-    //this.update({'_id': {$in: array}}, {$push: {"actor": id}}, {"multi": true}, callback);
-  }
-  else if(position === 'writer'){
-    this.find({$in: array},  callback);
-    //this.update({'_id': {$in: array}}, {$push: {"writer": id}},{ "multi": true}, callback);
-    /*this.find({'_id': {$in: array}}.update(results, {$push: {"writer": id}},
-      { "new": true, "upsert": true }, callback);*/
-  }
-}
-
 
 /*
 personSchema.methods.frequentCollabs = function(callback){
