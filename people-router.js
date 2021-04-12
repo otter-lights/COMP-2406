@@ -28,7 +28,7 @@ router.param("id", function(req, res, next, value){
   			return;
   		}
 
-      Person.findById(value).populate("director writer actor followers commonCollabs").exec(function(err, result){
+      Person.findById(value).populate("director writer actor followers").exec(function(err, result){
           if(err){
             throw err;
             res.sendStatus(500);
@@ -45,6 +45,16 @@ router.param("id", function(req, res, next, value){
       res.status(401).render('./primaries/homepage.pug', {session:req.session});
   }
 });
+
+function getCollabs(req, res, next){
+  Person.frequentCollabs(req.person, function(err, result){
+    if(err) throw err
+    console.log(result)
+    req.commonCollabs = result
+    console.log(req.commonCollabs)
+    next();
+  })
+}
 
 
 function sendPerson(req, res, next){

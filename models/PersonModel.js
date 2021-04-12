@@ -24,10 +24,6 @@ let personSchema = Schema({
   actor: {
     type: [Schema.Types.ObjectId],
     ref: 'Movie',
-  },
-  commonCollabs: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Person',
   }
 });
 
@@ -40,32 +36,6 @@ personSchema.statics.findArrayByName = function(array, callback){
 }
 
 
-/*
-personSchema.methods.frequentCollabs = function(callback){
-  let films = []
-  let collabs = []
-  films = films.concat(this.actor);
-  films = films.concat(this.director);
-  films = films.concat(this.writer);
-  //console.log(films)
-  Movie.find({_id: {$in: films}}).populate("actor director writer", "name").exec(function(err, result){
-    let collabs = []
-    result.forEach(film=>{
-      console.log(film)
-      thisFilm = []
-      thisFilm = thisFilm.concat(film.actor, film.director, film.writer)
-      console.log(thisFilm)
-      let dist = unique(thisFilm)
-      collabs = collabs.concat(dist);
-    })
-    console.log(collabs)
-    personSchema.find({})
-    personSchema.find({name: {$in: collabs}}).exec(function(err, result){
-      console.log(result)
-      callback(result)
-    })
-  })
-}*/
 personSchema.statics.frequentCollabs = function(person, callback){
   let films = []
   let collabs = []
