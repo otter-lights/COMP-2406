@@ -12,6 +12,9 @@ html(lang='en' dir='ltr')
         +menubar
         .whitebackground
             p ADD A MOVIE
+            h5(style="margin: auto;") INSTRUCTIONS: Add each individual genre, writer, director, and actor one at a time using the buttons.
+            h5 All fields must be filled, and at least one genre, writer, director and actor must be added.
+            h5 When you're done adding everything, press the ADD MOVIE button to add the movie to the database.
             .formbox
                 p
                     label(for='title') TITLE:
@@ -19,32 +22,45 @@ html(lang='en' dir='ltr')
                     br
                 p
                     label(for='releaseYear') RELEASE YEAR:
-                    input#year(type='text' name='releaseYear')
+                    input#year(type='number' name='releaseYear')
                     br
                 p
                     label(for='runtime') RUNTIME:
-                    input#runtime(type='text' name='runtime')
+                    input#runtime(type='number' name='runtime')
                     br
                 p
                     label(for='genres') GENRES:
                     input#genres(type='text' name='genres')
+                    button#addGenres(type='button' onclick='addGenres()') ADD GENRE
                     br
                 p
                     label(for='writers') WRITERS:
                     input#writers(type='text' name='writers' oninput='getWriters()' list='writerNames')
                     datalist(id='writerNames')
+                    button#addwriters(type='button' onclick='addWriters()') ADD WRITER
                     br
                 p
                     label(for='directors') DIRECTORS:
                     input#directors(type='text' name='directors' oninput='getDirectors()' list='directorNames')
                     datalist(id='directorNames')
+                    button#addirectors(type='button' onclick='addDirectors()') ADD DIRECTOR
                     br
                 p
                     label(for='actors') ACTORS:
                     input#actors(type='text' name='actors' oninput='getActors()' list='actorNames')
                     datalist(id='actorNames')
+                    button#addactors(type='button' onclick='addActors()') ADD ACTOR
                     br
                 p
                     label
-                    button#addbutton(type='button' onclick='addMovie()') ADD
+                    button#addbutton.addbutton(type='button' onclick='addMovie()') ADD MOVIE
+            div#wad
+                div#writ
+                    h4 WRITERS:
+                div#direct
+                    h4 DIRECTORS:
+                div#act
+                    h4 ACTORS:
+                div#gen
+                    h4 GENRES:
     script(src='/javascript/addmovie.js' charset='utf-8')

@@ -5,6 +5,11 @@ body {
   overflow-x: hidden;
 }
 
+h5{
+  text-align: center;
+  margin: auto;
+}
+
 .whitebackground{
   background: white;
   margin: auto;
@@ -50,7 +55,35 @@ body {
     text-indent: 2em
 }
 
-.formbox button{
+#wad{
+  margin: auto;
+  width: 638px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#wad div{
+  width: 23%;
+  height: 100%;
+  display: inline-block;
+  border: 1px solid #000000;
+  margin: 2px;
+  vertical-align:top;
+}
+#wad h4{
+  margin: 0px;
+  font-weight: bolder;
+}
+
+#wad p{
+  font-size: 14px;
+  display: inline-block;
+  margin: 0px;
+  margin-right: 10px;
+  padding: 0px;
+}
+
+.formbox .addbutton{
   font-family: Fira Sans Extra Condensed;
   font-style: normal;
   font-weight: bold;
