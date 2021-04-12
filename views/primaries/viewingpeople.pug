@@ -16,11 +16,11 @@ html(lang='en' dir='ltr')
             button#followbutton(type='button' name='follow' onclick='startFollowing()') follow
         .personcard
             .sections
-                if (person.commonCollabs.length > 0)
+                if (commonCollabs.length > 0)
                     div
                         h2 FREQUENT COLLABORATORS
                         #frequentcollaboratorscontainer.profileboxes
-                            each collaborator in person.commonCollabs
+                            each collaborator in commonCollabs
                                 .iconboxes
                                     img(src='/img/Profile.png' alt='')
                                     p

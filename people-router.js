@@ -63,7 +63,7 @@ function sendPerson(req, res, next){
   		"application/json": function(){
   			res.status(200).json(req.person);
   		},
-  		"text/html": () => { res.render('./primaries/viewingpeople', {session: req.session, person: req.person});}
+  		"text/html": () => { res.render('./primaries/viewingpeople', {session: req.session, person: req.person, commonCollabs: []});}
   	});
   	next();
   }
