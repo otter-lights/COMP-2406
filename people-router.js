@@ -65,8 +65,6 @@ function sendPerson(req, res, next){
 //now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.
 
 function getCharacters(req, res, next){
-  const MAX_RESULTS = 10;
-  console.log(req.query.chars);
   if(req.query.chars){
     Person.startsWith(req.query.chars, function(err, result){
       if(err){
@@ -74,7 +72,6 @@ function getCharacters(req, res, next){
         res.sendStatus(404);
       }
       else{
-        console.log(result);
         res.status(200).send({names: result});
       }
     });
