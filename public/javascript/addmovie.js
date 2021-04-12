@@ -71,6 +71,7 @@ function addWriters(){
   let div = document.getElementById("writ");
 
   addNames(input, datalist, div, writers);
+  document.getElementById("writers").value = "";
 }
 
 function addNames(input, datalist, div, array){
@@ -96,6 +97,7 @@ function addDirectors(){
   let datalist =  document.getElementById("directorNames");
   let div = document.getElementById("direct");
   addNames(input, datalist, div, directors);
+  document.getElementById("directors").value = "";
 }
 
 function addActors(){
@@ -103,6 +105,7 @@ function addActors(){
   let datalist =  document.getElementById("actorNames");
   let div = document.getElementById("act");
   addNames(input, datalist, div, actors);
+  document.getElementById("actors").value = "";
 }
 //The page must give the user a way to dynamically search for people within the
 //database to add to the movie (e.g., using AJAX).
@@ -114,18 +117,30 @@ function addActors(){
 
 function addGenres(){
   let input = document.getElementById("genres").value.trim();
-  if(!isDuplicate(input, genres)){
-    genres.push(input);
-    let div = document.getElementById("gen");
-    let gen = div.innerHTML;
-    if(gen === undefined){
-      gen = "";
+  input = capitalize(input);
+  if(input.length > 0){
+    if(!isDuplicate(input, genres)){
+      genres.push(input);
+      let div = document.getElementById("gen");
+      let gen = div.innerHTML;
+      if(gen === undefined){
+        gen = "";
+      }
+      gen += "<p>"+input+"</p>";
+      console.log(gen);
+      div.innerHTML = gen;
+      console.log(div);
     }
-    gen += "<p>"+input+"</p>";
-    console.log(gen);
-    div.innerHTML = gen;
-    console.log(div);
+    document.getElementById("genres").value = "";
   }
+}
+
+function capitalize(string){
+  let words = string.toLowerCase().split(' ');
+   for (let i = 0; i < words.length; i++) {
+       words[i] = words[i].charAt(0).toUpperCase() + words[i].substring(1);
+   }
+   return words.join(' ');
 }
 
 function isDuplicate(name, array){
@@ -192,6 +207,11 @@ function sendServerRequest(movie){
         }
         else if(this.status == 400){
           alert("Something is wrong with the content.");
+        }
+        else if(this.status == 500){
+          alert("Something went wrong with linking the people you added to the movie.");
+          let id = (JSON.parse(this.responseText))._id;
+          window.location.replace(`/movies/${id}`);
         }
         else{
           alert("There was a problem with the server. Try again.");
