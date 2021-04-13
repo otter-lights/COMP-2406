@@ -105,6 +105,7 @@ function changeWatchlist(object){
         }
         else{
           alert("There was a problem with the server. Try again.");
+          location.reload();
         }
   		}
   	};

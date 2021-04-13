@@ -132,6 +132,7 @@ function sendItemsToServer(object, path){
         }
         else{
           alert("There was a problem with the server. Try again.");
+          location.reload();
         }
   		}
   	};

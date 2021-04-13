@@ -65,30 +65,30 @@ function addWriters(){
   let input = document.getElementById("writers").value.trim();
   let datalist =  document.getElementById("writerNames");
   let div = document.getElementById("writ");
-
-  addNames(input, datalist, div, writers);
-  document.getElementById("writers").value = "";
+  let clear = document.getElementById("writers");
+  addNames(input, datalist, div, writers, clear);
 }
 
 function addDirectors(){
   let input = document.getElementById("directors").value.trim();
   let datalist =  document.getElementById("directorNames");
   let div = document.getElementById("direct");
-  addNames(input, datalist, div, directors);
-  document.getElementById("directors").value = "";
+  let clear = document.getElementById("directors");
+  addNames(input, datalist, div, directors, clear);
 }
 
 function addActors(){
   let input = document.getElementById("actors").value.trim();
   let datalist =  document.getElementById("actorNames");
   let div = document.getElementById("act");
-  addNames(input, datalist, div, actors);
-  document.getElementById("actors").value = "";
+  let clear = document.getElementById("actors");
+  addNames(input, datalist, div, actors, clear);
 }
 
-function addNames(input, datalist, div, array){
+function addNames(input, datalist, div, array, boxToClear){
   for(let i = 0; i < datalist.options.length; i++){
     if(input === datalist.options[i].value){
+      boxToClear.value = "";
       if(!isDuplicate(datalist.options[i].value, array)){
         array.push(datalist.options[i].value);
         let names = div.innerHTML;
@@ -96,9 +96,7 @@ function addNames(input, datalist, div, array){
           names = "";
         }
         names += "<p>"+datalist.options[i].value+"</p>";
-        console.log(names);
         div.innerHTML = names;
-        console.log(div);
       }
     }
   }
@@ -147,8 +145,6 @@ function addMovie(){
   let plot = document.getElementById("plot").value.trim();
 
   if((!verifynumber(year)|| !verifynumber(runtime)) && genres.length > 0 && title.length > 0){
-    console.log(year);
-    console.log(runtime);
     alert("Please make sure you are entering your answers in numerical format for the year and release year.");
   }
 
