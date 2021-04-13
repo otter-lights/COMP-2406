@@ -20,6 +20,15 @@ html(lang='en' dir='ltr')
 
         .personcard
             .sections
+                if (commonCollabs.length > 0)
+                    div
+                        h2 FREQUENT COLLABORATORS
+                        #frequentcollaboratorscontainer.profileboxes
+                            each collaborator in commonCollabs
+                                .iconboxes
+                                    img(src='/img/Profile.png' alt='')
+                                    p
+                                        a(href=/people/+ collaborator._id) #{collaborator.name}
                 if (person.director.length > 0)
                     div
                         h2 MOVIES DIRECTED
@@ -47,15 +56,6 @@ html(lang='en' dir='ltr')
                                     img(src='/img/Video.png' alt='')
                                     p
                                         a(href=`/movies/`+ movie._id) #{movie.title}
-                if (commonCollabs.length > 0)
-                    div
-                        h2 FREQUENT COLLABORATORS
-                        #frequentcollaboratorscontainer.profileboxes
-                            each collaborator in commonCollabs
-                                .iconboxes
-                                    img(src='/img/Profile.png' alt='')
-                                    p
-                                        a(href=/people/+ collaborator._id) #{collaborator.name}
     script.
         let userID = !{JSON.stringify(session.userID)}
     script(src='/javascript/viewingpeople.js' charset='utf-8')
