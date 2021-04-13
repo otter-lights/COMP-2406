@@ -1,25 +1,3 @@
-function createObject(rating, briefsummary, review){
-  let reviewObject = {};
-  if (rating === ""){
-    alert("The rating field is required.")
-    return;
-  }
-  else{
-    reviewObject.rating = rating;
-  }
-  if(!(briefsummary === "")){
-    reviewObject.briefsummary = briefsummary;
-  }
-  if(!(review === "")){
-    reviewObject.review = review;
-  }
-  let movieID = window.location.pathname.slice(8);
-  console.log(movieID);
-  reviewObject.movieID = movieID;
-  console.log(reviewObject);
-  return reviewObject;
-}
-
 function addReview(){
   let rating = document.getElementById("reviewoutof10").value;
   let briefsummary = document.getElementById("briefsummaryinput").value;
@@ -49,9 +27,29 @@ function addReview(){
 	xhttp.send(JSON.stringify(reviewObject));
 }
 
-function getLoggedinUser(){
-
+function createObject(rating, briefsummary, review){
+  let reviewObject = {};
+  if (rating === ""){
+    alert("The rating field is required.")
+    return;
+  }
+  else{
+    reviewObject.rating = rating;
+  }
+  if(!(briefsummary === "")){
+    reviewObject.briefsummary = briefsummary;
+  }
+  if(!(review === "")){
+    reviewObject.review = review;
+  }
+  let movieID = window.location.pathname.slice(8);
+  console.log(movieID);
+  reviewObject.movieID = movieID;
+  console.log(reviewObject);
+  return reviewObject;
 }
+
+//////////////////////////////////////////////////
 
 function addToWatchlist(){
   let movieID = window.location.pathname.slice(8);
@@ -61,7 +59,7 @@ function addToWatchlist(){
 		if(this.readyState==4){
       if (this.status==200){
         let watchlist =  JSON.parse(this.responseText);
-        createMovieObject(watchlist.watchlist);
+        createWatchlistObject(watchlist.watchlist);
       }
       else if(this.status==403){
         //accessing another user's account, redirect
@@ -84,16 +82,23 @@ function addToWatchlist(){
 	xhttp.send();
 }
 
-function changeWatchlist(watchlist){
-  if(watchlist){
-    let movieID = window.location.pathname.slice(8);
+function createWatchlistObject(watchlist){
+  let object = {};
+  let movieID = window.location.pathname.slice(8);
+  watchlist.push(movieID);
+  object.watchlist = watchlist;
+  object.addedMovie = movieID;
+  changeWatchlist(object);
+}
+
+function changeWatchlist(object){
+  if(object){
     let xhttp = new XMLHttpRequest();
   	xhttp.onreadystatechange = function() {
   		if(this.readyState==4){
         if(this.status==200){
           alert("Added to watchlist.");
           location.reload();
-          console.log("test")
         }
         else if(this.status==401){
           alert("You are not authorized to add this movie to your watchlist.");
@@ -105,18 +110,9 @@ function changeWatchlist(watchlist){
   	};
   	xhttp.open("PUT", "/users/"+userID+"/watchlist", true);
   	xhttp.setRequestHeader("Content-Type", "application/json");
-  	xhttp.send(JSON.stringify({"watchlist": watchlist}));
+  	xhttp.send(JSON.stringify(object));
   }
   else{
     alert("Something went wrong with adding this movie to your watchlist.")
   }
-}
-
-
-function createMovieObject(watchlist){
-  let movieID = window.location.pathname.slice(8);
-  console.log(watchlist);
-  watchlist.push(movieID);
-  console.log(watchlist);
-  changeWatchlist(watchlist);
 }

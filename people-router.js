@@ -50,7 +50,6 @@ function getCollabs(req, res, next){
   Person.frequentCollabs(req.person, function(err, result){
     if(err) throw err
     Person.find({name: {$in: result}}).exec(function(err, result){
-      console.log(result)
       req.commonCollabs = result
       next();
     })
@@ -59,8 +58,6 @@ function getCollabs(req, res, next){
 function inList(req, res, next){
   User.inPeopleFollowing(req.session.userID, req.person, function(err, result){
     req.inList = result
-    console.log(result)
-    console.log(req.inList)
     next()
   })
 }

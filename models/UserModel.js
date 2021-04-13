@@ -68,7 +68,6 @@ userSchema.statics.getRecs = function(user, callback){
 userSchema.statics.inWatchlist = function(userID, movie, callback){
   this.findById(userID).exec(function(err, result){
     if(err) throw err
-    console.log(result)
     callback(err, result.watchlist.includes(movie._id))
   })
 }
@@ -76,14 +75,12 @@ userSchema.statics.inWatchlist = function(userID, movie, callback){
 userSchema.statics.inPeopleFollowing = function(userID, person, callback){
   this.findById(userID).exec(function(err, result){
     if(err) throw err
-    console.log(result)
     callback(err, result.peopleFollowing.includes(person._id))
   })
 }
 userSchema.statics.inUserFollowing = function(userID, user, callback){
   this.findById(userID).exec(function(err, result){
     if(err) throw err
-    console.log(result)
     callback(err, result.usersFollowing.includes(user._id))
   })
 }
