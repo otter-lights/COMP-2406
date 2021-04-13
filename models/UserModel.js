@@ -54,7 +54,7 @@ userSchema.statics.getRecs = function(user, callback){
       allgenres = allgenres.concat(film.genres)
     })
     console.log(allgenres)
-    Movie.find({genres: {$in: allgenres}}).limit(5).sort('-rating -year').exec(function(err, result){
+    Movie.find({genres: {$in: allgenres}, _id: {$nin: user.watchlist}}).sort('-rating -year').limit(5).exec(function(err, result){
       callback(err, result)
     })
   }   
