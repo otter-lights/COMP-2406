@@ -32,7 +32,7 @@ personSchema.statics.startsWith = function(name, callback){
 }
 
 personSchema.statics.findArrayByName = function(array, callback){
-  this.find({'name': {$in: array}}, callback).select("followers");
+  this.find({'name': {$in: array}}, callback);
 }
 
 personSchema.statics.frequentCollabs = function(person, callback){
@@ -41,15 +41,12 @@ personSchema.statics.frequentCollabs = function(person, callback){
   films = films.concat(person.actor);
   films = films.concat(person.director);
   films = films.concat(person.writer);
-  console.log(films)
 
   Movie.find({_id: {$in: films}}).populate("actor director writer", "name").exec(function(err, result){
     let collabs = []
     result.forEach(film=>{
-      console.log(film)
       thisFilm = []
       thisFilm = thisFilm.concat(film.actor, film.director, film.writer)
-      console.log(thisFilm)
       let dist = unique(thisFilm)
       collabs = collabs.concat(dist);
       collabs.splice(collabs.indexOf(person.name), 1)
