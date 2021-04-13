@@ -34,7 +34,8 @@ body {
   width: 200px;
   height: 25px;
   background: #FFBAAB;
-  margin-right:475px;
+  margin: auto;
+  display: block;
   padding: 0px;
 }
 
