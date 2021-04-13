@@ -10,7 +10,7 @@ const fs = require("fs");
 const csv = require('csv-parser')
 const results = []
 
-const fileName = "./data/movie-data-100.json";
+const fileName = "./data/movie-data-1000.json";
 const userDataFile = "./data/user-data.json";
 
 //Array of all movie documents (no duplicates)
