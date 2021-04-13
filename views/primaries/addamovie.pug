@@ -14,6 +14,7 @@ html(lang='en' dir='ltr')
             p ADD A MOVIE
             h5(style="margin: auto;") INSTRUCTIONS: Add each individual genre, writer, director, and actor one at a time using the buttons.
             h5 All fields must be filled, and at least one genre, writer, director and actor must be added.
+            h5 Runtime is in minutes.
             h5 When you're done adding everything, press the ADD MOVIE button to add the movie to the database.
             .formbox
                 p
@@ -25,7 +26,7 @@ html(lang='en' dir='ltr')
                     input#year(type='number' name='releaseYear')
                     br
                 p
-                    label(for='runtime') RUNTIME (MINS):
+                    label(for='runtime') RUNTIME:
                     input#runtime(type='number' name='runtime')
                     br
                 p
