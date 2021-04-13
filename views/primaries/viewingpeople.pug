@@ -29,6 +29,8 @@ html(lang='en' dir='ltr')
                                     img(src='/img/Profile.png' alt='')
                                     p
                                         a(href=/people/+ collaborator._id) #{collaborator.name}
+                else
+                    h2 Looks like this person hasn't participated in many movies from our database yet.
                 if (person.director.length > 0)
                     div
                         h2 MOVIES DIRECTED
