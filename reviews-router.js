@@ -4,7 +4,7 @@ const Movie = require("./models/MovieModel");
 const User = require("./models/UserModel");
 const Person = require("./models/PersonModel");
 const Review = require("./models/ReviewModel");
-const Notifcation = require("./models/NotificationModel");
+const Notification = require("./models/NotificationModel");
 const express = require('express');
 let router = express.Router();
 
@@ -14,7 +14,7 @@ router.get("/:id", getReview); //sends review with ID (PUG or JSON)
 
 */
 //now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.
-router.post("/", createReview, pushReviewIDtoUser, pushReviewIDtoMovie);
+router.post("/", createReview, pushReviewIDtoUser, pushReviewIDtoMovie, getUser, createNotificationObject, pushNotificationIDtoFollowers);
 
 function createReview(req, res, next){
   if(req.session.loggedin){
@@ -32,7 +32,7 @@ function createReview(req, res, next){
     newReview.save(function(err, user) {
         if (err) {
             console.log(err);
-            res.send(400); //bad content
+            res.sendStatus(400); //bad content
           }
         else{
           //console.log(newReview);
@@ -53,7 +53,7 @@ function pushReviewIDtoUser(req, res, next){
   function(err, result){
     if(err){
       console.log(err);
-      res.sendStatus(400); //bad content
+      res.sendStatus(500); //server error
     }
     else{
       //console.log("user results" + result);
@@ -61,6 +61,7 @@ function pushReviewIDtoUser(req, res, next){
     }
   });
 }
+
 
 function pushReviewIDtoMovie(req, res, next){
   Movie.findByIdAndUpdate(req.reviewObject.movieId,
@@ -74,7 +75,6 @@ function pushReviewIDtoMovie(req, res, next){
     else{
         //console.log("movie results" + result);
         if(!result.rating){
-          console.log("test")
           result.rating = req.body.rating;
           result.save()
         }
@@ -82,11 +82,54 @@ function pushReviewIDtoMovie(req, res, next){
           result.rating = result.calcAvRating(req.body.rating);
           result.save()
         }
-        res.status(201).send(req.reviewObject);
+        next();
     }
   });
 }
 
+function getUser(req, res, next){
+  User.findById(req.session.userID, function(err, result){
+    if(err){
+      res.sendStatus(500);
+    }
+    else{
+      req.user = result;
+      next();
+    }
+  });
+}
+
+function createNotificationObject(req, res, next){
+  let newNotification = new Notification();
+  newNotification._id = mongoose.Types.ObjectId();
+  newNotification.user = req.session.userID;
+  newNotification.movieId = req.reviewObject.movieId;
+  newNotification.nType = 0;
+  newNotification.save(function(err, user) {
+      if (err) {
+          console.log(err);
+          res.status(500).send(req.reviewObject); //everything up until this point should've been verified, so this is a server error.
+        }
+      else{
+        req.notification = newNotification;
+        next();
+      }
+    });
+}
+
+function pushNotificationIDtoFollowers(req, res, next){
+  User.updateMany({'_id': {$in: req.user.followers}}, { $push: { "notifications": req.notification._id }}, function(err, results){
+    if(err){
+      console.log(err);
+      res.status(500).send(req.reviewObject);
+      //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
+    }
+    else{
+      console.log(results);
+      res.status(201).send(req.reviewObject);
+    }
+  });
+}
 
 //Export the router so it can be mounted in the main app
 module.exports = router;

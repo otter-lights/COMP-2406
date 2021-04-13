@@ -35,7 +35,6 @@ personSchema.statics.findArrayByName = function(array, callback){
   this.find({'name': {$in: array}}, callback);
 }
 
-
 personSchema.statics.frequentCollabs = function(person, callback){
   let films = []
   let collabs = []
@@ -56,7 +55,6 @@ personSchema.statics.frequentCollabs = function(person, callback){
       collabs.splice(collabs.indexOf(person.name), 1)
     })
     let final = sortByFrequency(collabs)
-    console.log(final)
     callback(err, final.slice(0,5))
   })
 }

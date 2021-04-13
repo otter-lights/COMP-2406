@@ -37,13 +37,14 @@ router.param("id", function(req, res, next, value){
   			return;
   		}
       //need to add nested population for notifications as well
-      User.findById(value).populate("usersFollowing peopleFollowing followers watchlist").populate({path: "reviews", populate: {path: "movieId",  select: 'title'}}).exec(function(err, result){
+      User.findById(value).populate("usersFollowing peopleFollowing watchlist").populate({path: "reviews", populate: {path: "movieId",  select: 'title'}}).populate({path: "notifications", populate: [{path: "person",  select: 'name'},{path: "user",  select: 'username'}]}).exec(function(err, result){
           if(err){
             throw err;
             res.sendStatus(500);
             //500 Internal Server Error
             //the server can't populate the data that it has already verified, making it a server error.
           }
+          console.log(result);
           req.user = result;
           //error codes here check if empty, blah blah blah blah.
           next();
