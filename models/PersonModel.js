@@ -56,6 +56,7 @@ personSchema.statics.frequentCollabs = function(person, callback){
       collabs.splice(collabs.indexOf(person.name), 1)
     })
     let final = sortByFrequency(collabs)
+    console.log(final)
     callback(err, final.slice(0,5))
   })
 }

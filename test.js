@@ -26,11 +26,12 @@ const Notification = require("./models/NotificationModel");mongoose.connect('mon
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  Person.findOne({name: "Robin Williams"}).exec(function(err, result){
+  User.findOne({username: "snapracklepop"}).populate("watchlist").exec(function(err, result){
     if(err)throw err;
     console.log(result);
-    Person.frequentCollabs(result, function(err, result){
-      console.log(result);
-    });
+    User.getRecs(result, function(err, result){
+      if(err) throw err;
+      console.log(result)
+    })
   })
 })

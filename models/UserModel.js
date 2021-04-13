@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Movie = require("./MovieModel");
+
 
 let userSchema = Schema({
   username: {
@@ -44,6 +46,24 @@ let userSchema = Schema({
 userSchema.statics.findByUsername = function(username, callback){
   this.findOne({username: new RegExp(username, 'i')}, callback);
 }
+userSchema.statics.getRecs = function(user, callback){
+  if(user.watchlist.length > 0){
+    console.log(user.watchlist)
+    let allgenres = []
+    user.watchlist.forEach(film=>{
+      allgenres = allgenres.concat(film.genres)
+    })
+    console.log(allgenres)
+    Movie.find({genres: {$in: allgenres}}).limit(5).sort('-rating -year').exec(function(err, result){
+      callback(err, result)
+    })
+  }   
+  else{
+    console.log("No Watchlist Available")
+    Movie.find().sort('-rating -year').limit(5).exec(callback)
+  }
+}
+
 
 userSchema.statics.inWatchlist = function(userID, movie, callback){
   this.findById(userID).exec(function(err, result){
