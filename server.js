@@ -263,12 +263,10 @@ function createNotifications(req, res, next){
     newNotification.nType = 2;
     notifications.push(newNotification);
   });
-  console.log(notifications);
   req.notifications = notifications;
   Notification.insertMany(notifications, function(err, result){
     if(err){
       console.log(err);
-      console.log("Here.");
       res.status(500).send(res.movie);
     }
     else{

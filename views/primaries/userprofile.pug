@@ -80,7 +80,7 @@ html(lang='en' dir='ltr')
                                     else if(notification.nType === 2)
                                         img(src='/img/directed.png')
                                         p
-                                            a(href='/viewpeople') #{notification.person.name.toUpperCase()}
+                                            a(href=`/people/`+notification.person._id) #{notification.person.name.toUpperCase()}
                                             |  directed a !{' '}
                                             a(href=`/movies/`+ notification.movieId) MOVIE
                                             | .
@@ -88,7 +88,7 @@ html(lang='en' dir='ltr')
                                     else if(notification.nType === 4)
                                         img(src='/img/wrote.png')
                                         p
-                                            a(href='/viewpeople') #{notification.person.name.toUpperCase()}
+                                            a(href=`/people/`+notification.person._id) #{notification.person.name.toUpperCase()}
                                             |  wrote a !{' '}
                                             a(href=`/movies/`+ notification.movieId) MOVIE
                                             | .
@@ -96,7 +96,7 @@ html(lang='en' dir='ltr')
                                     else if(notification.nType === 3)
                                         img(src='/img/acted.png')
                                         p
-                                            a(href='/viewpeople') #{notification.person.name.toUpperCase()}
+                                            a(href=`/people/`+notification.person._id) #{notification.person.name.toUpperCase()}
                                             |  acted in a !{' '}
                                             a(href=`/movies/`+ notification.movieId) MOVIE
                                             | .
