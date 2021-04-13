@@ -80,11 +80,13 @@ body {
 
 .iconboxes{
   width: 130px;
-  height: 130px;
   display: inline-block;
+  word-wrap: break-word;
   overflow: auto;
   margin: 5px;
   margin-right: 0px;
+  text-align: center;
+  vertical-align: top;
 }
 
 .iconboxes img{
