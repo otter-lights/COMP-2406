@@ -15,7 +15,7 @@ router.get("/:id/reviews", populateReviewIds, sendReviews);
 let watchlist = [{"id": "6", "title": "Force Awakens"}, {"id": "43", "title": "Split"}, {"id": "45", "title": "To All The Boys"},
 {"id": "654", "title": "The Ugly Truth"}, {"id": "12", "title": "V for Vendetta"}, {"id": "64", "title": "Bleach"}];
 router.post("/logout", logoutUser);
-router.get("/:id", sendUser);
+router.get("/:id", inList, sendUser);
 router.post("/login", loginUser);
 router.post("/signup", createUser, loginUser)
 router.put("/:id/accountType", changeAccountType); //this needs to be a put
@@ -150,8 +150,14 @@ function logoutUser(req, res, next){
   res.status(200).redirect("/")
 }
 
-
-
+function inList(req, res, next){
+  User.inUserFollowing(req.session.userID, req.user, function(err, result){
+    req.inList = result
+    console.log(result)
+    console.log(req.inList)
+    next()
+  })
+}
 
 function sendUser(req, res, next){
   if(req.session.loggedin){
@@ -165,7 +171,7 @@ function sendUser(req, res, next){
           res.render('./primaries/userprofile', {user: req.user, recommendedMovies: watchlist, session:req.session});
         }
         else{
-          res.render('./primaries/viewingusers', {user: req.user, recommendedMovies: watchlist, session:req.session});
+          res.render('./primaries/viewingusers', {user: req.user, recommendedMovies: watchlist, session:req.session, inList: req.inList});
         }
       }
   	});

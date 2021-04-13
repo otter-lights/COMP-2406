@@ -14,7 +14,7 @@ router.post("/", express.json(), addPerson); //create a person and add to the da
 router.get("/:id", sendUser); //sends person with ID (PUG or JSON)
 
 */
-router.get("/:id", sendPerson);
+router.get("/:id", inList, sendPerson);
 router.get("/", getCharacters);
 
 //we will find the user
@@ -55,7 +55,14 @@ function getCollabs(req, res, next){
     next();
   })
 }
-
+function inList(req, res, next){
+  User.inPeopleFollowing(req.session.userID, req.person, function(err, result){
+    req.inList = result
+    console.log(result)
+    console.log(req.inList)
+    next()
+  })
+}
 
 function sendPerson(req, res, next){
   if(req.session.loggedin){
@@ -63,7 +70,7 @@ function sendPerson(req, res, next){
   		"application/json": function(){
   			res.status(200).json(req.person);
   		},
-  		"text/html": () => { res.render('./primaries/viewingpeople', {session: req.session, person: req.person});}
+  		"text/html": () => { res.render('./primaries/viewingpeople', {session: req.session, person: req.person, inList: req.inList});}
   	});
   	next();
   }

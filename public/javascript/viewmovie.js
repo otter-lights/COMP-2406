@@ -92,6 +92,8 @@ function changeWatchlist(watchlist){
   		if(this.readyState==4){
         if(this.status==200){
           alert("Added to watchlist.");
+          location.reload();
+          console.log("test")
         }
         else if(this.status==401){
           alert("You are not authorized to add this movie to your watchlist.");

@@ -6,6 +6,7 @@ function startFollowing(){
         let peopleFollowing =  JSON.parse(this.responseText);
         console.log(peopleFollowing);
         createObject(peopleFollowing.peopleFollowing);
+        location.reload()
       }
       else if(this.status==403){
         //accessing another user's account, redirect

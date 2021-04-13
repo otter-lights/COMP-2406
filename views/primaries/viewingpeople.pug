@@ -13,20 +13,13 @@ html(lang='en' dir='ltr')
     .blackbackground
         .personheader
             p #{person.name.toUpperCase()}
-            button#followbutton(type='button' name='follow' onclick='startFollowing()') follow
+            if(inList)
+              button#followbutton(type='button' name='follow') already following
+            else
+              button#followbutton(type='button' name='follow' onclick='startFollowing()') follow
+            
         .personcard
             .sections
-                if (person.commonCollabs.length > 0)
-                    div
-                        h2 FREQUENT COLLABORATORS
-                        #frequentcollaboratorscontainer.profileboxes
-                            each collaborator in person.commonCollabs
-                                .iconboxes
-                                    img(src='/img/Profile.png' alt='')
-                                    p
-                                        a(href=`/people/`+ collaborator._id) #{collaborator.name}
-                else
-                    h2 Looks like this person hasn't participated in movies in our database yet.
                 if (person.director.length > 0)
                     div
                         h2 MOVIES DIRECTED

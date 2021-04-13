@@ -21,7 +21,7 @@ router.get("/:id/reviews", populateReviewIds, sendReviews);
 //now make these functions so the get requests and whatever can be executed :)
 */
 
-router.get("/:id", recommendMovies, sendMovie);
+router.get("/:id", recommendMovies, inList, sendMovie);
 userData = {"accountType": "true"};
 
 //we will find the user
@@ -62,17 +62,24 @@ function recommendMovies(req, res, next){
     next();
   })
 }
+function inList(req, res, next){
+  User.inWatchlist(req.session.userID, req.movie, function(err, result){
+    req.inList = result
+    console.log(result)
+    console.log(req.inList)
+    next()
+  })
+}
 
 function sendMovie(req, res, next){
   if(req.session.loggedin){
     //get the current logged in user, and send the watchlist
-    //
     //if req.movie._id is in the user's watchlist, give boolean.
     res.format({
   		"application/json": function(){
   			res.status(200).json(req.movie);
   		},
-  		"text/html": () => { res.render('./primaries/movieprofile', {movie: req.movie, recommendedMovies: req.recommendedMovies, session: req.session});}
+  		"text/html": () => { res.render('./primaries/movieprofile', {movie: req.movie, recommendedMovies: req.recommendedMovies, session: req.session, inList: req.inList});}
   	});
   	next();
   }

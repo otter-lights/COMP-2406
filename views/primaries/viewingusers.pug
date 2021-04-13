@@ -13,7 +13,10 @@ html(lang='en' dir='ltr')
     .blackbackground
         .userheader
             p #{user.username.toUpperCase()}
-            button#followbutton(type='button' name='follow' onclick='startFollowing()') follow
+            if(inList)
+              button#followbutton(type='button' name='follow') already following
+            else
+              button#followbutton(type='button' name='follow' onclick='startFollowing()') follow
         .usercard
             .sections
                 div
