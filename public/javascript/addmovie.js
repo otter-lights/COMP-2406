@@ -3,12 +3,7 @@ let writers=[];
 let actors=[];
 let genres = [];
 
-function verifynumber(number){
-  console.log(!isNaN(parseInt(number)));
-  return(!isNaN(parseInt(number)));
-}
-
-
+////////////////////////////////////////////////
 function getDirectors(){
   let input = document.getElementById("directors").value;
   if(input.length > 0){
@@ -27,23 +22,6 @@ function getWriters(){
   if(input.length > 0){
     sendRequest("writers", input);
   }
-}
-
-function sendRequest(path, input){
-  let xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if(this.readyState==4){
-      if (this.status==200){
-        let result = JSON.parse(this.responseText);
-        display(result, path);
-      }
-      else{ //500 error code (internal server error)
-        alert("The server failed to get retrieve the list. Please try again.");
-      }
-    }
-	};
-	xhttp.open("GET", `/people?chars=${input}`, true);
-	xhttp.send();
 }
 
 function display(result, path){
@@ -65,12 +43,47 @@ function display(result, path){
   div.innerHTML = names;
 }
 
+function sendRequest(path, input){
+  let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if(this.readyState==4){
+      if (this.status==200){
+        let result = JSON.parse(this.responseText);
+        display(result, path);
+      }
+      else{ //500 error code (internal server error)
+        alert("The server failed to get retrieve the list. Please try again.");
+      }
+    }
+	};
+	xhttp.open("GET", `/people?chars=${input}`, true);
+	xhttp.send();
+}
+
+///////////////////////////////////////////////////////////////
 function addWriters(){
   let input = document.getElementById("writers").value.trim();
   let datalist =  document.getElementById("writerNames");
   let div = document.getElementById("writ");
 
   addNames(input, datalist, div, writers);
+  document.getElementById("writers").value = "";
+}
+
+function addDirectors(){
+  let input = document.getElementById("directors").value.trim();
+  let datalist =  document.getElementById("directorNames");
+  let div = document.getElementById("direct");
+  addNames(input, datalist, div, directors);
+  document.getElementById("directors").value = "";
+}
+
+function addActors(){
+  let input = document.getElementById("actors").value.trim();
+  let datalist =  document.getElementById("actorNames");
+  let div = document.getElementById("act");
+  addNames(input, datalist, div, actors);
+  document.getElementById("actors").value = "";
 }
 
 function addNames(input, datalist, div, array){
@@ -91,46 +104,41 @@ function addNames(input, datalist, div, array){
   }
 }
 
-function addDirectors(){
-  let input = document.getElementById("directors").value.trim();
-  let datalist =  document.getElementById("directorNames");
-  let div = document.getElementById("direct");
-  addNames(input, datalist, div, directors);
-}
-
-function addActors(){
-  let input = document.getElementById("actors").value.trim();
-  let datalist =  document.getElementById("actorNames");
-  let div = document.getElementById("act");
-  addNames(input, datalist, div, actors);
-}
-//The page must give the user a way to dynamically search for people within the
-//database to add to the movie (e.g., using AJAX).
-//The user should not be required to type in the full name of the person,
-//but instead should be able to add the person as a writer, director, or actor
-//directly from the search results.
-
-//ADD EVENT LISTENERS FOR THE WRITERS, DIRECTORS, ACTORS BOXES SO THE SEARCH RESULTS AUTO UPDATE
+////////////////////////////////////////////////////////////////
 
 function addGenres(){
   let input = document.getElementById("genres").value.trim();
-  if(!isDuplicate(input, genres)){
-    genres.push(input);
-    let div = document.getElementById("gen");
-    let gen = div.innerHTML;
-    if(gen === undefined){
-      gen = "";
+  input = capitalize(input);
+  if(input.length > 0){
+    if(!isDuplicate(input, genres)){
+      genres.push(input);
+      let div = document.getElementById("gen");
+      let gen = div.innerHTML;
+      if(gen === undefined){
+        gen = "";
+      }
+      gen += "<p>"+input+"</p>";
+      console.log(gen);
+      div.innerHTML = gen;
+      console.log(div);
     }
-    gen += "<p>"+input+"</p>";
-    console.log(gen);
-    div.innerHTML = gen;
-    console.log(div);
+    document.getElementById("genres").value = "";
   }
+}
+
+function capitalize(string){
+  let words = string.toLowerCase().split(' ');
+   for (let i = 0; i < words.length; i++) {
+       words[i] = words[i].charAt(0).toUpperCase() + words[i].substring(1);
+   }
+   return words.join(' ');
 }
 
 function isDuplicate(name, array){
   return array.includes(name);
 }
+
+//////////////////////////////////////////////////////////
 
 function addMovie(){
   let title = document.getElementById("title").value.trim();
@@ -157,10 +165,11 @@ function addMovie(){
   else{
     createObject(title, year, runtime, plot);
   }
-    //now have array of each.
-    //let newMovie = {"Title": title, "Year":releaseyear, "Runtime": runtime + " min", "Genre":genres, "Director": directors, "Writer": writers, "Actors": actors};
-    //send movie to server
-  //}
+}
+
+function verifynumber(number){
+  console.log(!isNaN(parseInt(number)));
+  return(!isNaN(parseInt(number)));
 }
 
 function createObject(title, year, runtime, plot){
@@ -192,6 +201,11 @@ function sendServerRequest(movie){
         }
         else if(this.status == 400){
           alert("Something is wrong with the content.");
+        }
+        else if(this.status == 500){
+          alert("Something went wrong with linking the people you added to the movie.");
+          let id = (JSON.parse(this.responseText))._id;
+          window.location.replace(`/movies/${id}`);
         }
         else{
           alert("There was a problem with the server. Try again.");

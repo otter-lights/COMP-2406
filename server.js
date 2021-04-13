@@ -177,9 +177,6 @@ function getIDs(req, res, next){
 }
 
 function createMovie(req, res, next){
-    console.log(req.body);
-    //Create a new person document using the Mongoose model
-    //Copy over the required basic person data
     let newMovie = new Movie();
     newMovie._id = mongoose.Types.ObjectId();
     newMovie.title = req.body.title;
@@ -199,7 +196,7 @@ function createMovie(req, res, next){
           }
           else{
             console.log(err);
-            res.send(400);
+            res.send(400); //something else is wrong with the data
           }
         }
         else{
@@ -209,20 +206,27 @@ function createMovie(req, res, next){
     });
 }
 
+
 function addMovieToPeople(req, res, next){
   Person.updateMany({'_id': {$in: res.movie.director}}, { $push: { "director": res.movie._id }}, function(err, results){
     if(err){
       console.log(err);
+      res.status(500).send(res.movie);
+      //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
     }
     else{
       Person.updateMany({'_id': {$in: res.movie.actor}}, { $push: { "actor": res.movie._id }}, function(err, results){
         if(err){
           console.log(err);
+          res.status(500).send(res.movie);
+          //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
         }
         else{
           Person.updateMany({'_id': {$in: res.movie.writer}}, { $push: { "writer": res.movie._id }}, function(err, results){
             if(err){
               console.log(err);
+              res.status(500).send(res.movie);
+              //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
             }
             else{
               res.status(201).send(res.movie);

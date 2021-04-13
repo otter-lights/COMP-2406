@@ -17,9 +17,20 @@ html(lang='en' dir='ltr')
               button#followbutton(type='button' name='follow') already following
             else
               button#followbutton(type='button' name='follow' onclick='startFollowing()') follow
-            
+
         .personcard
             .sections
+                if (commonCollabs.length > 0)
+                    div
+                        h2 FREQUENT COLLABORATORS
+                        #frequentcollaboratorscontainer.profileboxes
+                            each collaborator in commonCollabs
+                                .iconboxes
+                                    img(src='/img/Profile.png' alt='')
+                                    p
+                                        a(href=`/people/`+ collaborator._id) #{collaborator.name}
+                else
+                    h2 Looks like this person hasn't participated in movies in our database yet.
                 if (person.director.length > 0)
                     div
                         h2 MOVIES DIRECTED
