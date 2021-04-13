@@ -32,7 +32,7 @@ personSchema.statics.startsWith = function(name, callback){
 }
 
 personSchema.statics.findArrayByName = function(array, callback){
-  this.find({'name': {$in: array}}, callback);
+  this.find({'name': {$in: array}}, callback).select("followers");
 }
 
 personSchema.statics.frequentCollabs = function(person, callback){

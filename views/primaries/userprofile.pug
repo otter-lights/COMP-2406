@@ -72,41 +72,33 @@ html(lang='en' dir='ltr')
                                     if(notification.nType === 0)
                                         img(src='/img/review.png')
                                         p
-                                            a(href=`/users/`+notification.user._id) #{notification.user.username}
+                                            a(href=`/users/`+notification.user._id) #{notification.user.username.toUpperCase()}
                                             |  wrote a review for a !{' '}
                                             a(href=`/movies/`+ notification.movieId) MOVIE
                                             | .
                                         br
-                                    else if(notification.nType === 1)
-                                        img(src='/img/watchlist.png')
-                                        p
-                                            a(href='/viewuser') #{notification.name.toUpperCase()}
-                                            |  added a !{' '}
-                                            a(href='/movieprofile') MOVIE
-                                            |  to their watchlist.
-                                        br
                                     else if(notification.nType === 2)
                                         img(src='/img/directed.png')
                                         p
-                                            a(href='/viewpeople') #{notification.name.toUpperCase()}
+                                            a(href='/viewpeople') #{notification.person.name.toUpperCase()}
                                             |  directed a !{' '}
-                                            a(href='/movieprofile') MOVIE
+                                            a(href=`/movies/`+ notification.movieId) MOVIE
                                             | .
                                         br
                                     else if(notification.nType === 4)
                                         img(src='/img/wrote.png')
                                         p
-                                            a(href='/viewpeople') #{notification.name.toUpperCase()}
+                                            a(href='/viewpeople') #{notification.person.name.toUpperCase()}
                                             |  wrote a !{' '}
-                                            a(href='/movieprofile') MOVIE
+                                            a(href=`/movies/`+ notification.movieId) MOVIE
                                             | .
                                         br
                                     else if(notification.nType === 3)
                                         img(src='/img/acted.png')
                                         p
-                                            a(href='/viewpeople') #{notification.name.toUpperCase()}
+                                            a(href='/viewpeople') #{notification.person.name.toUpperCase()}
                                             |  acted in a !{' '}
-                                            a(href='/movieprofile') MOVIE
+                                            a(href=`/movies/`+ notification.movieId) MOVIE
                                             | .
                                         br
     script

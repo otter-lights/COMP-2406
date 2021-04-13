@@ -34,7 +34,7 @@ let reviewsRouter = require("./reviews-router");
 app.use("/reviews", reviewsRouter);
 
 app.post("/addperson", createPerson);
-app.post("/addmovie", getIDs, createMovie, addMovieToPeople, createNotifications);
+app.post("/addmovie", getIDs, createMovie, addMovieToPeople, createNotifications, pushNotificationsToFollowers);
 
 
 let searchResults = [{"id": "6", "title": "Force Awakens", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "43", "title": "Split", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "45", "title": "To All The Boys","genres":["Action","Adventure","Sci-Fi"]},
@@ -264,47 +264,31 @@ function createNotifications(req, res, next){
     notifications.push(newNotification);
   });
   console.log(notifications);
-  /*Notification.insertMany(notifications, function(err, result){
+  req.notifications = notifications;
+  Notification.insertMany(notifications, function(err, result){
     if(err){
       console.log(err);
+      console.log("Here.");
       res.status(500).send(res.movie);
     }
-  });*/
-  res.status(201).send(res.movie);
-}
-
-function pushWriterNotifcationToFollowers(req, res, next){
-  let newNotification = new Notification();
-  newNotification._id = mongoose.Types.ObjectId();
-  newNotification.person = req.session.userID;
-  newNotification.movieId = req.reviewObject.movieId;
-  newNotification.nType = 0;
-  newNotification.save(function(err, user) {
-      if (err) {
-          console.log(err);
-          res.status(500).send(req.reviewObject); //everything up until this point should've been verified, so this is a server error.
-        }
-      else{
-        req.notification = newNotification;
-        next();
-      }
-  });
-  User.updateMany({'_id': {$in: res.user.followers}}, { $push: { "notifications": req.notification._id }}, function(err, results){
-    if(err){
-      console.log(err);
-      res.status(500).send(req.reviewObject);
-      //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
-    }
     else{
-      console.log(results);
-      res.status(201).send(req.reviewObject);
+      next();
     }
   });
+
 }
 
-
-function pushNotificationIDtoFollowers(req, res, next){
-
+async function pushNotificationsToFollowers(req, res, next){
+  await req.notifications.forEach(async (notification) => {
+    const results = await Person.findById(notification.person);
+    try{
+      await User.updateMany({'_id': results.followers}, { $push: { "notifications": notification._id }});
+    }
+    catch(err){
+      res.status(500).send(res.movie);
+    }
+  });
+  res.status(201).send(res.movie);
 }
 
 mongoose.connect('mongodb://localhost/moviedata', {useNewUrlParser: true});
