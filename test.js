@@ -26,18 +26,11 @@ const Notification = require("./models/NotificationModel");mongoose.connect('mon
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  User.findOne({username: "snapracklepop"}).exec(function(err, result){
-    if(err) throw err
-    //console.log(result)
-    User.inWatchlist(result._id, "6074ba5016a11d89f85b0b7f", function(err, result){
-      if(err) throw err
-      console.log(result)
-    })
-  })
-  /*Person.findOne({name: "Robin Williams"}).exec(function(err, result){
+  Person.findOne({name: "Robin Williams"}).exec(function(err, result){
     if(err)throw err;
     console.log(result);
-    Person.frequentCollabs(result, function(result){
+    Person.frequentCollabs(result, function(err, result){
       console.log(result);
-    });*/
+    });
+  })
 })

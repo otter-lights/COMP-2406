@@ -14,7 +14,7 @@ router.post("/", express.json(), addPerson); //create a person and add to the da
 router.get("/:id", sendUser); //sends person with ID (PUG or JSON)
 
 */
-router.get("/:id", inList, sendPerson);
+router.get("/:id", inList, getCollabs, sendPerson);
 router.get("/", getCharacters);
 
 //we will find the user
@@ -49,10 +49,11 @@ router.param("id", function(req, res, next, value){
 function getCollabs(req, res, next){
   Person.frequentCollabs(req.person, function(err, result){
     if(err) throw err
-    console.log(result)
-    req.commonCollabs = result
-    console.log(req.commonCollabs)
-    next();
+    Person.find({name: {$in: result}}).exec(function(err, result){
+      console.log(result)
+      req.commonCollabs = result
+      next();
+    })
   })
 }
 function inList(req, res, next){
@@ -70,7 +71,7 @@ function sendPerson(req, res, next){
   		"application/json": function(){
   			res.status(200).json(req.person);
   		},
-  		"text/html": () => { res.render('./primaries/viewingpeople', {session: req.session, person: req.person, inList: req.inList});}
+  		"text/html": () => { res.render('./primaries/viewingpeople', {session: req.session, person: req.person, inList: req.inList, commonCollabs: req.commonCollabs});}
   	});
   	next();
   }
