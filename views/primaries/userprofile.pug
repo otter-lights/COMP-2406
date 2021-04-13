@@ -64,7 +64,7 @@ html(lang='en' dir='ltr')
                                     .iconboxes
                                         img(src='/img/Video.png' alt='')
                                         label(for='movie')
-                                            a(href='/movieprofile') #{movie.title}
+                                            a(href=`/movies/`+ movie._id) #{movie.title}
                         div
                             p NOTIFICATIONS
                             #notificationscontainer.profileboxes
