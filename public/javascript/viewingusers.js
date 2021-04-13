@@ -6,7 +6,6 @@ function startFollowing(){
         let usersFollowing =  JSON.parse(this.responseText);
         console.log(usersFollowing);
         createObject(usersFollowing.usersFollowing);
-        location.reload()
       }
       else if(this.status==403){
         //accessing another user's account, redirect
@@ -43,6 +42,7 @@ function changeUsersFollowing(usersFollowing){
   		if(this.readyState==4){
         if(this.status==200){
           alert("Added to users following.");
+          location.reload();
         }
         else if(this.status==401){
           alert("You are not authorized to add this user to your following list.");
