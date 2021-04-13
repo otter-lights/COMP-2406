@@ -93,7 +93,7 @@ html(lang='en' dir='ltr')
                                             a(href='/movieprofile') MOVIE
                                             | .
                                         br
-                                    else if(notification.nType === 3)
+                                    else if(notification.nType === 4)
                                         img(src='/img/wrote.png')
                                         p
                                             a(href='/viewpeople') #{notification.name.toUpperCase()}
@@ -101,7 +101,7 @@ html(lang='en' dir='ltr')
                                             a(href='/movieprofile') MOVIE
                                             | .
                                         br
-                                    else if(notification.nType === 4)
+                                    else if(notification.nType === 3)
                                         img(src='/img/acted.png')
                                         p
                                             a(href='/viewpeople') #{notification.name.toUpperCase()}

@@ -9,7 +9,7 @@ const Movie = require("./models/MovieModel");
 const User = require("./models/UserModel");
 const Person = require("./models/PersonModel");
 const Review = require("./models/ReviewModel");
-const Notifcation = require("./models/NotificationModel");
+const Notification = require("./models/NotificationModel");
 let MongoClient = mongo.MongoClient;
 
 
@@ -34,7 +34,7 @@ let reviewsRouter = require("./reviews-router");
 app.use("/reviews", reviewsRouter);
 
 app.post("/addperson", createPerson);
-app.post("/addmovie", getIDs, createMovie, addMovieToPeople);
+app.post("/addmovie", getIDs, createMovie, addMovieToPeople, createNotifications);
 
 
 let searchResults = [{"id": "6", "title": "Force Awakens", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "43", "title": "Split", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "45", "title": "To All The Boys","genres":["Action","Adventure","Sci-Fi"]},
@@ -229,8 +229,7 @@ function addMovieToPeople(req, res, next){
               //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
             }
             else{
-              res.status(201).send(res.movie);
-            }
+              next();            }
           });
         }
       });
@@ -238,38 +237,75 @@ function addMovieToPeople(req, res, next){
   });
 }
 
-/*function addMovieToPeople(req, res, next){
-  Person.addMovieToArray(res.movie.director, "director", res.movie._id, function(err, results) {
+function createNotifications(req, res, next){
+  let notifications = [];
+  res.movie.writer.forEach(writer=>{
+    let newNotification = new Notification();
+    newNotification._id = mongoose.Types.ObjectId();
+    newNotification.person = writer;
+    newNotification.movieId = res.movie._id;
+    newNotification.nType = 4;
+    notifications.push(newNotification);
+  });
+  res.movie.actor.forEach(actor=>{
+    let newNotification = new Notification();
+    newNotification._id = mongoose.Types.ObjectId();
+    newNotification.person = actor;
+    newNotification.movieId = res.movie._id;
+    newNotification.nType = 3;
+    notifications.push(newNotification);
+  });
+  res.movie.director.forEach(director=>{
+    let newNotification = new Notification();
+    newNotification._id = mongoose.Types.ObjectId();
+    newNotification.person = director;
+    newNotification.movieId = res.movie._id;
+    newNotification.nType = 2;
+    notifications.push(newNotification);
+  });
+  console.log(notifications);
+  /*Notification.insertMany(notifications, function(err, result){
     if(err){
       console.log(err);
+      res.status(500).send(res.movie);
+    }
+  });*/
+  res.status(201).send(res.movie);
+}
+
+function pushWriterNotifcationToFollowers(req, res, next){
+  let newNotification = new Notification();
+  newNotification._id = mongoose.Types.ObjectId();
+  newNotification.person = req.session.userID;
+  newNotification.movieId = req.reviewObject.movieId;
+  newNotification.nType = 0;
+  newNotification.save(function(err, user) {
+      if (err) {
+          console.log(err);
+          res.status(500).send(req.reviewObject); //everything up until this point should've been verified, so this is a server error.
+        }
+      else{
+        req.notification = newNotification;
+        next();
+      }
+  });
+  User.updateMany({'_id': {$in: res.user.followers}}, { $push: { "notifications": req.notification._id }}, function(err, results){
+    if(err){
+      console.log(err);
+      res.status(500).send(req.reviewObject);
+      //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
     }
     else{
-      console.log("director");
       console.log(results);
-      Person.addMovieToArray(res.movie.actor, "actor", res.movie._id, function(err, results) {
-        if(err){
-          console.log(err);
-        }
-        else{
-          console.log("writer");
-
-          console.log(results);
-          Person.addMovieToArray(res.movie.writer, "writer", res.movie._id, function(err, results) {
-            if(err){
-              console.log(err);
-            }
-            else{
-              console.log("actor");
-
-              console.log(results);
-              res.status(201).send(res.movie);
-            }
-          });
-        }
-      });
+      res.status(201).send(req.reviewObject);
     }
   });
-}*/
+}
+
+
+function pushNotificationIDtoFollowers(req, res, next){
+
+}
 
 mongoose.connect('mongodb://localhost/moviedata', {useNewUrlParser: true});
 let db = mongoose.connection;
