@@ -64,6 +64,7 @@ function sendChangeRequest(accountType){
 	xhttp.send(JSON.stringify({"accountType": !accountType.accountType}));
 }
 
+////////////////////////////////
 function editPeople(){
   let collectionOfDivs = document.getElementById("peopleyoufollowcontainer").getElementsByClassName("iconboxes");
   buildList(collectionOfDivs, "peopleFollowing")
@@ -71,35 +72,53 @@ function editPeople(){
 
 
 function editUsers(){
-  console.log("Heyy");
   let collectionOfDivs = document.getElementById("usersyoufollowcontainer").getElementsByClassName("iconboxes");
   buildList(collectionOfDivs, "usersFollowing")
 }
 
 function editWatchlist(){
-  console.log("Heyy");
   let collectionOfDivs = document.getElementById("watchlistcontainer").getElementsByClassName("iconboxes");
   buildList(collectionOfDivs, "watchlist")
 }
 
 function buildList(divs, path){
   let stillFollowing = [];
+  let unfollowed = [];
   for (let i = 0; i < divs.length; i++){
     let checkbox = divs[i].getElementsByTagName("input");
-    console.log(checkbox[0].checked);
     //If an item isn't checked, we want to keep it
     if(checkbox[0].checked === false){
       stillFollowing.push(divs[i].id);
     }
+    else{
+      unfollowed.push(divs[i].id);
+    }
   }
   console.log(stillFollowing);
   if(stillFollowing.length < divs.length){
-    sendItemsToServer(stillFollowing, path);
+    createObject(stillFollowing, unfollowed, path);
   }
 }
 
-function sendItemsToServer(following, path){
-  if(following){
+function createObject(stillFollowing, unfollowed, path){
+  let object = {};
+  if(path === "peopleFollowing"){
+     object.peopleFollowing = stillFollowing;
+     object.removed = unfollowed;
+   }
+  else if(path === "usersFollowing"){
+    object.usersFollowing = stillFollowing;
+    object.removed = unfollowed;
+  }
+  else if(path === "watchlist"){
+    object.watchlist = stillFollowing;
+    object.removed = unfollowed;
+  }
+  sendItemsToServer(object, path);
+}
+
+function sendItemsToServer(object, path){
+  if(object){
     let xhttp = new XMLHttpRequest();
   	xhttp.onreadystatechange = function() {
   		if(this.readyState==4){
@@ -118,14 +137,8 @@ function sendItemsToServer(following, path){
   	};
   	xhttp.open("PUT", window.location.href+'/'+path, true);
   	xhttp.setRequestHeader("Content-Type", "application/json");
-    if(path === "peopleFollowing"){
-  	   xhttp.send(JSON.stringify({"peopleFollowing": following}));
-     }
-    else if(path === "usersFollowing"){
-      xhttp.send(JSON.stringify({"usersFollowing": following}));
-    }
-    else if(path === "watchlist"){
-      xhttp.send(JSON.stringify({"watchlist": following}));
-    }
+    xhttp.send(JSON.stringify(object));
   }
 }
+
+////////////////////////////////

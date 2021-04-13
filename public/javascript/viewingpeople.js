@@ -4,7 +4,6 @@ function startFollowing(){
 		if(this.readyState==4){
       if (this.status==200){
         let peopleFollowing =  JSON.parse(this.responseText);
-        console.log(peopleFollowing);
         createObject(peopleFollowing.peopleFollowing);
       }
       else if(this.status==403){
@@ -29,14 +28,16 @@ function startFollowing(){
 }
 
 function createObject(peopleFollowing){
+  let object = {};
   let personID = window.location.pathname.slice(8);
   peopleFollowing.push(personID);
-  console.log(peopleFollowing);
-  changePeopleFollowing(peopleFollowing);
+  object.peopleFollowing = peopleFollowing;
+  object.addedPerson = personID;
+  changePeopleFollowing(object);
 }
 
-function changePeopleFollowing(peopleFollowing){
-  if(peopleFollowing){
+function changePeopleFollowing(object){
+  if(object){
     let xhttp = new XMLHttpRequest();
   	xhttp.onreadystatechange = function() {
   		if(this.readyState==4){
@@ -54,7 +55,7 @@ function changePeopleFollowing(peopleFollowing){
   	};
   	xhttp.open("PUT", "/users/"+userID+"/peopleFollowing", true);
   	xhttp.setRequestHeader("Content-Type", "application/json");
-  	xhttp.send(JSON.stringify({"peopleFollowing": peopleFollowing}));
+  	xhttp.send(JSON.stringify(object));
   }
   else{
     alert("Something went wrong with adding this person to your following list.")

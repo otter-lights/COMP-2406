@@ -23,15 +23,14 @@ router.get("/:id/accountType", sendAccountType);
 router.get("/:id/watchlist", sendWatchlist);
 router.put("/:id/watchlist", changeWatchlist);
 router.get("/:id/peopleFollowing", sendPeopleFollowing);
-router.put("/:id/peopleFollowing", changePeopleFollowing);
+router.put("/:id/peopleFollowing", changePeopleFollowing, changePeopleFollowers);
 router.get("/:id/usersFollowing", sendUsersFollowing);
-router.put("/:id/usersFollowing", changeUsersFollowing);
+router.put("/:id/usersFollowing", changeUsersFollowing, changeUsersFollowers);
 
 //we will find the user
 router.param("id", function(req, res, next, value){
   if(req.session.loggedin){
     User.findById(value, function(err, result){
-      console.log(value);
   		if(err || !result){
   			console.log(err);
   			res.sendStatus(404);   //404 Not Found
@@ -46,7 +45,6 @@ router.param("id", function(req, res, next, value){
             //the server can't populate the data that it has already verified, making it a server error.
           }
           req.user = result;
-          console.log(result);
           //error codes here check if empty, blah blah blah blah.
           next();
       });
@@ -115,7 +113,6 @@ function loginUser(req, res, next){
             //404 Not Found
         }
         else{
-          console.log(results);
           if (req.body.password === results.password){
             req.user = results;
             req.session.username = results.username;
@@ -143,25 +140,23 @@ function loginUser(req, res, next){
 }
 
 
-
-
 function logoutUser(req, res, next){
   req.session.destroy();
   res.status(200).redirect("/")
 }
 
+
+///////////////////////////////
+
 function inList(req, res, next){
   User.inUserFollowing(req.session.userID, req.user, function(err, result){
     req.inList = result
-    console.log(result)
-    console.log(req.inList)
     next()
   })
 }
 
 function sendUser(req, res, next){
   if(req.session.loggedin){
-      console.log(req.session);
       res.format({
   		"application/json": function(){
   			res.status(200).json(req.user);
@@ -181,6 +176,8 @@ function sendUser(req, res, next){
     //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
   }
 }
+
+///////////////////////////////////
 
 function sendAccountType(req, res, next){
   if(req.session.loggedin){
@@ -232,6 +229,8 @@ function changeAccountType(req, res, next){
   }
 }
 
+///////////////////////////////////
+
 function sendWatchlist(req, res, next){
   if(req.session.loggedin){
     if(req.session.username === req.user.username){
@@ -250,6 +249,7 @@ function sendWatchlist(req, res, next){
 }
 
 function changeWatchlist(req, res, next){
+  console.log(req.body);
     if(req.session.loggedin){
       if(req.session.username === req.user.username){
         req.user.watchlist = req.body.watchlist;
@@ -278,10 +278,13 @@ function changeWatchlist(req, res, next){
       }
     }
     else{
-      res.sendStatus(403);
+      res.sendStatus(401);
       //403 forbidden, the server understood the request, but is refusing to fulfill it.
     }
 }
+
+///////////////////////////////////
+
 
 function sendPeopleFollowing(req, res, next){
   if(req.session.loggedin){
@@ -301,6 +304,7 @@ function sendPeopleFollowing(req, res, next){
 }
 
 function changePeopleFollowing(req, res, next){
+  console.log(req.body);
   if(req.session.loggedin){
     if(req.session.username === req.user.username){
       req.user.peopleFollowing = req.body.peopleFollowing;
@@ -318,8 +322,7 @@ function changePeopleFollowing(req, res, next){
             }
           }
           else{
-            console.log(req.user.peopleFollowing);
-            res.status(200).send({"watchlist": req.user.peopleFollowing});
+            next();
           }
         });
     }
@@ -333,6 +336,44 @@ function changePeopleFollowing(req, res, next){
     //403 forbidden, the server understood the request, but is refusing to fulfill it.
   }
 }
+
+function changePeopleFollowers(req, res, next){
+  if(req.body.hasOwnProperty("removed")){
+    Person.updateMany({'_id': {$in: req.body.removed}}, { $pull: { "followers": req.user._id }}, function(err, results){
+      if(err){
+        console.log(err);
+        res.status(500).send({"peopleFollowing": req.user.peopleFollowing});
+        //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
+      }
+      else{
+        console.log(results);
+        res.status(200).send({"peopleFollowing": req.user.peopleFollowing});
+      }
+    });
+  }
+  else if(req.body.hasOwnProperty("addedPerson")){
+    Person.findByIdAndUpdate(req.body.addedPerson,
+    {$push: {"followers": req.user._id}},
+    { "new": true, "upsert": true},
+    function(err, result){
+      if(err){
+        console.log(err);
+        res.status(500).send({"peopleFollowing": req.user.peopleFollowing});
+        //if we're at this point, the server has already added this new personID to the user's following, which means the
+        //personID should be verified. This error must be a server error, but the adding to watchlist is a done deal.
+      }
+      else{
+        Person.findById(req.body.addedPerson, function(err, results){
+          console.log(results);
+        });
+        res.status(200).send({"peopleFollowing": req.user.peopleFollowing});
+      }
+    });
+  }
+}
+
+///////////////////////////////////
+
 
 function sendUsersFollowing(req, res, next){
   if(req.session.loggedin){
@@ -352,6 +393,7 @@ function sendUsersFollowing(req, res, next){
 }
 
 function changeUsersFollowing(req, res, next){
+  console.log(req.body);
   if(req.session.loggedin){
     if(req.session.username === req.user.username){
       req.user.usersFollowing = req.body.usersFollowing;
@@ -370,7 +412,7 @@ function changeUsersFollowing(req, res, next){
           }
           else{
             console.log(req.user.usersFollowing);
-            res.status(200).send({"usersFollowing": req.user.usersFollowing});
+            next();
           }
         });
     }
@@ -380,11 +422,46 @@ function changeUsersFollowing(req, res, next){
     }
   }
   else{
-    res.sendStatus(403);
+    res.sendStatus(401);
     //403 forbidden, the server understood the request, but is refusing to fulfill it.
   }
 }
-//now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.
+
+function changeUsersFollowers(req, res, next){
+  if(req.body.hasOwnProperty("removed")){
+    User.updateMany({'_id': {$in: req.body.removed}}, { $pull: { "followers": req.user._id }}, function(err, results){
+      if(err){
+        console.log(err);
+        res.status(500).send({"usersFollowing": req.user.usersFollowing});
+        //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
+      }
+      else{
+        console.log(results);
+        res.status(200).send({"usersFollowing": req.user.usersFollowing});
+      }
+    });
+  }
+  else if(req.body.hasOwnProperty("addedUser")){
+    User.findByIdAndUpdate(req.body.addedUser,
+    {$push: {"followers": req.user._id}},
+    { "new": true, "upsert": true},
+    function(err, result){
+      if(err){
+        console.log(err);
+        res.status(500).send({"usersFollowing": req.user.usersFollowing});
+        //if we're at this point, the server has already added this new personID to the user's following, which means the
+        //personID should be verified. This error must be a server error, but the adding to watchlist is a done deal.
+      }
+      else{
+        User.findById(req.body.addedUser, function(err, results){
+          console.log(results);
+        });
+        res.status(200).send({"usersFollowing": req.user.usersFollowing});
+      }
+    });
+  }
+}
+///////////////////////////////////
 
 //Export the router so it can be mounted in the main app
 module.exports = router;
