@@ -17,7 +17,7 @@ html(lang='en' dir='ltr')
                     each movie in movies
                         .searchresult
                             h2
-                                a(href='/movieprofile') #{movie.title}
+                                a(href=`/movie/`+ movie._id) #{movie.title}
                             each genre in movie.genres
                                 p #{genre}
                 button#back
