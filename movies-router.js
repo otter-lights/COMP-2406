@@ -10,7 +10,7 @@ let router = express.Router();
 
 /*
 
-router.get("/", searchMovie); //or queryparser idk whatever we wanna call the functions
+ //or queryparser idk whatever we wanna call the functions
 router.post("/", express.json(), createMovie); //create a movie and add to the database
 //also dave had express.json() as the first step for adding a new product in his store-server example so ig this parses the data.
 
@@ -20,7 +20,7 @@ router.get("/:id/reviews", populateReviewIds, sendReviews);
 //- Retrieves the array of reviews about a particular movie
 //now make these functions so the get requests and whatever can be executed :)
 */
-
+router.get("/", queryParse, loadSearch, respondSearch);
 router.get("/:id", recommendMovies, inList, sendMovie);
 userData = {"accountType": "true"};
 
@@ -54,6 +54,71 @@ router.param("id", function(req, res, next, value){
 });
 
 //sessions for logging in and user ID, maybe watchlist.
+
+//title, name, genre
+
+function queryParse(req, res, next){
+  let params = [];
+  for(prop in req.query){
+		  if(prop == "page"){
+			   continue;
+		  }
+		  params.push(prop + "=" + req.query[prop]);
+	 }
+  
+	 req.qstring = params.join("&");
+  try{
+    req.query.limit = req.query.limit || 10;
+    req.query.limit = Number(req.query.limit);
+  }
+  catch{
+    req.query.limit = 10;
+  }
+  
+  try{
+    req.query.page = req.query.page || 1;
+    req.query.page = Number(req.query.page);
+    if(req.query.page < 1){
+     req.query.page = 1;
+    }
+  }
+  catch{
+    req.query.page = 1;
+  }
+
+  if(!req.query.name){
+    req.query.name = "";
+  }
+  if(!req.query.title){
+    req.query.title = "";
+  }
+  if(!req.query.genre){
+    req.query.genre = "";
+  }
+  console.log(req.query)
+  next();
+}
+function loadSearch(req, res, next){
+	let startIndex = ((req.query.page-1) * req.query.limit);
+	let amount = req.query.limit;
+	
+	Movie.find({title: new RegExp(req.query.title, 'i'), genres: {$in: req.query.genre}}).limit(amount).skip(startIndex).exec(function(err, results){
+		if(err){
+			res.status(500).send("Error reading users.");
+			console.log(err);
+			return;
+		}
+		res.search = results;
+		next();
+		return;
+	});
+}
+
+function respondSearch(req, res, next){
+  res.render('./primaries/searchresults', {movies: res.search, session:req.session});
+  next();
+}
+
 
 function recommendMovies(req, res, next){
   Movie.getSimilar(req.movie, function(err, result){
