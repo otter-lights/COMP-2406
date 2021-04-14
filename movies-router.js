@@ -97,23 +97,53 @@ function queryParse(req, res, next){
   if(!req.query.genre){
     req.query.genre = "";
   }
-  console.log(req.query)
-  next();
+
+  if(!req.query.person){
+    console.log("test")
+    req.query.person = ""
+    console.log(req.query)
+    next();
+    return
+  }
+  if(req.query.person){
+    Person.find({name: new RegExp(req.query.person, 'i')}).select("_id").exec(function(err, result){
+      console.log("test2")
+      console.log(result)
+      req.query.pID = result
+      console.log(req.query)
+      next();
+    })
+  }
 }
 function loadSearch(req, res, next){
-	let startIndex = ((req.query.page-1) * req.query.limit);
-	let amount = req.query.limit;
-
-	Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i')}).limit(amount).skip(startIndex).exec(function(err, results){
-		if(err){
-			res.status(500).send("Error Finding Movies.");
-			console.log(err);
-			return;
-		}
-		res.search = results;
-		next();
-		return;
-	});
+  let startIndex = ((req.query.page-1) * req.query.limit);
+  let amount = req.query.limit;
+  if(req.query.person === ""){
+    Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i')}).limit(amount).skip(startIndex).populate("actor director writer").exec(function(err, results){
+      if(err){
+        res.status(500).send("Error Finding Movies.");
+        console.log(err);
+        return;
+      }
+      console.log("fuck")
+      res.search = results;
+      next();
+      return;
+    })
+  }
+  else{
+    Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i'), $or: [{actor: {$in: req.query.pID}}, {director: {$in: req.query.pID}}, {writer: {$in: req.query.pID}}]}).limit(amount).skip(startIndex).populate("actor director writer").exec(function(err, results){
+      if(err){
+        res.status(500).send("Error Finding Movies.");
+        console.log(err);
+        return;
+      }
+      //console.log(results)
+      res.search = results;
+      next();
+      return;
+    })
+  }
 }
 
 function respondSearch(req, res, next){

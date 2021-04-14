@@ -99,17 +99,6 @@ app.get('/advancedsearch', (req, res) => {
   }
 })
 
-app.get('/searchresults', (req, res) => {
-  if(req.session.loggedin){
-    res.setHeader('content-type', 'text/html');
-    res.status(200);
-  	res.render('./primaries/searchresults', {movies: searchResults, session:req.session});
-  }
-  else{
-    res.status(401).redirect("/");
-  }
-})
-
 
 mongoose.connect('mongodb://localhost/moviedata', {useNewUrlParser: true});
 let db = mongoose.connection;

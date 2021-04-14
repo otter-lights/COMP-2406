@@ -22,16 +22,14 @@ const User = require("./models/UserModel");
 const Review = require("./models/ReviewModel");
 const Movie = require("./models/MovieModel");
 const Person = require("./models/PersonModel");
-const Notification = require("./models/NotificationModel");mongoose.connect('mongodb://localhost/moviedata', {useNewUrlParser: true});
+const Notification = require("./models/NotificationModel");
+
+mongoose.connect('mongodb://localhost/moviedata', {useNewUrlParser: true});
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  User.findOne({username: "snapracklepop"}).populate("watchlist").exec(function(err, result){
-    if(err)throw err;
-    console.log(result);
-    User.getRecs(result, function(err, result){
-      if(err) throw err;
-      console.log(result)
-    })
+  Movie.find({title: new RegExp("", 'i'), genres: new RegExp("Romance", 'i'), $or: [{actor: {$in: "607706cbb04349aee8d6a7ac"}}, {director: {$in: "607706cbb04349aee8d6a7ac"}}, {writer: {$in: "607706cbb04349aee8d6a7ac"}}]}).limit(5).populate("actor director writer").exec(function(err, results){
+    if(err) throw err
+    console.log(results)
   })
 })
