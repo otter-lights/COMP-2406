@@ -107,12 +107,13 @@ function queryParse(req, res, next){
     console.log("test")
     req.query.person = ""
     console.log(req.query)
+    res.q = q
     next();
     return
   }
   if(req.query.person){
     q = q + "&person=" + req.query.person
-    req.q = q
+    res.q = q
     Person.find({name: new RegExp(req.query.person, 'i')}).select("_id").exec(function(err, result){
       console.log("test2")
       console.log(result)
@@ -152,7 +153,8 @@ function loadSearch(req, res, next){
 }
 
 function respondSearch(req, res, next){
-  res.render('./primaries/searchresults', {movies: res.search, session:req.session, current: req.query.page, query: req.q});
+  console.log(res.q)
+  res.render('./primaries/searchresults', {movies: res.search, session:req.session, current: req.query.page, query: res.q});
   next();
 }
 
