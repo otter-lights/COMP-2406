@@ -5,12 +5,21 @@ function verifyLetters(name){
   return true;
 }
 
+function capitalize(string){
+  let words = string.toLowerCase().split(' ');
+   for (let i = 0; i < words.length; i++) {
+       words[i] = words[i].charAt(0).toUpperCase() + words[i].substring(1);
+   }
+   return words.join(' ');
+}
+
 function addPerson(){
   let name = document.getElementById("name").value;
   if(!verifyLetters(name)){
     alert("Please input a valid name into the textfield.")
     return;
   }
+  name = capitalize(name);
   let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if(this.readyState==4){

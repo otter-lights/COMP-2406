@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+  
 let movieSchema = Schema({
   //movieID from the Data Model will be the associated MongoDB id
   title: {
