@@ -102,9 +102,9 @@ function loadSearch(req, res, next){
 	let startIndex = ((req.query.page-1) * req.query.limit);
 	let amount = req.query.limit;
 	
-	Movie.find({title: new RegExp(req.query.title, 'i'), genres: {$in: req.query.genre}}).limit(amount).skip(startIndex).exec(function(err, results){
+	Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i')}).limit(amount).skip(startIndex).exec(function(err, results){
 		if(err){
-			res.status(500).send("Error reading users.");
+			res.status(500).send("Error Finding Movies.");
 			console.log(err);
 			return;
 		}
