@@ -61,6 +61,7 @@ router.param("id", function(req, res, next, value){
 
 function queryParse(req, res, next){
   let params = [];
+  let q = ""
   for(prop in req.query){
 		  if(prop == "page"){
 			   continue;
@@ -69,13 +70,6 @@ function queryParse(req, res, next){
 	 }
 
 	 req.qstring = params.join("&");
-  try{
-    req.query.limit = req.query.limit || 10;
-    req.query.limit = Number(req.query.limit);
-  }
-  catch{
-    req.query.limit = 10;
-  }
 
   try{
     req.query.page = req.query.page || 1;
@@ -91,12 +85,25 @@ function queryParse(req, res, next){
   if(!req.query.name){
     req.query.name = "";
   }
+  else{
+    q = q + "&name=" + req.query.name
+  }
+  
   if(!req.query.title){
     req.query.title = "";
   }
+  else{
+    q = q + "&title=" + req.query.title
+  }
+  
   if(!req.query.genre){
     req.query.genre = "";
   }
+  else{
+    q = q + "&genre=" + req.query.genre
+  }
+  console.log(q)
+  req.test = q
 
   if(!req.query.person){
     console.log("test")
@@ -116,10 +123,9 @@ function queryParse(req, res, next){
   }
 }
 function loadSearch(req, res, next){
-  let startIndex = ((req.query.page-1) * req.query.limit);
-  let amount = req.query.limit;
+  let startIndex = ((req.query.page-1) * 10);
   if(req.query.person === ""){
-    Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i')}).limit(amount).skip(startIndex).populate("actor director writer").exec(function(err, results){
+    Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i')}).limit(10).skip(startIndex).populate("actor director writer").exec(function(err, results){
       if(err){
         res.status(500).send("Error Finding Movies.");
         console.log(err);
@@ -131,7 +137,7 @@ function loadSearch(req, res, next){
     })
   }
   else{
-    Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i'), $or: [{actor: {$in: req.query.pID}}, {director: {$in: req.query.pID}}, {writer: {$in: req.query.pID}}]}).limit(amount).skip(startIndex).populate("actor director writer").exec(function(err, results){
+    Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i'), $or: [{actor: {$in: req.query.pID}}, {director: {$in: req.query.pID}}, {writer: {$in: req.query.pID}}]}).limit(10).skip(startIndex).populate("actor director writer").exec(function(err, results){
       if(err){
         res.status(500).send("Error Finding Movies.");
         console.log(err);
@@ -146,8 +152,7 @@ function loadSearch(req, res, next){
 }
 
 function respondSearch(req, res, next){
-  console.log(req.query.page)
-  res.render('./primaries/searchresults', {movies: res.search, session:req.session, current: req.query.page});
+  res.render('./primaries/searchresults', {movies: res.search, session:req.session, current: req.query.page, query: req.test});
   next();
 }
 

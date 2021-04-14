@@ -21,8 +21,12 @@ html(lang='en' dir='ltr')
                             each genre in movie.genres
                                 p #{genre}
                 button#back
-                    a(href=`/movies?page=` + (current-1)) 
+                    - let url =`movies?page=` + (current-1)
+                    - url += query
+                    a(href=url) 
                       img(src='/img/backwards.png')
                 button#forward
-                    a(href=`/movies?page=` + (current+1)) 
+                    - url = `movies?page=` + (current+1)
+                    - url += query
+                    a(href=url) 
                       img(src='/img/forward.png')
