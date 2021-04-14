@@ -1,0 +1,26 @@
+include ../partials/menubar
+doctype html
+html(lang='en' dir='ltr')
+    head
+        meta(charset='utf-8')
+        link(href='/css/searchresults.css' rel='stylesheet')
+        link(href='/css/menubar.css' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
+        title Search Results for "___"
+    body
+        +menubar
+        .whitebackground
+            h1 SEARCH RESULTS
+            .results
+                #resultsbox.resultsbox
+                    each movie in movies
+                        .searchresult
+                            h2
+                                a(href=`/movie/`+ movie._id) #{movie.title}
+                            each genre in movie.genres
+                                p #{genre}
+                button#back
+                    img(src='/img/backwards.png')
+                button#forward
+                    img(src='/img/forward.png')
