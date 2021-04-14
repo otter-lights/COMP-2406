@@ -17,10 +17,12 @@ html(lang='en' dir='ltr')
                     each movie in movies
                         .searchresult
                             h2
-                                a(href=`/movie/`+ movie._id) #{movie.title}
+                                a(href=`/movies/`+ movie._id) #{movie.title}
                             each genre in movie.genres
                                 p #{genre}
                 button#back
-                    img(src='/img/backwards.png')
+                    a(href=`/movies?page=` + (current-1)) 
+                      img(src='/img/backwards.png')
                 button#forward
-                    img(src='/img/forward.png')
+                    a(href=`/movies?page=` + (current+1)) 
+                      img(src='/img/forward.png')

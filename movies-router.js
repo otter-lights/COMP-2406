@@ -125,7 +125,6 @@ function loadSearch(req, res, next){
         console.log(err);
         return;
       }
-      console.log("fuck")
       res.search = results;
       next();
       return;
@@ -147,7 +146,8 @@ function loadSearch(req, res, next){
 }
 
 function respondSearch(req, res, next){
-  res.render('./primaries/searchresults', {movies: res.search, session:req.session});
+  console.log(req.query.page)
+  res.render('./primaries/searchresults', {movies: res.search, session:req.session, current: req.query.page});
   next();
 }
 
