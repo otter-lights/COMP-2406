@@ -4,7 +4,7 @@ const Movie = require("./models/MovieModel");
 const User = require("./models/UserModel");
 const Person = require("./models/PersonModel");
 const Review = require("./models/ReviewModel");
-const Notifcation = require("./models/NotificationModel");
+const Notification = require("./models/NotificationModel");
 const express = require('express');
 let router = express.Router();
 
@@ -22,6 +22,8 @@ router.get("/:id/reviews", populateReviewIds, sendReviews);
 */
 router.get("/", queryParse, loadSearch, respondSearch);
 router.get("/:id", recommendMovies, inList, sendMovie);
+router.post("/", getIDs, createMovie, addMovieToPeople, createNotifications, pushNotificationsToFollowers);
+
 userData = {"accountType": "true"};
 
 //we will find the user
@@ -65,7 +67,7 @@ function queryParse(req, res, next){
 		  }
 		  params.push(prop + "=" + req.query[prop]);
 	 }
-  
+
 	 req.qstring = params.join("&");
   try{
     req.query.limit = req.query.limit || 10;
@@ -74,7 +76,7 @@ function queryParse(req, res, next){
   catch{
     req.query.limit = 10;
   }
-  
+
   try{
     req.query.page = req.query.page || 1;
     req.query.page = Number(req.query.page);
@@ -101,7 +103,7 @@ function queryParse(req, res, next){
 function loadSearch(req, res, next){
 	let startIndex = ((req.query.page-1) * req.query.limit);
 	let amount = req.query.limit;
-	
+
 	Movie.find({title: new RegExp(req.query.title, 'i'), genres: {$in: req.query.genre}}).limit(amount).skip(startIndex).exec(function(err, results){
 		if(err){
 			res.status(500).send("Error reading users.");
@@ -152,6 +154,155 @@ function sendMovie(req, res, next){
       res.status(401).render('./primaries/homepage.pug', {session:req.session});
       //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
   }
+}
+
+
+/////////////////
+
+function getIDs(req, res, next){
+  if(req.session.loggedin && req.session.admin){
+    Person.findArrayByName(req.body.director, function(err, result){
+      if(err){
+        console.log(err);
+      }
+      else{
+        req.directors = result;
+        Person.findArrayByName(req.body.actor, function(err, result){
+          if(err){
+            console.log(err);
+          }
+          else{
+            req.actors = result;
+            Person.findArrayByName(req.body.writer, function(err, result){
+              if(err){
+                console.log(err);
+              }
+              else{
+                req.writers = result;
+                next();
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+  else{
+    res.sendStatus(401); //or whatever to indicate unauthorized
+  }
+}
+
+function createMovie(req, res, next){
+    let newMovie = new Movie();
+    newMovie._id = mongoose.Types.ObjectId();
+    newMovie.title = req.body.title;
+    newMovie.year = req.body.year;
+    newMovie.plot = req.body.plot;
+    newMovie.runtime = req.body.runtime;
+    newMovie.writer = req.writers;
+    newMovie.actor = req.actors;
+    newMovie.director = req.directors;
+    newMovie.genres = req.body.genres;
+    console.log(newMovie);
+    newMovie.save(function(err, movie) {
+        if (err) {
+          if(err.code == 11000){ //this is duplicate-key error (someone already exists with that name)
+            res.send(409); //409 is the correct status code for duplicate resource or resource already exists.
+            //it means conflict
+          }
+          else{
+            console.log(err);
+            res.send(400); //something else is wrong with the data
+          }
+        }
+        else{
+          res.movie = movie;
+          next();
+        }
+    });
+}
+
+
+function addMovieToPeople(req, res, next){
+  Person.updateMany({'_id': {$in: res.movie.director}}, { $push: { "director": res.movie._id }}, function(err, results){
+    if(err){
+      console.log(err);
+      res.status(500).send(res.movie);
+      //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
+    }
+    else{
+      Person.updateMany({'_id': {$in: res.movie.actor}}, { $push: { "actor": res.movie._id }}, function(err, results){
+        if(err){
+          console.log(err);
+          res.status(500).send(res.movie);
+          //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
+        }
+        else{
+          Person.updateMany({'_id': {$in: res.movie.writer}}, { $push: { "writer": res.movie._id }}, function(err, results){
+            if(err){
+              console.log(err);
+              res.status(500).send(res.movie);
+              //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
+            }
+            else{
+              next();            }
+          });
+        }
+      });
+    }
+  });
+}
+
+function createNotifications(req, res, next){
+  let notifications = [];
+  res.movie.writer.forEach(writer=>{
+    let newNotification = new Notification();
+    newNotification._id = mongoose.Types.ObjectId();
+    newNotification.person = writer;
+    newNotification.movieId = res.movie._id;
+    newNotification.nType = 4;
+    notifications.push(newNotification);
+  });
+  res.movie.actor.forEach(actor=>{
+    let newNotification = new Notification();
+    newNotification._id = mongoose.Types.ObjectId();
+    newNotification.person = actor;
+    newNotification.movieId = res.movie._id;
+    newNotification.nType = 3;
+    notifications.push(newNotification);
+  });
+  res.movie.director.forEach(director=>{
+    let newNotification = new Notification();
+    newNotification._id = mongoose.Types.ObjectId();
+    newNotification.person = director;
+    newNotification.movieId = res.movie._id;
+    newNotification.nType = 2;
+    notifications.push(newNotification);
+  });
+  req.notifications = notifications;
+  Notification.insertMany(notifications, function(err, result){
+    if(err){
+      console.log(err);
+      res.status(500).send(res.movie);
+    }
+    else{
+      next();
+    }
+  });
+
+}
+
+async function pushNotificationsToFollowers(req, res, next){
+  await req.notifications.forEach(async (notification) => {
+    const results = await Person.findById(notification.person);
+    try{
+      await User.updateMany({'_id': results.followers}, { $push: { "notifications": notification._id }});
+    }
+    catch(err){
+      res.status(500).send(res.movie);
+    }
+  });
+  res.status(201).send(res.movie);
 }
 
 //Export the router so it can be mounted in the main app
