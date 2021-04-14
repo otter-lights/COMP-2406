@@ -208,7 +208,7 @@ function sendServerRequest(movie){
         }
   		}
   	};
-  	xhttp.open("POST", "/addmovie", true);
+  	xhttp.open("POST", "/movies", true);
   	xhttp.setRequestHeader("Content-Type", "application/json");
   	xhttp.send(JSON.stringify(movie));
 }

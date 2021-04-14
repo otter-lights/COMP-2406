@@ -29,7 +29,7 @@ function addPerson(){
       }
 		}
 	};
-	xhttp.open("POST", "/addperson", true);
+	xhttp.open("POST", "/people", true);
 	xhttp.setRequestHeader("Content-Type", "application/json");
 	xhttp.send(JSON.stringify({"name": name}));
 }
