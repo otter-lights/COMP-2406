@@ -20,7 +20,8 @@ html(lang='en' dir='ltr')
                                 a(href=`/movies/`+ movie._id) #{movie.title}
                             each genre in movie.genres
                                 p #{genre}
-                button#back
+                if current !== 1
+                  button#back
                     - let url =`movies?page=` + (current-1)
                     - url += query
                     a(href=url) 
