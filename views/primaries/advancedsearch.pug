@@ -19,12 +19,13 @@ html(lang='en' dir='ltr')
                     br
                 p
                     label(for='cast') CAST:
-                    input#releaseYear(type='text' placeholder='Search by cast member...')
+                    input#cast(type='text' placeholder='Search by cast member...')
                     br
                 p
                     label(for='genre') GENRE:
-                    input#runtime(type='text' placeholder='Search by genre...')
+                    input#genre(type='text' placeholder='Search by genre...')
                     br
                 p
                     label
-                    button#searchButton(type='button' name='search' onclick="window.location.href='/searchresults'") SEARCH
+                    button#searchButton(type='button' name='search' onclick="sendLink()") SEARCH
+        script(src='/javascript/searchresults.js' charset='utf-8')
