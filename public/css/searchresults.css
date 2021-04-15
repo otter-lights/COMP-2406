@@ -10,13 +10,13 @@ body {
   background: white;
   margin: auto;
   margin-top: 100px;
-  width: 1117px;
-  height: 654px;
+  width: 70%;
   border: 1px solid #FFFFFF;
   border-radius: 20px;
   font-family: Inter;
   font-style: normal;
   font-weight: bold;
+  padding-bottom: 50px;
 }
 
 .whitebackground h1{
@@ -27,8 +27,8 @@ body {
 }
 
 .results{
-  width: 986px;
-  height: 510px;
+  width: 80%;
+  height: 560px;
   left: 227px;
   top: 244px;
   border: 1px solid #000000;
@@ -37,8 +37,8 @@ body {
 }
 
 .resultsbox{
-    width: 986px;
-    height: 440px;
+    width: 100%;
+    height: 490px;
 }
 
 .results button{
@@ -58,14 +58,16 @@ body {
 .searchresult{
   margin-bottom: 3px;
   height: 9%;
-  width: 981px;
+  width: 100%;
   border:1px solid black;
   color: black;
   background: #FFBAAB;
+  overflow: auto;
 }
 
 .searchresult h2{
   display: inline-block;
+  margin: 0px;
   margin-left: 20px;
   margin-top: 10px;
   font-size: 20px;

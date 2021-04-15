@@ -9,7 +9,7 @@ body {
   background: black;
   margin: auto;
   margin-top: 50px;
-  width: 1236px;
+  width: 80%;
   border: 1px solid #FFFFFF;
   border-radius: 20px;
   margin-bottom: 50px;
@@ -24,9 +24,10 @@ body {
   margin: auto;
   margin-top: 55px;
   margin-bottom: 33px;
-  width: 1117px;
+  width: 90%;
   height: 171px;
   border-radius: 20px;
+  overflow: auto;
 }
 
 .userheader button{
@@ -47,9 +48,9 @@ body {
 }
 
 .usercard{
+  width: 90%;
   background: white;
   margin: auto;
-  width: 1117px;
   margin-bottom: 55px;
   border-radius: 20px;
 }
@@ -59,7 +60,7 @@ body {
   font-family: Fira Sans Extra Condensed;
   font-style: normal;
   font-weight: bold;
-  width: 986px;
+  width: 88%;
   padding-bottom: 55px;
   margin: auto;
 }
@@ -72,7 +73,7 @@ body {
 }
 
 .profileboxes{
-  width: 985px;
+  width: 100%;
   height: 150px;
   border: 1px solid #000000;
   box-sizing: border-box;
@@ -111,7 +112,7 @@ body {
 }
 
 .reviewsbox{
-  width: 986px;
+  width: 100%;
   height: 400px;
   border: 1px solid #000000;
   overflow:auto;
@@ -160,6 +161,7 @@ body {
     font-size: 18px;
     margin-bottom: 0px;
     background-color: #FFBAAB;
+    overflow: auto;
 }
 
 .review .left p {
