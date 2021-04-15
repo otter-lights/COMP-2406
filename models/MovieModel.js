@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-  
+
 let movieSchema = Schema({
   //movieID from the Data Model will be the associated MongoDB id
   title: {
@@ -47,6 +47,11 @@ let movieSchema = Schema({
     ref: 'Review',
   }
 });
+
+
+movieSchema.statics.getTitle = function(title, callback){
+  this.find({title: title}).exec(callback);
+}
 
 movieSchema.statics.getSimilar = function(movie, callback){
 	this.find({genres: {$in: movie.genres}, _id: {$ne: movie._id}}).select("title year genres plot rating").sort('-rating -year').limit(5).exec(callback)
