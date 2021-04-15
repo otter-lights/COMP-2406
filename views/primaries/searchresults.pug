@@ -14,19 +14,24 @@ html(lang='en' dir='ltr')
             h1 SEARCH RESULTS
             .results
                 #resultsbox.resultsbox
+                  if movies.length > 0
                     each movie in movies
                         .searchresult
                             h2
                                 a(href=`/movies/`+ movie._id) #{movie.title}
                             each genre in movie.genres
                                 p #{genre}
-                if current !== 1
+                  if movies.length <= 0
+                    .searchresult
+                      h2 No Films Meet These Criteria
+                if current > 1
                   button#back
                     - let url =`movies?page=` + (current-1)
                     - url += query
                     a(href=url) 
                       img(src='/img/backwards.png')
-                button#forward
+                if movies.length === 10
+                  button#forward
                     - url = `movies?page=` + (current+1)
                     - url += query
                     a(href=url) 

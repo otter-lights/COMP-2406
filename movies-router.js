@@ -144,7 +144,7 @@ function loadSearch(req, res, next){
         console.log(err);
         return;
       }
-      //console.log(results)
+      let maxpages = results.length / 10
       res.search = results;
       next();
       return;
