@@ -3,6 +3,7 @@ body {
   background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFBAAB;
   background-repeat: no-repeat;
   overflow-x: hidden;
+  margin-bottom: 100px;
 }
 
 h5{
@@ -15,12 +16,14 @@ h5{
   margin: auto;
   margin-top: 100px;
   padding-bottom: 50px;
-  width: 1117px;
+  width: 65%;
   border: 1px solid #FFFFFF;
   border-radius: 20px;
   font-family: Inter;
   font-style: normal;
   font-weight: bold;
+  overflow: auto;
+  word-wrap: break-word;
 }
 
 .whitebackground p{
@@ -32,11 +35,12 @@ h5{
 
 .formbox{
   margin: auto;
-  width: 638px;
+  width: 60%;
   border: 1px solid #000000;
   box-sizing: border-box;
   display: table;
   padding: 15px;
+  overflow: auto;
 }
 
 .formbox input[type=text]{

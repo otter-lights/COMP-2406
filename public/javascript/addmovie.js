@@ -139,7 +139,7 @@ function isDuplicate(name, array){
 //////////////////////////////////////////////////////////
 
 function addMovie(){
-  let title = document.getElementById("title").value.trim();
+  let title = capitalize(document.getElementById("title").value).trim();
   let year = document.getElementById("year").value.trim();
   let runtime = document.getElementById("runtime").value.trim();
   let plot = document.getElementById("plot").value.trim();
@@ -193,15 +193,17 @@ function sendServerRequest(movie){
           alert("You are not authorized to add a movie to the database.");
         }
         else if(this.status==409){
-          alert("A movie with this title already exists in the database. You can search for them in the search tab.");
+          alert("A movie with this title already exists in the database. You can search for it in the search tab.");
         }
         else if(this.status == 400){
           alert("Something is wrong with the content.");
         }
         else if(this.status == 500){
           alert("Something went wrong with linking the people you added to the movie.");
-          let id = (JSON.parse(this.responseText))._id;
-          window.location.replace(`/movies/${id}`);
+          if(JSON.parse(this.responseText).hasOwnProperty("_id")){
+            let id = (JSON.parse(this.responseText))._id;
+            window.location.replace(`/movies/${id}`);
+          }
         }
         else{
           alert("There was a problem with the server. Try again.");

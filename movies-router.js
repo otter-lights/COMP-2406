@@ -88,14 +88,14 @@ function queryParse(req, res, next){
   else{
     q = q + "&name=" + req.query.name
   }
-  
+
   if(!req.query.title){
     req.query.title = "";
   }
   else{
     q = q + "&title=" + req.query.title
   }
-  
+
   if(!req.query.genre){
     req.query.genre = "";
   }
@@ -230,32 +230,40 @@ function getIDs(req, res, next){
 }
 
 function createMovie(req, res, next){
-    let newMovie = new Movie();
-    newMovie._id = mongoose.Types.ObjectId();
-    newMovie.title = req.body.title;
-    newMovie.year = req.body.year;
-    newMovie.plot = req.body.plot;
-    newMovie.runtime = req.body.runtime;
-    newMovie.writer = req.writers;
-    newMovie.actor = req.actors;
-    newMovie.director = req.directors;
-    newMovie.genres = req.body.genres;
-    console.log(newMovie);
-    newMovie.save(function(err, movie) {
-        if (err) {
-          if(err.code == 11000){ //this is duplicate-key error (someone already exists with that name)
-            res.send(409); //409 is the correct status code for duplicate resource or resource already exists.
-            //it means conflict
-          }
-          else{
-            console.log(err);
-            res.send(400); //something else is wrong with the data
-          }
-        }
-        else{
-          res.movie = movie;
-          next();
-        }
+    Movie.getTitle(req.body.title, function(err, result){
+      console.log(result);
+      if(result.length >= 1){
+        res.sendStatus(409);
+      }
+      else{
+        let newMovie = new Movie();
+        newMovie._id = mongoose.Types.ObjectId();
+        newMovie.title = req.body.title;
+        newMovie.year = req.body.year;
+        newMovie.plot = req.body.plot;
+        newMovie.runtime = req.body.runtime;
+        newMovie.writer = req.writers;
+        newMovie.actor = req.actors;
+        newMovie.director = req.directors;
+        newMovie.genres = req.body.genres;
+        console.log(newMovie);
+        newMovie.save(function(err, movie) {
+            if (err) {
+              if(err.code == 11000){ //this is duplicate-key error (someone already exists with that name)
+                res.sendStatus(409); //409 is the correct status code for duplicate resource or resource already exists.
+                //it means conflict
+              }
+              else{
+                console.log(err);
+                res.sendStatus(400); //something else is wrong with the data
+              }
+            }
+            else{
+              res.movie = movie;
+              next();
+            }
+        });
+      }
     });
 }
 

@@ -48,6 +48,11 @@ let movieSchema = Schema({
   }
 });
 
+
+movieSchema.statics.getTitle = function(title, callback){
+  this.find({title: title}).exec(callback);
+}
+
 movieSchema.statics.getSimilar = function(movie, callback){
 	this.find({genres: {$in: movie.genres}, _id: {$ne: movie._id}}).select("title year genres plot rating").sort('-rating -year').limit(5).exec(callback)
 }
