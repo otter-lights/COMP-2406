@@ -7,7 +7,7 @@ html(lang='en' dir='ltr')
         link(href='/css/menubar.css' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap' rel='stylesheet')
         link(href='https://fonts.googleapis.com/css?family=Inter&display=swap' rel='stylesheet')
-        title Search Results for "___"
+        title Search Results
     body
         +menubar
         .whitebackground
@@ -28,11 +28,11 @@ html(lang='en' dir='ltr')
                   button#back
                     - let url =`movies?page=` + (current-1)
                     - url += query
-                    a(href=url) 
+                    a(href=url)
                       img(src='/img/backwards.png')
                 if movies.length === 10
                   button#forward
                     - url = `movies?page=` + (current+1)
                     - url += query
-                    a(href=url) 
+                    a(href=url)
                       img(src='/img/forward.png')
