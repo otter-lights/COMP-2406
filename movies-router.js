@@ -51,7 +51,7 @@ router.param("id", function(req, res, next, value){
     });
   }
   else{
-    res.status(401).render('./primaries/homepage.pug', {session:req.session});
+    res.redirect("/"); //should be status 401, but redirects so user can log in.
   }
 });
 
@@ -60,96 +60,106 @@ router.param("id", function(req, res, next, value){
 //title, name, genre
 
 function queryParse(req, res, next){
-  let params = [];
-  let q = ""
-  for(prop in req.query){
-		  if(prop == "page"){
-			   continue;
-		  }
-		  params.push(prop + "=" + req.query[prop]);
-	 }
+  if(req.session.loggedin){
+    let params = [];
+    let q = ""
+    for(prop in req.query){
+  		  if(prop == "page"){
+  			   continue;
+  		  }
+  		  params.push(prop + "=" + req.query[prop]);
+  	 }
 
-	 req.qstring = params.join("&");
+  	 req.qstring = params.join("&");
 
-  try{
-    req.query.page = req.query.page || 1;
-    req.query.page = Number(req.query.page);
-    if(req.query.page < 1){
-     req.query.page = 1;
+    try{
+      req.query.page = req.query.page || 1;
+      req.query.page = Number(req.query.page);
+      if(req.query.page < 1){
+       req.query.page = 1;
+      }
+    }
+    catch{
+      req.query.page = 1;
+    }
+
+    if(!req.query.name){
+      req.query.name = "";
+    }
+    else{
+      q = q + "&name=" + req.query.name
+    }
+
+    if(!req.query.title){
+      req.query.title = "";
+    }
+    else{
+      q = q + "&title=" + req.query.title
+    }
+
+    if(!req.query.genre){
+      req.query.genre = "";
+    }
+    else{
+      q = q + "&genre=" + req.query.genre
+    }
+
+    if(!req.query.person){
+      console.log("test")
+      req.query.person = ""
+      console.log(req.query)
+      res.q = q
+      next();
+      return
+    }
+    if(req.query.person){
+      q = q + "&person=" + req.query.person
+      res.q = q
+      Person.find({name: new RegExp(req.query.person, 'i')}).select("_id").exec(function(err, result){
+        console.log("test2")
+        console.log(result)
+        req.query.pID = result
+        console.log(req.query)
+        next();
+      })
     }
   }
-  catch{
-    req.query.page = 1;
-  }
-
-  if(!req.query.name){
-    req.query.name = "";
-  }
   else{
-    q = q + "&name=" + req.query.name
-  }
-
-  if(!req.query.title){
-    req.query.title = "";
-  }
-  else{
-    q = q + "&title=" + req.query.title
-  }
-
-  if(!req.query.genre){
-    req.query.genre = "";
-  }
-  else{
-    q = q + "&genre=" + req.query.genre
-  }
-
-  if(!req.query.person){
-    console.log("test")
-    req.query.person = ""
-    console.log(req.query)
-    res.q = q
-    next();
-    return
-  }
-  if(req.query.person){
-    q = q + "&person=" + req.query.person
-    res.q = q
-    Person.find({name: new RegExp(req.query.person, 'i')}).select("_id").exec(function(err, result){
-      console.log("test2")
-      console.log(result)
-      req.query.pID = result
-      console.log(req.query)
-      next();
-    })
+    res.redirect("/"); //should be status 401, but redirects so user can log in.
   }
 }
-function loadSearch(req, res, next){
-  let startIndex = ((req.query.page-1) * 10);
-  if(req.query.person === ""){
-    Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i')}).limit(10).skip(startIndex).populate("actor director writer").exec(function(err, results){
-      if(err){
-        res.status(500).send("Error Finding Movies.");
-        console.log(err);
+
+
+
+
+
+  function loadSearch(req, res, next){
+    let startIndex = ((req.query.page-1) * 10);
+    if(req.query.person === ""){
+      Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i')}).limit(10).skip(startIndex).populate("actor director writer").exec(function(err, results){
+        if(err){
+          res.status(500).send("Error Finding Movies.");
+          console.log(err);
+          return;
+        }
+        res.search = results;
+        next();
         return;
-      }
-      res.search = results;
-      next();
-      return;
-    })
-  }
-  else{
-    Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i'), $or: [{actor: {$in: req.query.pID}}, {director: {$in: req.query.pID}}, {writer: {$in: req.query.pID}}]}).limit(10).skip(startIndex).populate("actor director writer").exec(function(err, results){
-      if(err){
-        res.status(500).send("Error Finding Movies.");
-        console.log(err);
+      })
+    }
+    else{
+      Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i'), $or: [{actor: {$in: req.query.pID}}, {director: {$in: req.query.pID}}, {writer: {$in: req.query.pID}}]}).limit(10).skip(startIndex).populate("actor director writer").exec(function(err, results){
+        if(err){
+          res.status(500).send("Error Finding Movies.");
+          console.log(err);
+          return;
+        }
+        let maxpages = results.length / 10
+        res.search = results;
+        next();
         return;
-      }
-      let maxpages = results.length / 10
-      res.search = results;
-      next();
-      return;
-    })
-  }
+      })
+    }
 }
 
 function respondSearch(req, res, next){
@@ -160,12 +170,18 @@ function respondSearch(req, res, next){
 
 
 function recommendMovies(req, res, next){
-  Movie.getSimilar(req.movie, function(err, result){
-    if(err) throw err
-    req.recommendedMovies = result
-    next();
-  })
+  if(req.session.loggedin){
+    Movie.getSimilar(req.movie, function(err, result){
+      if(err) throw err
+      req.recommendedMovies = result
+      next();
+    })
+  }
+  else{
+    res.redirect("/"); //should be status 401, but redirects so user can log in.
+  }
 }
+
 function inList(req, res, next){
   User.inWatchlist(req.session.userID, req.movie, function(err, result){
     req.inList = result
@@ -188,7 +204,7 @@ function sendMovie(req, res, next){
   	next();
   }
   else{
-      res.status(401).render('./primaries/homepage.pug', {session:req.session});
+      res.redirect("/"); //should be status 401, but redirects so user can log in.
       //Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
   }
 }
@@ -334,7 +350,6 @@ function createNotifications(req, res, next){
       next();
     }
   });
-
 }
 
 async function pushNotificationsToFollowers(req, res, next){
