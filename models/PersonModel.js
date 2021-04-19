@@ -27,14 +27,17 @@ let personSchema = Schema({
   }
 });
 
+//returns an array of 10 person documents that contain the 'name' passed in.
 personSchema.statics.startsWith = function(name, callback){
   this.find({name: new RegExp(name, 'i')}, callback).select("name").limit(10);
 }
 
+//returns an array of person documents that match the IDs in the array passed in
 personSchema.statics.findArrayByName = function(array, callback){
   this.find({'name': {$in: array}}, callback);
 }
 
+//returns the five common collaborators of the person passed in.
 personSchema.statics.frequentCollabs = function(person, callback){
   let films = []
   let collabs = []
@@ -56,11 +59,13 @@ personSchema.statics.frequentCollabs = function(person, callback){
   })
 }
 
+//makes sure there is uniqueness
 function unique(collabs){
   let distinct = [...new Set(collabs.map(x => x.name))];
   return(distinct)
 }
 
+//sorts results by frequency to display the most common collaborators
 function sortByFrequency(array) {
     var frequency = {};
 

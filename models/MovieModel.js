@@ -47,15 +47,17 @@ let movieSchema = Schema({
   }
 });
 
-
+//returns an array of movies that match a specific title
 movieSchema.statics.getTitle = function(title, callback){
   this.find({title: title}).exec(callback);
 }
 
+//returns an array of 5 movies that are similar in genre to the movie passed in, sorted by rating and year.
 movieSchema.statics.getSimilar = function(movie, callback){
 	this.find({genres: {$in: movie.genres}, _id: {$ne: movie._id}}).select("title year genres plot rating").sort('-rating -year').limit(5).exec(callback)
 }
 
+//a method to calculate the average rating of a movie with a new rating passed in.
 movieSchema.methods.calcAvRating = function(newRating){
   if(this.reviews.length === 0){
     return newRating
@@ -65,6 +67,7 @@ movieSchema.methods.calcAvRating = function(newRating){
   }
 }
 
+//this returns the people of a movie in one array.
 movieSchema.methods.getPeople = function(){
   let people = [];
   people = people.concat(this.actor);

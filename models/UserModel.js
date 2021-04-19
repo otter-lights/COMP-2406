@@ -43,9 +43,12 @@ let userSchema = Schema({
   }
 });
 
+//finds one User document that matches the username
 userSchema.statics.findByUsername = function(username, callback){
   this.findOne({username: new RegExp(username, 'i')}, callback);
 }
+
+//returns recommendations for movies for the user document passed in based off of watchlist
 userSchema.statics.getRecs = function(user, callback){
   if(user.watchlist.length > 0){
     let allgenres = []
@@ -57,10 +60,12 @@ userSchema.statics.getRecs = function(user, callback){
     })
   }
   else{
+    //if there is nothing in the watchlist, gives the 5 highest-rated movies.
     Movie.find().sort('-rating -year').limit(5).exec(callback)
   }
 }
 
+//checks if the movie passed in is in the user's watchlist
 userSchema.statics.inWatchlist = function(userID, movie, callback){
   this.findById(userID).exec(function(err, result){
     if(err) throw err
@@ -68,12 +73,15 @@ userSchema.statics.inWatchlist = function(userID, movie, callback){
   })
 }
 
+//checks if the person passed in is followed by the user passed in
 userSchema.statics.inPeopleFollowing = function(userID, person, callback){
   this.findById(userID).exec(function(err, result){
     if(err) throw err
     callback(err, result.peopleFollowing.includes(person._id))
   })
 }
+
+//checks if the first user passed in is followed by the second user passed in
 userSchema.statics.inUserFollowing = function(userID, user, callback){
   this.findById(userID).exec(function(err, result){
     if(err) throw err
