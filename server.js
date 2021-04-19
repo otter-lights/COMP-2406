@@ -18,12 +18,11 @@ let app = express();
 app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(express.static("public"));
-app.use(express.urlencoded({extended:true})); //for form data. It converts the stream to strings.
-//Automatically parse application/json data
+app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(session({secret: "A very huge secret goes here."}));
-//this is our session object. Can also add a maxAge if we want.
 
+//sets up routers for different endpoints
 let usersRouter = require("./users-router");
 app.use("/users", usersRouter);
 let moviesRouter = require("./movies-router");
@@ -33,17 +32,14 @@ app.use("/people", peopleRouter);
 let reviewsRouter = require("./reviews-router");
 app.use("/reviews", reviewsRouter);
 
-let searchResults = [{"id": "6", "title": "Force Awakens", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "43", "title": "Split", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "45", "title": "To All The Boys","genres":["Action","Adventure","Sci-Fi"]},
-{"id": "654", "title": "The Ugly Truth", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "12", "title": "V for Vendetta","genres":["Action","Adventure","Sci-Fi"]}, {"id": "64", "title": "Bleach","genres":["Action","Adventure","Sci-Fi"]}, {"id": "6", "title": "Force Awakens", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "43", "title": "Split", "genres":["Action","Adventure","Sci-Fi"]}, {"id": "45", "title": "To All The Boys", "genres":["Action","Adventure","Sci-Fi"]},
-{"id": "654", "title": "The Ugly Truth", "genres":["Action","Adventure","Sci-Fi"]}];
-
-
+//homepage endpoint
 app.get(['/', '/homepage'], (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.status(200);
 	res.render('./primaries/homepage.pug', {session:req.session});
 })
 
+//login/signin endpoint
 app.get('/login', (req, res) => {
   if(!req.session.loggedin){
     res.setHeader('content-type', 'text/html');
@@ -55,6 +51,7 @@ app.get('/login', (req, res) => {
   }
 })
 
+//signup endpoint
 app.get('/signup', (req, res) => {
   if(!req.session.loggedin){
     res.setHeader('content-type', 'text/html');
@@ -66,6 +63,7 @@ app.get('/signup', (req, res) => {
   }
 })
 
+//addmovie page endpoint, only visible for contributing users
 app.get('/addmovie', (req, res) => {
   if(req.session.loggedin && req.session.admin){
     res.setHeader('content-type', 'text/html');
@@ -77,6 +75,7 @@ app.get('/addmovie', (req, res) => {
   }
 })
 
+//addperson page endpoint, only visible for contributing users
 app.get('/addperson', (req, res) => {
   if(req.session.loggedin && req.session.admin){
     res.setHeader('content-type', 'text/html');
@@ -88,6 +87,8 @@ app.get('/addperson', (req, res) => {
   }
 })
 
+
+//search page endpoint
 app.get('/advancedsearch', (req, res) => {
   if(req.session.loggedin){
     res.setHeader('content-type', 'text/html');
@@ -99,9 +100,11 @@ app.get('/advancedsearch', (req, res) => {
   }
 })
 
+//connect to the mongodb database established in initialize.js
 mongoose.connect('mongodb://localhost/moviedata', {useNewUrlParser: true});
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
+//listens on port 3000
 app.listen(3000);
 console.log("Server listening at http://localhost:3000");

@@ -8,16 +8,14 @@ const Notification = require("./models/NotificationModel");
 const express = require('express');
 let router = express.Router();
 
-/*
-router.post("/", express.json(), addReview); //adds a new review
-router.get("/:id", getReview); //sends review with ID (PUG or JSON)
-
-*/
-//now create the functions above! Look at the store-server if confused. Those functions above are just examples btw.
 router.post("/", createReview, pushReviewIDtoUser, pushReviewIDtoMovie, getUser, createNotificationObject, pushNotificationIDtoFollowers);
 
+//////////////////////////CREATES A NEW REVIEW RESOURCE////////////////////////////////////
+
+//creates a review document based off of the Review schema
 function createReview(req, res, next){
   if(req.session.loggedin){
+    //creates a Review document based off provided information
     let newReview = new Review();
     newReview._id = mongoose.Types.ObjectId();
     newReview.username = req.session.userID;
@@ -29,23 +27,32 @@ function createReview(req, res, next){
     if(req.body.hasOwnProperty("review")){
       newReview.review = req.body.review;
     }
+    //saves the document
     newReview.save(function(err, user) {
-        if (err) {
-            console.log(err);
-            res.sendStatus(400); //bad content
+        if (err){
+          if(err.name === 'ValidationError'){
+            res.sendStatus(400); //Bad request, the data send by the client failed to get verified and added.
           }
+          else{
+            console.log(err);
+            res.sendStatus(500);
+            //the server had an error saving this document that did not involve validation
+          }
+        }
         else{
-          //console.log(newReview);
           req.reviewObject = newReview;
           next();
         }
       });
   }
   else{
-    res.sendStatus(401); //or whatever to indicate unauthorized
+    res.sendStatus(401);
+    //Authentication is required and has failed or has not yet been provided.
+
   }
 }
 
+//pushes the newly made review's ID to the logged in user's list of reviews
 function pushReviewIDtoUser(req, res, next){
   User.findByIdAndUpdate(req.session.userID,
   {$push: {"reviews": req.reviewObject._id}},
@@ -53,16 +60,18 @@ function pushReviewIDtoUser(req, res, next){
   function(err, result){
     if(err){
       console.log(err);
-      res.sendStatus(500); //server error
+      res.sendStatus(500);
+      //the logged in user's ID in session has already been verified, and the review ID was just created
+      //so this is a server error
     }
     else{
-      //console.log("user results" + result);
       next();
     }
   });
 }
 
 
+//appends the newly made review's ID to the movie it was created for
 function pushReviewIDtoMovie(req, res, next){
   Movie.findByIdAndUpdate(req.reviewObject.movieId,
   {$push: {"reviews": req.reviewObject._id}},
@@ -70,10 +79,12 @@ function pushReviewIDtoMovie(req, res, next){
   function(err, result){
     if(err){
       console.log(err);
-      res.sendStatus(400); //bad content
+      res.sendStatus(500);
+      //the movie ID came straight from the URL where the review was made, and the review ID was just created
+      //so this is a server error
     }
     else{
-        //console.log("movie results" + result);
+        //calculates the average rating of the movie with the newly added review
         if(!result.rating){
           result.rating = req.body.rating;
           result.save()
@@ -87,10 +98,12 @@ function pushReviewIDtoMovie(req, res, next){
   });
 }
 
+//gets the user object of the user in session (logged-in user)
 function getUser(req, res, next){
   User.findById(req.session.userID, function(err, result){
     if(err){
       res.sendStatus(500);
+      //the logged in user's ID in session has already been verified, so this is a server error
     }
     else{
       req.user = result;
@@ -99,16 +112,20 @@ function getUser(req, res, next){
   });
 }
 
+//creates a Notification object so that the followers of the logged-in user can get an alert that a review has been made
 function createNotificationObject(req, res, next){
+  //creates a new Notification document
   let newNotification = new Notification();
   newNotification._id = mongoose.Types.ObjectId();
   newNotification.user = req.session.userID;
   newNotification.movieId = req.reviewObject.movieId;
   newNotification.nType = 0;
+  //saves the document
   newNotification.save(function(err, user) {
       if (err) {
           console.log(err);
-          res.status(500).send(req.reviewObject); //everything up until this point should've been verified, so this is a server error.
+          res.status(500).send(req.reviewObject);
+          //everything up until this point should've been verified, so this is a server error.
         }
       else{
         req.notification = newNotification;
@@ -117,6 +134,7 @@ function createNotificationObject(req, res, next){
     });
 }
 
+//pushes the Notification object ID to the notifications array of each of the followers on the logged-in user
 function pushNotificationIDtoFollowers(req, res, next){
   User.updateMany({'_id': {$in: req.user.followers}}, { $push: { "notifications": req.notification._id }}, function(err, results){
     if(err){
@@ -125,8 +143,8 @@ function pushNotificationIDtoFollowers(req, res, next){
       //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
     }
     else{
-      console.log(results);
       res.status(201).send(req.reviewObject);
+      //sends back the newly made review object
     }
   });
 }
