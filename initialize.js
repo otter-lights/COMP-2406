@@ -20,6 +20,8 @@ let allPeople = [];
 let allUsers = [];
 
 
+//this function adds a Person to a movie
+//if they don't exist, creates a new Person document
 function addPersonToMovie(personName, movie, position){
   if(!people.hasOwnProperty(personName)){
     let newPerson = new Person();
@@ -34,6 +36,7 @@ function addPersonToMovie(personName, movie, position){
     allPeople.push(newPerson);
 
     people[newPerson.name] = newPerson;
+    //also builds up a database of People documents
   }
 
   let curPerson = people[personName];
@@ -42,6 +45,7 @@ function addPersonToMovie(personName, movie, position){
 }
 
 
+//creates new movie documents
 let data = require(fileName);
 data.forEach(movie=>{
 
@@ -53,16 +57,16 @@ data.forEach(movie=>{
   newMovie.genres = movie.Genre;
   newMovie.plot = movie.Plot;
 
-
+  //adds all the actors to the movie
   movie.Actors.forEach(actorName => {
     addPersonToMovie(actorName, newMovie, "actor");
   })
 
-
+//adds all the directors to the movie
   movie.Director.forEach(directorName => {
     addPersonToMovie(directorName, newMovie, "director");
   })
-
+ //adds all the writers to the movie
   movie.Writer.forEach(directorName => {
     addPersonToMovie(directorName, newMovie, "writer");
   })
@@ -71,6 +75,7 @@ data.forEach(movie=>{
 })
 
 
+//goes through user dummy data and creates an array of documents of Users
 let userData = require(userDataFile);
 userData.forEach(user=>{
 
@@ -83,6 +88,7 @@ userData.forEach(user=>{
   allUsers.push(newUser)
 })
 
+//connects to Mongo and inserts all the Movie documents, Person documents, and User documents.
 mongoose.connect('mongodb://localhost/moviedata', {useNewUrlParser: true});
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -106,6 +112,7 @@ db.once('open', function() {
             console.log(err);
             return;
           }
+
           console.log("Server has been initialized. :)");
           mongoose.connection.close()
         })

@@ -102,7 +102,8 @@ function pushReviewIDtoMovie(req, res, next){
 function getUser(req, res, next){
   User.findById(req.session.userID, function(err, result){
     if(err){
-      res.sendStatus(500);
+      res.setHeader('content-type', 'application/json');
+      res.status(500).send(req.reviewObject);
       //the logged in user's ID in session has already been verified, so this is a server error
     }
     else{
@@ -124,6 +125,7 @@ function createNotificationObject(req, res, next){
   newNotification.save(function(err, user) {
       if (err) {
           console.log(err);
+          res.setHeader('content-type', 'application/json');
           res.status(500).send(req.reviewObject);
           //everything up until this point should've been verified, so this is a server error.
         }
@@ -139,10 +141,12 @@ function pushNotificationIDtoFollowers(req, res, next){
   User.updateMany({'_id': {$in: req.user.followers}}, { $push: { "notifications": req.notification._id }}, function(err, results){
     if(err){
       console.log(err);
+      res.setHeader('content-type', 'application/json');
       res.status(500).send(req.reviewObject);
       //these ids should've already been verified by the server, so if they can't be added then the server has a problem.
     }
     else{
+      res.setHeader('content-type', 'application/json');
       res.status(201).send(req.reviewObject);
       //sends back the newly made review object
     }
