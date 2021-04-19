@@ -7,6 +7,7 @@ body{
   margin-bottom: 50px;
 }
 
+
 #movieinfoblackbackground{
   background: black;
   margin: auto;
@@ -21,22 +22,23 @@ body{
 #reviewsonmoviepagecontainer{
   width: 1235px;
   margin:auto;
-  margin-top: 75px;
 }
 
 #movieinfocard{
-  width: 795px;
-  height: 620px;
+  width: 723px;
+  height: 590px;
   display: inline-block;
   margin-left: 65px;
   margin-top: 55px;
   background: #FFFFFF;
   border-radius: 20px;
+  padding-left: 75px;
+  padding-top: 20px;
 }
 
 #recommendedmovieinfocard{
   width: 285px;
-  height: 620px;
+  height: 610px;
   display: inline-block;
   margin-left: 25px;
   margin-top: 55px;
@@ -46,12 +48,11 @@ body{
 
 #movieinfotitle{
   font-family: Fira Sans Extra Condensed;
-  display:inline-block;
+  display:inline;
   font-style: normal;
   font-weight: normal;
+
   font-size: 46px;
-  margin-left: 75px;
-  margin-top: 25px;
   margin-bottom:0px;
 }
 
@@ -78,9 +79,6 @@ body{
   height: 30px;
 }
 
-#movieinforeleasedate{
-  margin-left: 75px;
-}
 
 #addtowatchlistbutton{
   width: 155px;
@@ -107,13 +105,11 @@ body{
   font-size: 18px;
   margin-top: 12px;
   margin-bottom: 0px;
-  margin-left: 72px;
 }
 
 #overviewdiv{
   width: 653px;
   height: 110px;
-  margin-left:72px;
   background: #FFFFFF;
   border: 1px solid #000000;
   box-sizing: border-box;
@@ -126,7 +122,6 @@ body{
 .castcontainers{
   width: 653px;
   height: 50px;
-  margin-left:72px;
   background: #FFFFFF;
   border: 1px solid #000000;
   box-sizing: border-box;

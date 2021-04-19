@@ -12,7 +12,7 @@ html(lang='en' dir='ltr')
     +menubar
     #movieinfoblackbackground
       #movieinfocard.movieinfocard
-        h1#movieinfotitle #{movie.title}
+        h1#movieinfotitle #{movie.title} #{'   '} 
         if (movie.rating)
           h3#movierating #{movie.rating.substring(0, 4)}/10
         else

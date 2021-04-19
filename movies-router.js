@@ -8,34 +8,19 @@ const Notification = require("./models/NotificationModel");
 const express = require('express');
 let router = express.Router();
 
-/*
-
- //or queryparser idk whatever we wanna call the functions
-router.post("/", express.json(), createMovie); //create a movie and add to the database
-//also dave had express.json() as the first step for adding a new product in his store-server example so ig this parses the data.
-
-router.get("/:id", sendMovie); //sends movie with ID (PUG or JSON)
-router.get("/:id/reviews", populateReviewIds, sendReviews);
-//- Supports response types application/json
-//- Retrieves the array of reviews about a particular movie
-//now make these functions so the get requests and whatever can be executed :)
-*/
 router.get("/", queryParse, loadSearch, respondSearch);
 router.get("/:id", recommendMovies, inList, sendMovie);
 router.post("/", getIDs, createMovie, addMovieToPeople, createNotifications, pushNotificationsToFollowers);
 
-userData = {"accountType": "true"};
-
-//we will find the user
+//we will find the movie with this id in the parameter.
 router.param("id", function(req, res, next, value){
   if(req.session.loggedin){
     Movie.findById(value, function(err, result){
       if(err || !result){
         console.log(err);
-        res.sendStatus(404);   //404 Not Found
+        res.sendStatus(404);   //404 not found to indicate movie cannot be found with this ID.
         return;
       }
-
       Movie.findById(value).populate("director writer actor").populate({path: "reviews", populate: {path: "username",  select: 'username'}}).exec(function(err, result){
           if(err){
             console.log(err);
@@ -44,8 +29,6 @@ router.param("id", function(req, res, next, value){
             //the server can't populate the data that it has already verified, making it a server error.
           }
           req.movie = result;
-          //console.log(result);
-          //error codes here check if empty, blah blah blah blah.
           next();
       });
     });
@@ -55,9 +38,6 @@ router.param("id", function(req, res, next, value){
   }
 });
 
-//sessions for logging in and user ID, maybe watchlist.
-
-//title, name, genre
 
 function queryParse(req, res, next){
   if(req.session.loggedin){
@@ -156,7 +136,6 @@ function queryParse(req, res, next){
 }
 
 function respondSearch(req, res, next){
-  console.log(res.q)
   res.render('./primaries/searchresults', {movies: res.search, session:req.session, current: req.query.page, query: res.q});
   next();
 }
