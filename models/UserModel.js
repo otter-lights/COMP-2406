@@ -64,7 +64,6 @@ userSchema.statics.getRecs = function(user, callback){
   }
 }
 
-
 userSchema.statics.inWatchlist = function(userID, movie, callback){
   this.findById(userID).exec(function(err, result){
     if(err) throw err

@@ -83,13 +83,6 @@ function queryParse(req, res, next){
       req.query.page = 1;
     }
 
-    if(!req.query.name){
-      req.query.name = "";
-    }
-    else{
-      q = q + "&name=" + req.query.name
-    }
-
     if(!req.query.title){
       req.query.title = "";
     }
@@ -136,7 +129,7 @@ function queryParse(req, res, next){
   function loadSearch(req, res, next){
     let startIndex = ((req.query.page-1) * 10);
     if(req.query.person === ""){
-      Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i')}).limit(10).skip(startIndex).populate("actor director writer").exec(function(err, results){
+      Movie.find({title: new RegExp(req.query.title, 'i'), genres: new RegExp(req.query.genre, 'i')}).limit(10).skip(startIndex).sort("title").populate("actor director writer").exec(function(err, results){
         if(err){
           res.status(500).send("Error Finding Movies.");
           console.log(err);

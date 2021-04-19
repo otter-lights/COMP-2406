@@ -13,6 +13,5 @@ function sendLink(){
     qstring.push("genre=" + genre)
   }
   console.log(qstring.join("&"))
-  //console.log("?title=" + title + "&person=" + name + "&genre=" + genre)
   window.location.href='/movies?' + qstring.join("&")
 }
