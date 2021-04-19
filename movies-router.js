@@ -13,7 +13,7 @@ router.post("/", getIDs, createMovie, addMovieToPeople, createNotifications, pus
 router.get("/:id", recommendMovies, inList, sendMovie);
 
 //////////////////////////MOVIE QUERY RESULTS////////////////////////////////////
-//parses the query, including page #, title, genre, and person name
+// parses the query, including page #, title, genre, and person name
 function queryParse(req, res, next){
   if(req.session.loggedin){
     let params = [];
@@ -26,7 +26,8 @@ function queryParse(req, res, next){
   	 }
 
   	 req.qstring = params.join("&");
-
+    
+    //trys to set the page that was requested by the user and attempts to convert to a Number
     try{
       req.query.page = req.query.page || 1;
       req.query.page = Number(req.query.page);
@@ -38,20 +39,23 @@ function queryParse(req, res, next){
       req.query.page = 1;
     }
 
+    //adds to the query string if there is a query parameter for title, "" if not
     if(!req.query.title){
       req.query.title = "";
     }
     else{
       q = q + "&title=" + req.query.title
     }
-
+    
+    //same method as for title
     if(!req.query.genre){
       req.query.genre = "";
     }
     else{
       q = q + "&genre=" + req.query.genre
     }
-
+    
+    //if there is nothing in the person parameter move to the next function, if there is run a contains search on the database to find matching people, the move to the next function
     if(!req.query.person){
       req.query.person = ""
       res.q = q
