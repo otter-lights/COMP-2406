@@ -70,7 +70,6 @@ movieSchema.methods.getPeople = function(){
   people = people.concat(this.actor);
   people = people.concat(this.director);
   people = people.concat(this.writer);
-  console.log(people)
   return(people)
 }
 

@@ -48,18 +48,15 @@ userSchema.statics.findByUsername = function(username, callback){
 }
 userSchema.statics.getRecs = function(user, callback){
   if(user.watchlist.length > 0){
-    console.log(user.watchlist)
     let allgenres = []
     user.watchlist.forEach(film=>{
       allgenres = allgenres.concat(film.genres)
     })
-    console.log(allgenres)
     Movie.find({genres: {$in: allgenres}, _id: {$nin: user.watchlist}}).sort('-rating -year').limit(5).exec(function(err, result){
       callback(err, result)
     })
-  }   
+  }
   else{
-    console.log("No Watchlist Available")
     Movie.find().sort('-rating -year').limit(5).exec(callback)
   }
 }

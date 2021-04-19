@@ -1,3 +1,4 @@
+//checks if name is empty
 function verifyLetters(name){
   if(name.length == 0){
     return false;
@@ -5,6 +6,7 @@ function verifyLetters(name){
   return true;
 }
 
+//capitalizes all the words in a person's name
 function capitalize(string){
   let words = string.toLowerCase().split(' ');
    for (let i = 0; i < words.length; i++) {
@@ -20,6 +22,8 @@ function addPerson(){
     return;
   }
   name = capitalize(name);
+
+  //makes a POST request to add the person to the server
   let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if(this.readyState==4){
@@ -27,8 +31,12 @@ function addPerson(){
         let id = (JSON.parse(this.responseText))._id;
         window.location.replace(`/people/${id}`);
       }
+      else if(this.status == 400){
+        alert("There is something wrong with the content you provided. Try again.");
+      }
       else if(this.status==401){
-        alert("You are not authorized to add a person to the database.");
+        alert("You are not logged-in.");
+        window.location.replace("/");
       }
       else if(this.status==409){
         alert("This person already exists in the database. You can search for them in the search tab.");

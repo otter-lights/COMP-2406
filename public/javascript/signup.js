@@ -1,3 +1,4 @@
+//validates input to ensure it's not empty
 function validateInput(username, password){
   if(username.length == 0 || password.length == 0){
     alert("Both textfields are required to proceed.")
@@ -6,12 +7,13 @@ function validateInput(username, password){
   return true;
 }
 
-
+//creates the user object to send to the server
 function createUserObject(username, password){
   let userObject = {"username": username, "password": password};
   return userObject;
 }
 
+//called when the button is clicked to sign up.
 function signUpUser(){
   let username = document.getElementById("username").value;
   let password = document.getElementById("password").value;
@@ -27,21 +29,19 @@ function signUpUser(){
             window.location.replace(`/users/${id}`);
           }
           else if(this.status==403){
-            alert("You are not authorized to signup for an account.");
-            //403 Forbidden
-            //The request contained valid data and was understood by the server,
-            //but the server is refusing action. This may be due to the user not having the necessary permissions for a
-            //resource or needing an account of some sort, or attempting a prohibited action
-            // (e.g. creating a duplicate record where only one is allowed).
-            //Zara ->such as making an account when already logged in for our case
+            alert("You cannot create an account while logged-in.");
+            //the user is already logged in
           }
           else if(this.status==409){
+            //conflict error due to username
             alert("A user exists with this username. Try another one.");
           }
           else if(this.status==400){
+            //bad content error
             alert("There was a problem with creating your account. Ensure both fields are filled in or try a different combination.")
           }
           else{
+            //500 or other errors
             alert("There was a problem with the server. Try again.");
           }
     		}

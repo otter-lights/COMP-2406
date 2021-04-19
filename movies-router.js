@@ -53,7 +53,6 @@ function queryParse(req, res, next){
     }
 
     if(!req.query.person){
-      console.log("test")
       req.query.person = ""
       res.q = q
       next();

@@ -1,25 +1,32 @@
+
+/////////////////////CHANGE ACCOUNT TYPE////////////////////////
+
+//called when the button is clicked to change account type.
 function switchAccountType(){
+  //sends a GET request to get the user's account type.
   let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if(this.readyState==4){
       if (this.status==200){
        sendChangeRequest(JSON.parse(this.responseText));
+       //sends the response to the next function
       }
       else if(this.status==403){
         //accessing another user's account, redirect
-        alert("You are not authorized.");
+        alert("You are not authorized to access this account.");
         window.location.replace("/");
       }
       else if(this.status==404){
         alert("The user account you are requesting can't be found. Try to log in again.")
+        window.location.replace("/");
       }
       else if(this.status == 401){
-        alert("You are not authorized.");
+        alert("You are not logged in.");
         window.location.replace("/");
-        //not logged in
       }
       else{ //500 error code (internal server error)
         alert("The server failed to get your account type. Please try again.");
+        location.reload();
       }
     }
 	};
@@ -28,34 +35,36 @@ function switchAccountType(){
 	xhttp.send();
 }
 
+//sends a PUT request to change the account type
 function sendChangeRequest(accountType){
   let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if(this.readyState==4){
       if(this.status==200){
+        //refreshes the page to reflect the changes
         location.reload();
       }
       else if(this.status == 400){
         alert("Bad request. Try again.");
       }
       else if(this.status == 500){
-        alert("Your changed account type couldn't be saved. Tru again.");
+        alert("Your changed account type couldn't be saved. Try again.");
       }
       else if(this.status == 403){
-        alert("You are not authorized.");
+        alert("You are not authorized to change the account type of this user.");
         window.location.replace("/");
-        // session has expired trying to access an account that isn't theirs
       }
       else if(this.status == 401){
-        alert("You are not authorized.");
+        alert("You are not logged in.");
         window.location.replace("/");
-        //not logged in
       }
       else if(this.status==404){
-        alert("The user account you are requesting can't be found. Try to log in again.")
+        alert("The user account you are requesting can't be found. Try to log in again.");
+        window.location.replace("/");
       }
-      else{ //500 error code (internal server error)
+      else{ //500 error code (internal server error) or something else
         alert("The server failed to change your account type. Please try again.");
+        location.reload();
       }
 		}
 	};
@@ -64,23 +73,26 @@ function sendChangeRequest(accountType){
 	xhttp.send(JSON.stringify({"accountType": !accountType.accountType}));
 }
 
-////////////////////////////////
+//////////////////////EDITING WATCHLIST/FOLLOWING LISTS////////////////////////
+//called when remove button is clicked for people followed
 function editPeople(){
   let collectionOfDivs = document.getElementById("peopleyoufollowcontainer").getElementsByClassName("iconboxes");
   buildList(collectionOfDivs, "peopleFollowing")
 }
 
-
+//called when remove button is clicked for users followed
 function editUsers(){
   let collectionOfDivs = document.getElementById("usersyoufollowcontainer").getElementsByClassName("iconboxes");
   buildList(collectionOfDivs, "usersFollowing")
 }
 
+//called when remove button is clicked for watchlist
 function editWatchlist(){
   let collectionOfDivs = document.getElementById("watchlistcontainer").getElementsByClassName("iconboxes");
   buildList(collectionOfDivs, "watchlist")
 }
 
+//looks at divs and checks what is checked (for removal) and what is not
 function buildList(divs, path){
   let stillFollowing = [];
   let unfollowed = [];
@@ -94,12 +106,12 @@ function buildList(divs, path){
       unfollowed.push(divs[i].id);
     }
   }
-  console.log(stillFollowing);
   if(stillFollowing.length < divs.length){
     createObject(stillFollowing, unfollowed, path);
   }
 }
 
+//creates an object depending on whether it is watchlist, users followed or people followed
 function createObject(stillFollowing, unfollowed, path){
   let object = {};
   if(path === "peopleFollowing"){
@@ -117,6 +129,7 @@ function createObject(stillFollowing, unfollowed, path){
   sendItemsToServer(object, path);
 }
 
+//sends the PUT request to the server for the path depending on whether it is watchlist, users followed or people followed changed
 function sendItemsToServer(object, path){
   if(object){
     let xhttp = new XMLHttpRequest();
@@ -126,11 +139,23 @@ function sendItemsToServer(object, path){
           alert("Removed from following.");
           location.reload();
         }
-        else if(this.status==401){
+        else if(this.status== 400){
+          alert("Something went wrong.");
+          location.reload();
+        }
+        else if(this.status == 404){
+          alert("The user you are requesting cannot be found.");
+          window.location.replace("/");
+        }
+        else if(this.status == 403){
           alert("You are not authorized to remove from following from this account.");
           window.location.replace("/");
         }
-        else{
+        else if(this.status==401){
+          alert("You are not logged in.");
+          window.location.replace("/");
+        }
+        else{ //500 or some other error.
           alert("There was a problem with the server. Try again.");
           location.reload();
         }
@@ -141,5 +166,3 @@ function sendItemsToServer(object, path){
     xhttp.send(JSON.stringify(object));
   }
 }
-
-////////////////////////////////
